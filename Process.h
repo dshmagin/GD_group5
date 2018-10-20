@@ -1,24 +1,27 @@
 #ifndef PROCESS_H_INCLUDED
 #define PROCESS_H_INCLUDED
+#define NULL nullptr
 
 class Process
 {
-    enum state {RUNNING, PAUSED, FAILED, SUCCESS, ABORTED, UNINIT};
-    int state;
-    Process* child = nullptr;
+    public:
+        enum state {RUNNING, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
+        int state;
+        Process* child = nullptr;
 
-    virtual initialize() {state = RUNNING;}
-    virtual update(float deltaMs) = 0;
-    virtual postSuccess(){};
-    virtual postFailed(){};
-    virtual postAbort(){};
+        Process(){};
+        virtual void initialize();
+        virtual void update(float deltaMs) = 0;
+        virtual void postSuccess();
+        virtual void postFailed();
+        virtual void postAbort();
 
-    void Pause();
-    void Unpause();
-    bool isDead(){return state = SUCCESS | FAILED | ABORTED;}
-    int getState(){return state;}
-    bool hasChild(){return child != nullptr;}
-    Process* getChild() {return child;}
+        void Pause();
+        void Unpause();
+        bool isDead();
+        int getState();
+        bool hasChild();
+        Process* getChild();
 };
 
 

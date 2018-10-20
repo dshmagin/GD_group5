@@ -11,10 +11,10 @@ class ProcessManager
 
     public:
         std::list <Process*> processList;
-        updateProcessList(float deltaMs);
-        attachProcess(Process* p);
-        abortAllProcess();
-        removeProcess(Process* p);
+        void updateProcessList(float deltaMs);
+        void attachProcess(Process* p);
+        void abortAllProcess();
+        void removeProcess(Process* p);
 
         ProcesManager(){};
 };
