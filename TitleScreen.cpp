@@ -15,6 +15,19 @@ TitleScreen::TitleScreen()
         cout << "Background did not load" << endl;
 }
 
+void TitleScreen::setSelected(int direction)
+{
+    if(selected !=0 && direction < 0 )
+    {
+        selected = selected + direction;
+    }
+    else if( selected != 1 && direction > 0)
+    {
+        selected = selected + direction;
+    }
+    cout<<"SEL: "<<selected;
+}
+
 void TitleScreen::drawTitleScreen( sf::RenderWindow* window )
 {
     if( enemyVal > .5 )
@@ -32,8 +45,27 @@ void TitleScreen::drawTitleScreen( sf::RenderWindow* window )
     else if( !firstSprite )
         TitleBackground.setTextureRect(sf::IntRect(0,450,750,450));
 
-    cout<<"Value: "<<enemyVal<<endl;
+    Option.setFont(GameFont);
+    Option.setString("Option");
+    Start.setFont(GameFont);
+    Start.setString("Start");
+    Start.setPosition(200,500);
+    Option.setPosition(600,500);
     TitleBackground.setPosition(75,25);
+    Start.setColor(sf::Color::Black);
+    Option.setColor(sf::Color::Black);
+
+    switch(selected)
+    {
+    case 0:
+        Start.setColor(sf::Color::Red);
+        break;
+    case 1:
+        Option.setColor(sf::Color::Red);
+        break;
+    }
     window -> draw( TitleBackground );
+    window -> draw( Option );
+    window -> draw( Start );
     //window -> display();
 }

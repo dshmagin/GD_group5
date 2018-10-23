@@ -7,18 +7,18 @@
 class TitleScreen
 {
     private:
-
+        int selected = 0;
         sf::Font GameFont;
         //sf::Text Title;
-        //sf::Text SinglePlayer;
-        //sf::Text MultiPlayer;
+        sf::Text Option;
+        sf::Text Start;
         sf::Texture BackgroundTexture;
         sf::Sprite TitleBackground;
         bool firstSprite = true;
         float enemyVal = 0;
 
     public:
-
+        void setSelected( int direction);
         TitleScreen();
 
         void drawTitleScreen(sf::RenderWindow* window);
