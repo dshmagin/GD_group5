@@ -1,30 +1,43 @@
 #include <SFML/Graphics.hpp>
+#include "GameLogic.h"
+#include "TitleScreen.h"
 
 int main(int argc, char** argv)
 {
-  // create main window
-  sf::RenderWindow App(sf::VideoMode(800,600,32), "Hello World - SFML");
 
-  // start main loop
-  while(App.isOpen())
-  {
-    // process events
-    sf::Event Event;
-    while(App.pollEvent(Event))
+    GameLogic* game = new GameLogic();
+    TitleScreen menu = TitleScreen();
+
+    // create main window
+    sf::RenderWindow window(sf::VideoMode(800,600,32), "Hello World - SFML");
+
+    // start main loop
+    window.setFramerateLimit(60);
+    int num =2;
+    while(window.isOpen())
     {
-      // Exit
-      if(Event.type == sf::Event::Closed)
-        App.close();
+        // process events
+        sf::Event Event;
+        window.clear();
+        while(window.pollEvent(Event))
+        {
+          // Exit
+          if(Event.type == sf::Event::Closed)
+            window.close();
+        }
+        if( game -> getGameState() == 0 && num ==2)
+        {
+
+            menu.drawTitleScreen(&window);
+        }
+
+        // clear screen and fill with blue
+
+        // display
+        window.display();
     }
 
-    // clear screen and fill with blue
-    App.clear(sf::Color::Blue);
-
-    // display
-    App.display();
-  }
-
-  // Done.
-  return 0;
+    // Done.
+    return 0;
 }
 
