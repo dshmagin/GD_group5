@@ -2,10 +2,11 @@
 
 using namespace std;
 
-TitleScreen::TitleScreen()
+TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
 {
 
-    if( !GameFont.loadFromFile( "../Assets/Fonts/GROBOLD.ttf" ) )
+   this -> window_ptr = window_ptr;
+   if( !GameFont.loadFromFile( "../Assets/Fonts/GROBOLD.ttf" ) )
     {
         cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
         cout << "Player one control W-up S-down, Player two control I-up K-down" << endl;
@@ -25,10 +26,9 @@ void TitleScreen::setSelected(int direction)
     {
         selected = selected + direction;
     }
-    cout<<"SEL: "<<selected;
 }
 
-void TitleScreen::drawTitleScreen( sf::RenderWindow* window )
+void TitleScreen::drawTitleScreen(  )
 {
     if( enemyVal > .5 )
     {
@@ -64,8 +64,8 @@ void TitleScreen::drawTitleScreen( sf::RenderWindow* window )
         Option.setColor(sf::Color::Red);
         break;
     }
-    window -> draw( TitleBackground );
-    window -> draw( Option );
-    window -> draw( Start );
+    window_ptr -> draw( TitleBackground );
+    window_ptr -> draw( Option );
+    window_ptr -> draw( Start );
     //window -> display();
 }

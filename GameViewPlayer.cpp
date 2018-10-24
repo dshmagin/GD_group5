@@ -3,9 +3,10 @@
 
 using namespace std;
 
-GameViewPlayer::GameViewPlayer (GameLogic* game)
+GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &window_ptr)
 {
     this -> game = game;
+    this -> window_ptr = window_ptr;
 
 }
 
@@ -13,7 +14,7 @@ GameViewPlayer::GameViewPlayer (GameLogic* game)
 
 
 
-void GameViewPlayer::checkKeyEvents( sf::RenderWindow* window,sf::Event Event )
+void GameViewPlayer::checkKeyEvents(sf::Event Event )
 {
    // cout<<"GAME STATE: "<<Event.key.code<<" here"<<sf::Keyboard::A<<endl;
         if( game -> getGameState() == 0 )
