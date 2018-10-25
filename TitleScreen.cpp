@@ -28,16 +28,16 @@ void TitleScreen::setSelected(int direction)
     }
 }
 
-void TitleScreen::drawTitleScreen(  )
+void TitleScreen::drawTitleScreen( float deltaTime )
 {
-    if( enemyVal > .5 )
+    if( titleImage > 5 )
     {
         firstSprite = !firstSprite;
-        enemyVal = 0.0f;
+        titleImage = 0.0f;
     }
 
 
-    enemyVal += 0.02f;
+    titleImage += 0.02f *deltaTime;
     TitleBackground.setTexture( BackgroundTexture );
     if( firstSprite )
         TitleBackground.setTextureRect(sf::IntRect(0,0,750,450));
@@ -64,8 +64,13 @@ void TitleScreen::drawTitleScreen(  )
         Option.setColor(sf::Color::Red);
         break;
     }
+    window_ptr -> clear(sf::Color::White);
     window_ptr -> draw( TitleBackground );
     window_ptr -> draw( Option );
     window_ptr -> draw( Start );
-    //window -> display();
+
+}
+int  TitleScreen::getSelected()
+{
+    return selected;
 }

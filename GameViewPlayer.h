@@ -26,6 +26,7 @@ class GameViewPlayer
         GameViewPlayer(GameLogic* game, shared_ptr<sf::RenderWindow> &window_ptr);
         void checkKeyEvents( sf::Event Event);
         void setTitleScreen(TitleScreen* screen);
+        void update();
 
 };
 

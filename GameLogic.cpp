@@ -9,7 +9,7 @@ GameLogic::GameLogic()
 
 
 
-int  GameLogic::setGameState( int GameState )
+void  GameLogic::setGameState( int GameState )
 {
     this -> GameState = GameState;
 }

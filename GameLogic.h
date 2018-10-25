@@ -16,7 +16,7 @@ class GameLogic
 
         GameLogic();
 
-        int  setGameState( int GameState );
+        void  setGameState( int GameState );
         int  getGameState( void );
 
 
