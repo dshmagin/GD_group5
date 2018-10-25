@@ -29,7 +29,7 @@ int main(int argc, char** argv)
         {
           // Exit
 
-            gvp.checkKeyEvents(Event);
+            gvp.checkKeyEvents(Event,deltaTime);
             if(Event.type == sf::Event::Closed)
                 window_ptr->close();
         }
@@ -42,6 +42,7 @@ int main(int argc, char** argv)
 
         if ( game -> getGameState() == 1 )
         {
+
             gvp.update();
         }
 

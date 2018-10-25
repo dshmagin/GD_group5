@@ -15,6 +15,20 @@ void  GameLogic::setGameState( int GameState )
 }
 int  GameLogic::getGameState()
 {
-    return this -> GameState;
+    return GameState;
 }
 
+void GameLogic::initiliaze()
+{
+    player = Player();
+    player.createPlayer(400,300);
+}
+
+sf::RectangleShape GameLogic::getPlayer()
+{
+    return player.getPlayerBody();
+}
+void GameLogic::movePlayer(char dir, float deltaTime)
+{
+    player.movePlayer(dir,deltaTime);
+}
