@@ -7,6 +7,8 @@
 int main(int argc, char** argv)
 {
 
+    float deltaTime;
+    sf::Clock clock;
     shared_ptr<sf::RenderWindow> window_ptr =make_shared<sf::RenderWindow>(sf::VideoMode(800,600,32), "Hello World - SFML");
     GameLogic* game = new GameLogic();
     GameViewPlayer gvp = GameViewPlayer(game, window_ptr);
@@ -15,9 +17,10 @@ int main(int argc, char** argv)
     // start main loop
     gvp.setTitleScreen(&menu);
     window_ptr->setFramerateLimit(60);
-    int num =2;
     while(window_ptr->isOpen())
     {
+        deltaTime = clock.getElapsedTime().asMicroseconds()/1000.0f;
+        clock.restart();
         // process events
         sf::Event Event;
         window_ptr->clear(sf::Color::Green);
@@ -30,14 +33,17 @@ int main(int argc, char** argv)
             if(Event.type == sf::Event::Closed)
                 window_ptr->close();
         }
-
-        if( game -> getGameState() == 0 && num ==2)
+        if( game -> getGameState() == 0 )
         {
 
-            menu.drawTitleScreen();
+            menu.drawTitleScreen(deltaTime);
 
         }
 
+        if ( game -> getGameState() == 1 )
+        {
+            gvp.update();
+        }
 
         window_ptr->display();
     }

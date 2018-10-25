@@ -22,13 +22,14 @@ class TitleScreen
         sf::Texture BackgroundTexture;
         sf::Sprite TitleBackground;
         bool firstSprite = true;
-        float enemyVal = 0;
+        float titleImage = 0;
 
     public:
         TitleScreen();
         TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr );
         void setSelected( int direction);
-        void drawTitleScreen();
+        int  getSelected();
+        void drawTitleScreen( float deltaTime );
 };
 
 #endif // TITLESCREEN_H_INCLUDED

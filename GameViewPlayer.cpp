@@ -19,7 +19,7 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event )
    // cout<<"GAME STATE: "<<Event.key.code<<" here"<<sf::Keyboard::A<<endl;
         if( game -> getGameState() == 0 )
         {
-          if (Event.type == sf::Event::KeyPressed)
+            if (Event.type == sf::Event::KeyPressed)
             {
                 if (Event.key.code == sf::Keyboard::A)
                 {
@@ -33,7 +33,14 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event )
                     cout << "the D key was pressed" << endl;
 
                 }
+                if (Event.key.code == sf::Keyboard::Return)
+                    if( menu -> getSelected() == 0 )
+                    {
+                        game -> setGameState(1);
+                        cout<< game -> getGameState()<<endl;
+                    }
             }
+
         }
 
 }
@@ -45,4 +52,9 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event )
 void GameViewPlayer::setTitleScreen(TitleScreen* screen)
 {
     menu = screen;
+}
+
+void GameViewPlayer::update()
+{
+
 }
