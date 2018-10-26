@@ -14,7 +14,7 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
 
 
 
-void GameViewPlayer::checkKeyEvents(sf::Event Event,float deltaTime )
+void GameViewPlayer::checkKeyEvents(sf::Event Event, float deltaTime )
 {
    // cout<<"GAME STATE: "<<Event.key.code<<" here"<<sf::Keyboard::A<<endl;
         if( game -> getGameState() == 0 )
@@ -51,23 +51,27 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event,float deltaTime )
             {
                 if (Event.key.code == sf::Keyboard::W)
                 {
-                    game -> movePlayer('N',deltaTime);
+                    game -> setDirection('N',deltaTime);
 
                 }
                 if (Event.key.code == sf::Keyboard::S)
                 {
-                    game -> movePlayer('S',deltaTime);
+                    game -> setDirection('S',deltaTime);
 
                 }
                 if (Event.key.code == sf::Keyboard::D)
                 {
-                    game -> movePlayer('E',deltaTime);
+                    game -> setDirection('E',deltaTime);
 
                 }
                 if (Event.key.code == sf::Keyboard::A)
                 {
-                    game -> movePlayer('W',deltaTime);
+                    game -> setDirection('W',deltaTime);
                 }
+            }
+            if(Event.type == sf::Event::KeyReleased)
+            {
+                game -> idle();
             }
 
         }
@@ -83,7 +87,8 @@ void GameViewPlayer::setTitleScreen(TitleScreen* screen)
     menu = screen;
 }
 
-void GameViewPlayer::update()
+void GameViewPlayer::update(float deltaTime)
 {
+    game -> update(deltaTime);
     window_ptr -> draw( game -> getPlayer());
 }

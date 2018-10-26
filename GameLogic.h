@@ -23,7 +23,9 @@ class GameLogic
         int  getGameState( void );
         void initiliaze();
         sf::RectangleShape getPlayer();
-        void movePlayer(char dir,float deltaTime);
+        void setDirection(char dir, float deltaTime );
+        void idle();
+        void update(float deltaTime);
 
 
 };

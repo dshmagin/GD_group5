@@ -20,10 +20,28 @@ sf::RectangleShape Player::getPlayerBody()
 {
     return body;
 }
-
-void Player::movePlayer(char dir, float deltaTime)
+void Player::setDirection(char dir,float deltaTime)
 {
-    cout<<"moving "<<dir<<endl;
+    this -> dir = dir;
+    moveKeyIsPressed = true;
+    switch(dir)
+    {
+    case 'N':
+        body.move(0,-.2 *deltaTime);
+        break;
+    case 'S':
+        body.move(0,.2 *deltaTime);
+        break;
+    case 'E':
+        body.move(.2 *deltaTime,0);
+        break;
+    case 'W':
+        body.move(-.2 *deltaTime,0);
+        break;
+    }
+}
+void Player::update(float deltaTime)
+{
     if(this -> dir != dir )
     {
         this -> dir = dir;
@@ -119,6 +137,7 @@ void Player::movePlayer(char dir, float deltaTime)
     }
     else if( dir == 'N')
     {
+
         switch(spriteNum )
         {
         case 0:
@@ -138,12 +157,16 @@ void Player::movePlayer(char dir, float deltaTime)
 
 
     }
-      if( changeTimer > 1 )
+
+
+    if(moveKeyIsPressed)
+    {
+      if( changeTimer > 10 )
         {
             spriteNum = (spriteNum +1) % 4;
-            cout<<"sprite num :"<<spriteNum<<endl;
             changeTimer = 0;
         }
+    }
 
 
         changeTimer += 0.04f *deltaTime;

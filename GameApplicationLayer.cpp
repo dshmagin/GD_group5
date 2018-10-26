@@ -43,7 +43,7 @@ int main(int argc, char** argv)
         if ( game -> getGameState() == 1 )
         {
 
-            gvp.update();
+            gvp.update(deltaTime);
         }
 
         window_ptr->display();

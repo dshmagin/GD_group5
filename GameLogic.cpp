@@ -28,7 +28,15 @@ sf::RectangleShape GameLogic::getPlayer()
 {
     return player.getPlayerBody();
 }
-void GameLogic::movePlayer(char dir, float deltaTime)
+void GameLogic::setDirection(char dir,float deltaTime)
 {
-    player.movePlayer(dir,deltaTime);
+    player.setDirection(dir,deltaTime);
+}
+void GameLogic::update(float deltaTime)
+{
+    player.update(deltaTime);
+}
+void GameLogic::idle()
+{
+    player.moveKeyIsPressed=false;
 }

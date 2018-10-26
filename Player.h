@@ -22,10 +22,12 @@ private:
 
 
 public:
+    bool moveKeyIsPressed=false;
     sf::Vector2f movement;
     sf::IntRect uvRect;
     Player();
-    void movePlayer(char dir, float deltaTime);
+    void setDirection(char dir,float deltaTime);
+    void update(float deltaTime);
     void animation( float deltaTime, char dir);
     void createPlayer(float x_pos, float y_pos);
     sf::RectangleShape getPlayerBody();
