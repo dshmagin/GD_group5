@@ -12,10 +12,10 @@ class GameLogic
 
         int GameState = 0;
 
-        Player player;
 
 
     public:
+        Player player;
 
         GameLogic();
 

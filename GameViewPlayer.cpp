@@ -45,6 +45,8 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event,float deltaTime )
         }
         if( game -> getGameState() == 1 )
         {
+            game-> player.movement.x =0.0f;
+            game-> player.movement.y =0.0f;
             if (Event.type == sf::Event::KeyPressed)
             {
                 if (Event.key.code == sf::Keyboard::W)
@@ -57,12 +59,12 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event,float deltaTime )
                     game -> movePlayer('S',deltaTime);
 
                 }
-                if (Event.key.code == sf::Keyboard::A)
+                if (Event.key.code == sf::Keyboard::D)
                 {
                     game -> movePlayer('E',deltaTime);
 
                 }
-                if (Event.key.code == sf::Keyboard::D)
+                if (Event.key.code == sf::Keyboard::A)
                 {
                     game -> movePlayer('W',deltaTime);
                 }
