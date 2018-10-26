@@ -15,6 +15,28 @@ void  GameLogic::setGameState( int GameState )
 }
 int  GameLogic::getGameState()
 {
-    return this -> GameState;
+    return GameState;
 }
 
+void GameLogic::initiliaze()
+{
+    player = Player();
+    player.createPlayer(400,300);
+}
+
+sf::RectangleShape GameLogic::getPlayer()
+{
+    return player.getPlayerBody();
+}
+void GameLogic::setDirection(char dir,float deltaTime)
+{
+    player.setDirection(dir,deltaTime);
+}
+void GameLogic::update(float deltaTime)
+{
+    player.update(deltaTime);
+}
+void GameLogic::idle()
+{
+    player.moveKeyIsPressed=false;
+}
