@@ -23,7 +23,7 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
     }
     else
     {
-    music.setBuffer(menuSong);
+        music.setBuffer(menuSong);
     }
     if( !keySound.loadFromFile( "../Assets/Sounds/keySound.wav" ) )
     {
@@ -33,9 +33,8 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
     }
     else
     {
-    sound.setBuffer(keySound);
+        sound.setBuffer(keySound);
     }
-
 }
 
 void TitleScreen::setSelected(int direction)
@@ -116,5 +115,4 @@ void TitleScreen::stopMusic()
         music.stop();
         sound.stop();
     }
-
 }
