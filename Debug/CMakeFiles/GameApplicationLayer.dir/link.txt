@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -g  -rdynamic CMakeFiles/GameApplicationLayer.dir/bin/GameApplicationLayer.cpp.o  -o GameApplicationLayer -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network libGD_group5_core.a -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network 

@@ -18,7 +18,7 @@ int  GameLogic::getGameState()
     return GameState;
 }
 
-void GameLogic::initiliaze()
+void GameLogic::initialize()
 {
     player = Player();
     player.createPlayer(400,300);
@@ -31,6 +31,10 @@ sf::RectangleShape GameLogic::getPlayer()
 void GameLogic::setDirection(char dir,float deltaTime)
 {
     player.setDirection(dir,deltaTime);
+}
+void GameLogic::playerAttack(char dir,float deltaTime)
+{
+
 }
 void GameLogic::update(float deltaTime)
 {

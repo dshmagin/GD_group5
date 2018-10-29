@@ -1,0 +1,76 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/GameLogic.h
+SFML/Graphics.hpp
+-
+SFML/Audio.hpp
+-
+Player.h
+../include/Player.h
+
+../include/GameViewPlayer.h
+SFML/Graphics.hpp
+-
+string
+-
+TitleScreen.h
+../include/TitleScreen.h
+GameLogic.h
+../include/GameLogic.h
+string
+-
+sstream
+-
+iostream
+-
+memory
+-
+
+../include/Player.h
+iostream
+-
+SFML/Graphics.hpp
+-
+
+../include/TitleScreen.h
+SFML/Graphics.hpp
+-
+iostream
+-
+memory
+-
+SFML/Graphics.hpp
+-
+string
+-
+string
+-
+sstream
+-
+iostream
+-
+memory
+-
+
+/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/src/GameLogic.cpp
+GameLogic.h
+/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/src/GameLogic.h
+
+/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/src/GameViewPlayer.cpp
+GameViewPlayer.h
+/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/src/GameViewPlayer.h
+
+/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/src/Player.cpp
+Player.h
+/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/src/Player.h
+
+/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/src/TitleScreen.cpp
+TitleScreen.h
+/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/src/TitleScreen.h
+

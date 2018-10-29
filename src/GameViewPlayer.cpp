@@ -38,7 +38,7 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event, float deltaTime )
                     {
                         menu -> stopMusic();
                         game -> setGameState(1);
-                        game -> initiliaze();
+                        game -> initialize();
                         cout<< game -> getGameState()<<endl;
                     }
             }
@@ -53,22 +53,39 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event, float deltaTime )
                 if (Event.key.code == sf::Keyboard::W)
                 {
                     game -> setDirection('N',deltaTime);
-
                 }
                 if (Event.key.code == sf::Keyboard::S)
                 {
                     game -> setDirection('S',deltaTime);
-
                 }
                 if (Event.key.code == sf::Keyboard::D)
                 {
                     game -> setDirection('E',deltaTime);
-
                 }
                 if (Event.key.code == sf::Keyboard::A)
                 {
                     game -> setDirection('W',deltaTime);
                 }
+
+                if (Event.key.code == sf::Keyboard::UP)
+                {
+                    game -> playerAttack('N',deltaTime);
+                }
+
+                if (Event.key.code == sf::Keyboard::DOWN)
+                {
+                    game -> playerAttack('S',deltaTime);
+                }
+
+                if (Event.key.code == sf::Keyboard::LEFT)
+                {
+                    game -> playerAttack('E',deltaTime);
+                }
+
+                if (Event.key.code == sf::Keyboard::RIGHT)
+                {
+                    game -> playerAttack('W',deltaTime);
+                }
             }
             if(Event.type == sf::Event::KeyReleased)
             {
