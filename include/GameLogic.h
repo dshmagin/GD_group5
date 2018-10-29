@@ -21,7 +21,7 @@ class GameLogic
 
         void  setGameState( int GameState );
         int  getGameState( void );
-        void initiliaze();
+        void initialize();
         sf::RectangleShape getPlayer();
         void setDirection(char dir, float deltaTime );
         void idle();
