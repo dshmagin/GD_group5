@@ -14,6 +14,7 @@ private:
     float changeTimer = 0;
     float totalTime=0;
     float switchTime=100.0f;
+    float playerH, playerW;
     sf::RectangleShape body;
     sf::Texture image;
 
@@ -25,7 +26,8 @@ public:
     bool moveKeyIsPressed=false;
     sf::Vector2f movement;
     sf::IntRect uvRect;
-    Player();
+    Player(){};
+    Player(float playerH, float playerW);
     void setDirection(char dir,float deltaTime);
     void update(float deltaTime);
     void animation( float deltaTime, char dir);

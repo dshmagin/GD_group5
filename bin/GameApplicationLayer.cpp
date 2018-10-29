@@ -6,7 +6,6 @@
 
 int main(int argc, char** argv)
 {
-
     float deltaTime;
     sf::Clock clock;
     shared_ptr<sf::RenderWindow> window_ptr =make_shared<sf::RenderWindow>(sf::VideoMode(800,600,32), "Hello World - SFML");
@@ -18,6 +17,8 @@ int main(int argc, char** argv)
     gvp.setTitleScreen(&menu);
     window_ptr->setFramerateLimit(60);
     menu.startMusic();
+
+
     while(window_ptr->isOpen())
     {
         deltaTime = clock.getElapsedTime().asMicroseconds()/1000.0f;

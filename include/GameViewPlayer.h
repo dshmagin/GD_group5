@@ -16,8 +16,17 @@ class GameViewPlayer
     private:
     //AI Movements
         TitleScreen* menu;
-
+        sf::Texture bckgText;
+        sf::RectangleShape background;
+        sf::View playerView;
         GameLogic* game;
+        float bckgW = 2400.0f;
+        float bckgH = 1800.0f;
+        float screenW = 800.0f;
+        float screenH = 600.0;
+        float bckgPixSize = 32.0f;
+        float playerW = 64.0f;
+        float playerH = 128.0f;
         shared_ptr<sf::RenderWindow> window_ptr;
 
     public:

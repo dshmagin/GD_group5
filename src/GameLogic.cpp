@@ -2,11 +2,6 @@
 
 using namespace std;
 
-GameLogic::GameLogic()
-{
-
-}
-
 
 
 void  GameLogic::setGameState( int GameState )
@@ -18,10 +13,17 @@ int  GameLogic::getGameState()
     return GameState;
 }
 
-void GameLogic::initiliaze()
+void GameLogic::initiliaze( float bckgW, float bckgH, float screenW, float screenH, float bckgPixSize, float playerW, float playerH )
 {
-    player = Player();
-    player.createPlayer(400,300);
+    this -> playerH = playerH;
+    this -> playerW = playerW;
+    this -> bckgW = bckgW;
+    this -> bckgH = bckgH;
+    this -> screenH = screenH;
+    this -> screenW = screenW;
+    this -> bckgPixSize = bckgPixSize;
+    player = Player( playerH, playerW);
+    player.createPlayer(bckgW/2 + (screenW/2 - playerW/2) ,bckgH/2 + (screenH/2 - playerH/2) );
 }
 
 sf::RectangleShape GameLogic::getPlayer()

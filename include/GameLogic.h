@@ -9,7 +9,8 @@ class GameLogic
     private:
 
         bool gameStatus = false;
-
+        float bckgW, bckgH, screenW, screenH, bckgPixSize;
+        float playerW,playerH;
         int GameState = 0;
 
 
@@ -17,11 +18,11 @@ class GameLogic
     public:
         Player player;
 
-        GameLogic();
+        GameLogic(){};
 
         void  setGameState( int GameState );
         int  getGameState( void );
-        void initiliaze();
+        void initiliaze(float bckgW, float bckgH, float screenW, float screenH, float bckgPixSize, float playerW, float playerH);
         sf::RectangleShape getPlayer();
         void setDirection(char dir, float deltaTime );
         void idle();
