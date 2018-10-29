@@ -31,6 +31,8 @@ public:
     void animation( float deltaTime, char dir);
     void createPlayer(float x_pos, float y_pos);
     sf::RectangleShape getPlayerBody();
+    float getXPos();
+    float getYPos();
 };
 
 
