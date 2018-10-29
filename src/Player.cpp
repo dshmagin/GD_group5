@@ -20,6 +20,18 @@ sf::RectangleShape Player::getPlayerBody()
 {
     return body;
 }
+
+float Player::getXPos()
+{
+    return this -> body.getPosition().x;
+}
+
+float Player::getYPos()
+{
+    return this -> body.getPosition().y;
+}
+
+
 void Player::setDirection(char dir,float deltaTime)
 {
     this -> dir = dir;
