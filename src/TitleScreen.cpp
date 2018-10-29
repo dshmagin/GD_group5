@@ -19,7 +19,23 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
     {
         cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
         cout << "Player one control W-up S-down, Player two control I-up K-down" << endl;
+        musicCanPlay = false;
     }
+    else
+    {
+    music.setBuffer(menuSong);
+    }
+    if( !keySound.loadFromFile( "../Assets/Sounds/keySound.wav" ) )
+    {
+        cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
+        cout << "Player one control W-up S-down, Player two control I-up K-down" << endl;
+        musicCanPlay = false;
+    }
+    else
+    {
+    sound.setBuffer(keySound);
+    }
+
 }
 
 void TitleScreen::setSelected(int direction)
@@ -31,6 +47,10 @@ void TitleScreen::setSelected(int direction)
     else if( selected != 1 && direction > 0)
     {
         selected = selected + direction;
+    }
+    if(musicCanPlay)
+    {
+        sound.play();
     }
 }
 
@@ -82,12 +102,19 @@ int  TitleScreen::getSelected()
 }
 void TitleScreen::startMusic()
 {
-    sound.setBuffer(menuSong);
-    sound.setLoop(true);
-    sound.play();
+    if(musicCanPlay)
+    {
+        music.setVolume(10);
+        music.setLoop(true);
+        music.play();
+    }
 }
 void TitleScreen::stopMusic()
 {
-    sound.stop();
+    if(musicCanPlay)
+    {
+        music.stop();
+        sound.stop();
+    }
 
 }
