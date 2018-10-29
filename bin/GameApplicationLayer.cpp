@@ -17,6 +17,7 @@ int main(int argc, char** argv)
     // start main loop
     gvp.setTitleScreen(&menu);
     window_ptr->setFramerateLimit(60);
+    menu.startMusic();
     while(window_ptr->isOpen())
     {
         deltaTime = clock.getElapsedTime().asMicroseconds()/1000.0f;
@@ -37,6 +38,7 @@ int main(int argc, char** argv)
         {
 
             menu.drawTitleScreen(deltaTime);
+
 
         }
 

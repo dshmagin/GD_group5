@@ -1,0 +1,2 @@
+Attacks: 128 x  64
+Sprites:  64 x 128
