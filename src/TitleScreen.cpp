@@ -14,6 +14,12 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
 
     if( !BackgroundTexture.loadFromFile( "../Assets/Images/MenuSpriteSheet.png" ) )
         cout << "Background did not load" << endl;
+
+    if( !menuSong.loadFromFile( "../Assets/Sounds/Ground_Break_Menu_01.wav" ) )
+    {
+        cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
+        cout << "Player one control W-up S-down, Player two control I-up K-down" << endl;
+    }
 }
 
 void TitleScreen::setSelected(int direction)
@@ -73,4 +79,15 @@ void TitleScreen::drawTitleScreen( float deltaTime )
 int  TitleScreen::getSelected()
 {
     return selected;
+}
+void TitleScreen::startMusic()
+{
+    sound.setBuffer(menuSong);
+    sound.setLoop(true);
+    sound.play();
+}
+void TitleScreen::stopMusic()
+{
+    sound.stop();
+
 }

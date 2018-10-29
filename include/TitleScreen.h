@@ -10,6 +10,7 @@
 #include <sstream>
 #include <iostream>
 #include <memory>
+#include <SFML/Audio.hpp>
 using namespace std;
 class TitleScreen
 {
@@ -21,6 +22,8 @@ class TitleScreen
         sf::Text Start;
         sf::Texture BackgroundTexture;
         sf::Sprite TitleBackground;
+        sf::SoundBuffer menuSong;
+        sf::Sound sound;
         bool firstSprite = true;
         float titleImage = 0;
 
@@ -30,6 +33,8 @@ class TitleScreen
         void setSelected( int direction);
         int  getSelected();
         void drawTitleScreen( float deltaTime );
+        void startMusic();
+        void stopMusic();
 };
 
 #endif // TITLESCREEN_H_INCLUDED

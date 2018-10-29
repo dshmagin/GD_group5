@@ -36,6 +36,7 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event, float deltaTime )
                 if (Event.key.code == sf::Keyboard::Return)
                     if( menu -> getSelected() == 0 )
                     {
+                        menu -> stopMusic();
                         game -> setGameState(1);
                         game -> initiliaze();
                         cout<< game -> getGameState()<<endl;
