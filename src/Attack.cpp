@@ -9,11 +9,10 @@ Attack::Attack()
 
 }
 
-void Attack::setDirection()
+Attack::~Attack()
 {
 
 }
-
 
 void Attack::update(float deltaTime)
 {
@@ -36,16 +35,16 @@ void Attack::update(float deltaTime)
     switch(dir)
     {
     case 'N':
-        body.move(0,-.2 *deltaTime);
+        element.move(0,-.2 *deltaTime);
         break;
     case 'S':
-        body.move(0,.2 *deltaTime);
+        element.move(0,.2 *deltaTime);
         break;
     case 'E':
-        body.move(.2 *deltaTime,0);
+        element.move(.2 *deltaTime,0);
         break;
     case 'W':
-        body.move(-.2 *deltaTime,0);
+        element.move(-.2 *deltaTime,0);
         break;
     }
 
@@ -53,16 +52,17 @@ void Attack::update(float deltaTime)
 }
 
 
-void Attack::createAttack(float x_pos, float y_pos)
+void Attack::createAttack(float x_pos, float y_pos, char dir)
 {
 
     this -> element.setSize( sf::Vector2f( 64, 128 ) );
     this -> element.setPosition(x_pos, y_pos);
     this -> element.setTexture(&image);
-    this.spriteNum = 0;
+    this -> spriteNum = 0;
+    this -> dir = dir;
 }
 
-sf::RectangleShape Player::getAttackElement()
+sf::RectangleShape Attack::getAttackElement()
 {
     return element;
 }
