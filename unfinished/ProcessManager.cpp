@@ -24,7 +24,7 @@ void ProcessManager::updateProcessList(float deltaMs)
                 }
             }
             if(p->getState()==Process::FAIL)
-                p->postFailed();
+                p->postFail();
             if(p->getState()==Process::ABORT)
                 p->postAbort();
         }
