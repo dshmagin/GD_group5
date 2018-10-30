@@ -1,0 +1,3 @@
+Attacks:        128 x  64
+Sprites:         64 x 128
+Air Shield:     128 x 128

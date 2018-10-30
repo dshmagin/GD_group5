@@ -23,8 +23,11 @@ class TitleScreen
         sf::Texture BackgroundTexture;
         sf::Sprite TitleBackground;
         sf::SoundBuffer menuSong;
+        sf::SoundBuffer keySound;
+        sf::Sound music;
         sf::Sound sound;
         bool firstSprite = true;
+        bool musicCanPlay = true;
         float titleImage = 0;
 
     public:
