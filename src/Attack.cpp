@@ -5,7 +5,7 @@ Attack::Attack()
     if( !image.loadFromFile( "../Assets/Images/water_attack_base_1.png" ))
         cout<<"Cannot load AttackSprite"<<endl;
 
-    element.setTextureRect(sf::IntRect(64*1 ,64 * 0,64 * 1,128 * 1));
+    element.setTextureRect(sf::IntRect(128 * 0 ,64 * 0,128 * 1,64 * 1));
 
 }
 
@@ -19,16 +19,16 @@ void Attack::update(float deltaTime)
     switch(spriteNum)
     {
     case 0:
-        element.setTextureRect(sf::IntRect(64*1 ,128 * 1,64 * 1,128 * 1));
+        element.setTextureRect(sf::IntRect(128 * 1 ,64 * 0,128 * 2,64 * 1));
         break;
     case 1:
-        element.setTextureRect(sf::IntRect(64*0 ,128 * 1,64 * 1,128 * 1));
+        element.setTextureRect(sf::IntRect(128 * 2 ,64 * 0,128 * 3,64 * 1));
         break;
     case 2:
-        element.setTextureRect(sf::IntRect(64*1 ,128 * 1,64 * 1,128 * 1));
+        element.setTextureRect(sf::IntRect(128 * 3 ,64 * 0,128 * 4,64 * 1));
         break;
     case 3:
-        element.setTextureRect(sf::IntRect(64*2 ,128 * 1,64 * 1,128 * 1));
+        element.setTextureRect(sf::IntRect(128 * 0 ,64 * 0,128 * 1,64 * 1));
         break;
     }
 
