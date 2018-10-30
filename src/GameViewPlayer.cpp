@@ -5,7 +5,7 @@ using namespace std;
 
 GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &window_ptr)
 {
-    if( !bckgText.loadFromFile( "../Assets/Images/earth.png" ) )
+    if( !bckgText.loadFromFile( "../Assets/Images/Earth.png" ) )
         cout << "Cannot load background " << endl;
 
     this -> game = game;
