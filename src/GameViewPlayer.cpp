@@ -127,7 +127,7 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                 {
-                    game -> createPlayerAttack('W',deltaTime);
+                    game -> createPlayerAttack('E',deltaTime);
                 }
 
 
