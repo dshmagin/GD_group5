@@ -5,6 +5,7 @@
 
 void ProcessManager::updateProcessList(float deltaMs)
 {
+    /*
     Process* p;
     for(std::list<Process*>::iterator it = processList.begin(); it != processList.end(); it++)
     {
@@ -29,6 +30,7 @@ void ProcessManager::updateProcessList(float deltaMs)
                 p->postAbort();
         }
     }
+    */
 }
 
 void ProcessManager::attachProcess(Process* p)

@@ -109,36 +109,36 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                 }
 
 
-            if(movingX == false && movingY == false)
 
-
-                if (Event.key.code == sf::Keyboard::Up)
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
                     game -> createPlayerAttack('N',deltaTime);
                 }
 
-                if (Event.key.code == sf::Keyboard::Down)
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 {
                     game -> createPlayerAttack('S',deltaTime);
                 }
 
-                if (Event.key.code == sf::Keyboard::Left)
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
                 {
                     game -> createPlayerAttack('E',deltaTime);
                 }
 
-                if (Event.key.code == sf::Keyboard::Right)
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                 {
                     game -> createPlayerAttack('W',deltaTime);
                 }
-            }
-            if(Event.type == sf::Event::KeyReleased)
 
+
+
+            if(movingX == false && movingY == false)
             {
                 game -> idle();
             }
 
         }
+
 
 }
 
