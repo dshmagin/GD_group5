@@ -32,13 +32,15 @@ void GameLogic::setDirection(char dir,float deltaTime)
 {
     player.setDirection(dir,deltaTime);
 }
-void GameLogic::playerAttack(char dir,float deltaTime)
+void GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
-
+    attack = Attack();
+    attack.createAttack(player.getXPos(), player.getYPos(), dir);
 }
 void GameLogic::update(float deltaTime)
 {
     player.update(deltaTime);
+    attack.update(deltaTime);
 }
 void GameLogic::idle()
 {
