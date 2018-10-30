@@ -1,17 +1,19 @@
 #include "Player.h"
 
-Player::Player()
+Player::Player(float playerH, float playerW)
 {
-    if( !image.loadFromFile( "../Assets/Images/MainPlayer3.png" ) )
+    this -> playerH = playerH;
+    this -> playerW = playerW;
+    if( !image.loadFromFile( "../Assets/Images/Simu.png" ) )
         cout<<"Cannot PlayerSprite"<<endl;
 
-        body.setTextureRect(sf::IntRect(64*1 ,64 * 0,64 * 1,128 * 1));
+        body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 0,playerW ,playerH ));
 }
 
 void Player::createPlayer(float x_pos, float y_pos)
 {
 
-    this -> body.setSize( sf::Vector2f( 64, 128 ) );
+    this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     this -> body.setPosition(x_pos, y_pos);
     this -> body.setTexture(&image);
 }
@@ -39,16 +41,16 @@ void Player::setDirection(char dir,float deltaTime)
     switch(dir)
     {
     case 'N':
-        body.move(0,-.2 *deltaTime);
+        body.move(0,-.3 *deltaTime);
         break;
     case 'S':
-        body.move(0,.2 *deltaTime);
+        body.move(0,.3 *deltaTime);
         break;
     case 'E':
-        body.move(.2 *deltaTime,0);
+        body.move(.3 *deltaTime,0);
         break;
     case 'W':
-        body.move(-.2 *deltaTime,0);
+        body.move(-.3 *deltaTime,0);
         break;
     }
 }
@@ -60,25 +62,25 @@ void Player::update(float deltaTime)
         switch(this -> dir)
         {
         case 'S':
-            body.setTextureRect(sf::IntRect(64*1 ,128 * 0,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 0,playerW ,playerH ));
             spriteNum = 0;
             changeTimer = 1.9;
             break;
 
         case 'N':
-            body.setTextureRect(sf::IntRect(64*1 ,128 *3 ,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW*1 ,playerH *3 ,playerW,playerH ));
             spriteNum = 0;
             changeTimer = 1.9;
             break;
 
         case 'E':
-            body.setTextureRect(sf::IntRect(64*1 ,128 * 2,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 2,playerW,playerH ));
             spriteNum = 0;
             changeTimer = 1.9;
             break;
 
         case 'W':
-            body.setTextureRect(sf::IntRect(64*1 ,128 * 1,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 1,playerW ,playerH ));
             spriteNum = 0;
             changeTimer = 1.9;
             break;
@@ -89,16 +91,16 @@ void Player::update(float deltaTime)
         switch(spriteNum )
         {
         case 0:
-            body.setTextureRect(sf::IntRect(64*1 ,128 * 0,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 0, playerW, playerH));
             break;
         case 1:
-            body.setTextureRect(sf::IntRect(64*0 ,128 * 0,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * 0,playerW ,playerH ));
             break;
         case 2:
-            body.setTextureRect(sf::IntRect(64*1 ,128 * 0,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 0,playerW ,playerH ));
             break;
         case 3:
-            body.setTextureRect(sf::IntRect(64*2 ,128 * 0,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * 0,playerW ,playerH ));
             break;
 
         }
@@ -110,16 +112,16 @@ void Player::update(float deltaTime)
         switch(spriteNum )
         {
         case 0:
-            body.setTextureRect(sf::IntRect(64*1 ,128 * 2,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 2, playerW , playerH ));
             break;
         case 1:
-            body.setTextureRect(sf::IntRect(64*0 ,128 * 2,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * 2, playerW , playerH ));
             break;
         case 2:
-            body.setTextureRect(sf::IntRect(64*1 ,128 * 2,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 2, playerW , playerH ));
             break;
         case 3:
-            body.setTextureRect(sf::IntRect(64*2 ,128 * 2,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * 2, playerW , playerH ));
             break;
 
         }
@@ -131,16 +133,16 @@ void Player::update(float deltaTime)
         switch(spriteNum )
         {
         case 0:
-            body.setTextureRect(sf::IntRect(64*1 ,128 * 1,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 1, playerW , playerH ));
             break;
         case 1:
-            body.setTextureRect(sf::IntRect(64*0 ,128 * 1,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * 1, playerW , playerH ));
             break;
         case 2:
-            body.setTextureRect(sf::IntRect(64*1 ,128 * 1,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 1, playerW , playerH ));
             break;
         case 3:
-            body.setTextureRect(sf::IntRect(64*2 ,128 * 1,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * 1, playerW , playerH ));
             break;
 
         }
@@ -153,16 +155,16 @@ void Player::update(float deltaTime)
         switch(spriteNum )
         {
         case 0:
-            body.setTextureRect(sf::IntRect(64*1 ,128 *3 ,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 1 , playerH * 3 ,64 , playerH ));
             break;
         case 1:
-            body.setTextureRect(sf::IntRect(64*0 ,128 *3 ,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 0 , playerH * 3 ,64 , playerH ));
             break;
         case 2:
-            body.setTextureRect(sf::IntRect(64*1 ,128 *3 ,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 1 , playerH * 3 ,64 , playerH ));
             break;
         case 3:
-            body.setTextureRect(sf::IntRect(64*2 ,128 *3 ,64 * 1,128 * 1));
+            body.setTextureRect(sf::IntRect(playerW * 2 , playerH * 3 ,64 , playerH ));
             break;
 
         }
