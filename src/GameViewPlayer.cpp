@@ -43,6 +43,7 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                         menu -> stopMusic();
                         game -> setGameState(1);
                         game -> initiliaze(bckgW, bckgH, screenW, screenH, bckgPixSize, playerW, playerH);
+
                         cout<< game -> getGameState()<<endl;
                     }
 
@@ -57,6 +58,7 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                 {
                     movingY = true;
                     game -> setDirection('N',deltaTime);
+
                     sf::Vector2f vect(game -> getPlayerCoord());
 
                     if ((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH)))
@@ -65,28 +67,33 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                         playerView.move(0, -camMoveSpeed *deltaTime);
                     }
 
+
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
                     movingY = true;
                     sf::Vector2f vect(game -> getPlayerCoord());
                     game -> setDirection('S',deltaTime);
+
                     if ((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH)))
                     {
                         playerView.move(0, camMoveSpeed *deltaTime);
                         window_ptr -> setView(playerView);
                     }
+
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
                     movingX = true;
                     sf::Vector2f vect(game -> getPlayerCoord());
                     game -> setDirection('E',deltaTime);
+
                     if ((vect.x + playerW/2) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW)))
                     {
                         playerView.move( camMoveSpeed * deltaTime,0 );
                         window_ptr -> setView(playerView);
                     }
+
 
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -99,8 +106,34 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                         playerView.move( -camMoveSpeed * deltaTime ,0 );
                         window_ptr -> setView(playerView);
                     }
-                }
+                }
+
+
             if(movingX == false && movingY == false)
+
+
+                if (Event.key.code == sf::Keyboard::Up)
+                {
+                    game -> createPlayerAttack('N',deltaTime);
+                }
+
+                if (Event.key.code == sf::Keyboard::Down)
+                {
+                    game -> createPlayerAttack('S',deltaTime);
+                }
+
+                if (Event.key.code == sf::Keyboard::Left)
+                {
+                    game -> createPlayerAttack('E',deltaTime);
+                }
+
+                if (Event.key.code == sf::Keyboard::Right)
+                {
+                    game -> createPlayerAttack('W',deltaTime);
+                }
+            }
+            if(Event.type == sf::Event::KeyReleased)
+
             {
                 game -> idle();
             }
