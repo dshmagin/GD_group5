@@ -27,13 +27,18 @@ class GameViewPlayer
         float bckgPixSize = 32.0f;
         float playerW = 64.0f;
         float playerH = 128.0f;
+        float camXview = bckgW/2;
+        float camYview = bckgH/2;
+        float camMoveSpeed = 0.3f;
+        bool movingX;
+        bool movingY;
         shared_ptr<sf::RenderWindow> window_ptr;
 
     public:
 
         GameViewPlayer(){};
         GameViewPlayer(GameLogic* game, shared_ptr<sf::RenderWindow> &window_ptr);
-        void checkKeyEvents( sf::Event Event, float deltaTime);
+        void checkKeyEvents( float deltaTime);
         void setTitleScreen(TitleScreen* screen);
         void update(float deltaTime);
 

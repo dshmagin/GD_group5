@@ -27,6 +27,7 @@ class GameLogic
         void setDirection(char dir, float deltaTime );
         void idle();
         void update(float deltaTime);
+        sf::Vector2f getPlayerCoord();
 
 
 };

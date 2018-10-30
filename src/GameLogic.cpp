@@ -42,3 +42,9 @@ void GameLogic::idle()
 {
     player.moveKeyIsPressed=false;
 }
+
+sf::Vector2f GameLogic::getPlayerCoord()
+{
+    sf::Vector2f coords(player.getPlayerBody().getPosition().x,player.getPlayerBody().getPosition().y);
+    return coords;
+}

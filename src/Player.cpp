@@ -13,7 +13,7 @@ Player::Player(float playerH, float playerW)
 void Player::createPlayer(float x_pos, float y_pos)
 {
 
-    this -> body.setSize( sf::Vector2f( 64, 128 ) );
+    this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     this -> body.setPosition(x_pos, y_pos);
     this -> body.setTexture(&image);
 }
@@ -29,16 +29,16 @@ void Player::setDirection(char dir,float deltaTime)
     switch(dir)
     {
     case 'N':
-        body.move(0,-.2 *deltaTime);
+        body.move(0,-.3 *deltaTime);
         break;
     case 'S':
-        body.move(0,.2 *deltaTime);
+        body.move(0,.3 *deltaTime);
         break;
     case 'E':
-        body.move(.2 *deltaTime,0);
+        body.move(.3 *deltaTime,0);
         break;
     case 'W':
-        body.move(-.2 *deltaTime,0);
+        body.move(-.3 *deltaTime,0);
         break;
     }
 }

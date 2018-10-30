@@ -24,7 +24,6 @@ private:
 
 public:
     bool moveKeyIsPressed=false;
-    sf::Vector2f movement;
     sf::IntRect uvRect;
     Player(){};
     Player(float playerH, float playerW);
