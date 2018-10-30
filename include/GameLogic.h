@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Player.h"
+#include "Attack.h"
 
 class GameLogic
 {
@@ -16,6 +17,7 @@ class GameLogic
 
     public:
         Player player;
+        Attack attack;
 
         GameLogic();
 
@@ -26,6 +28,7 @@ class GameLogic
         void setDirection(char dir, float deltaTime );
         void idle();
         void update(float deltaTime);
+        void createPlayerAttack(char, float);
 
 
 };
