@@ -67,24 +67,24 @@ void GameViewPlayer::checkKeyEvents(sf::Event Event, float deltaTime )
                     game -> setDirection('W',deltaTime);
                 }
 
-                if (Event.key.code == sf::Keyboard::UP)
+                if (Event.key.code == sf::Keyboard::Up)
                 {
-                    game -> playerAttack('N',deltaTime);
+                    game -> createPlayerAttack('N',deltaTime);
                 }
 
-                if (Event.key.code == sf::Keyboard::DOWN)
+                if (Event.key.code == sf::Keyboard::Down)
                 {
-                    game -> playerAttack('S',deltaTime);
+                    game -> createPlayerAttack('S',deltaTime);
                 }
 
-                if (Event.key.code == sf::Keyboard::LEFT)
+                if (Event.key.code == sf::Keyboard::Left)
                 {
-                    game -> playerAttack('E',deltaTime);
+                    game -> createPlayerAttack('E',deltaTime);
                 }
 
-                if (Event.key.code == sf::Keyboard::RIGHT)
+                if (Event.key.code == sf::Keyboard::Right)
                 {
-                    game -> playerAttack('W',deltaTime);
+                    game -> createPlayerAttack('W',deltaTime);
                 }
             }
             if(Event.type == sf::Event::KeyReleased)
