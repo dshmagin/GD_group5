@@ -1,4 +1,0 @@
-/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/Debug/CMakeFiles/rebuild_cache.dir
-/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/Debug/CMakeFiles/GD_group5_core.dir
-/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/Debug/CMakeFiles/edit_cache.dir
-/home/short/Documents/WM F18/CSCI437 Game Design/GD_group5/Debug/CMakeFiles/GameApplicationLayer.dir

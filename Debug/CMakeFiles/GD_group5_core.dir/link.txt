@@ -1,2 +1,0 @@
-/usr/bin/ar qc libGD_group5_core.a  CMakeFiles/GD_group5_core.dir/src/GameLogic.cpp.o CMakeFiles/GD_group5_core.dir/src/GameViewPlayer.cpp.o CMakeFiles/GD_group5_core.dir/src/Player.cpp.o CMakeFiles/GD_group5_core.dir/src/TitleScreen.cpp.o
-/usr/bin/ranlib libGD_group5_core.a
