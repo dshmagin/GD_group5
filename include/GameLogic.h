@@ -29,6 +29,7 @@ class GameLogic
 
 
         sf::RectangleShape getPlayer();
+        sf::RectangleShape getAttack();
         void setDirection(char dir, float deltaTime );
         void idle();
         void update(float deltaTime);

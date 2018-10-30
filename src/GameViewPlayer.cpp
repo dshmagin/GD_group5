@@ -5,7 +5,7 @@ using namespace std;
 
 GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &window_ptr)
 {
-    if( !bckgText.loadFromFile( "../Assets/Images/earth.png" ) )
+    if( !bckgText.loadFromFile( "../Assets/Images/Earth.png" ) )
         cout << "Cannot load background " << endl;
 
     this -> game = game;
@@ -122,12 +122,12 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
                 {
-                    game -> createPlayerAttack('E',deltaTime);
+                    game -> createPlayerAttack('W',deltaTime);
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                 {
-                    game -> createPlayerAttack('W',deltaTime);
+                    game -> createPlayerAttack('E',deltaTime);
                 }
 
 
@@ -156,4 +156,5 @@ void GameViewPlayer::update(float deltaTime)
     game -> update(deltaTime);
     window_ptr -> draw(background);
     window_ptr -> draw( game -> getPlayer());
+    window_ptr -> draw( game -> getAttack());
 }
