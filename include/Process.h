@@ -5,21 +5,21 @@
 class Process
 {
     public:
-        enum state {RUNNING, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
+        enum state {RUNNING,DEAD, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
         int state;
         Process* child = nullptr;
 
         Process(){};
         virtual void initialize();
-        virtual void update(float deltaMs) = 0;
-        virtual void postSuccess();
-        virtual void postFailed();
-        virtual void postAbort();
+        virtual void update(float deltaTime) = 0;
+        //virtual void postSuccess();
+       // virtual void postFailed();
+       // virtual void postAbort();
 
         void Pause();
         void Unpause();
         bool isDead();
-        int getState();
+        virtual int getState();
         bool hasChild();
         Process* getChild();
 };

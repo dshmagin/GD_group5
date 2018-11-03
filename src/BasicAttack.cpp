@@ -1,7 +1,10 @@
-#include "Attack.h"
+#include "BasicAttack.h"
+#include "ProcessManager.h"
 
-Attack::Attack()
+BasicAttack::BasicAttack(shared_ptr<sf::RenderWindow> window_ptr)
 {
+    this -> window_ptr = window_ptr;
+    this -> pm = pm;
     if( !image.loadFromFile( "../Assets/Images/fire_attack_base_1.png" ))
         cout<<"Cannot load AttackSprite"<<endl;
 
@@ -9,13 +12,16 @@ Attack::Attack()
 
 }
 
-Attack::~Attack()
+BasicAttack::~BasicAttack()
 {
 
 }
 
-void Attack::update(float deltaTime)
+void BasicAttack::update(float deltaTime)
 {
+    if(state == Process::RUNNING)
+    {
+
     switch(spriteNum)
     {
     case 0:
@@ -35,23 +41,33 @@ void Attack::update(float deltaTime)
     switch(dir)
     {
     case 'N':
-        element.move(0,-1 *deltaTime);
+        element.move(0,-.4 *deltaTime);
         break;
     case 'S':
-        element.move(0,1 *deltaTime);
+        element.move(0,.4 *deltaTime);
         break;
     case 'E':
-        element.move(1 *deltaTime,0);
+        element.move(.4 *deltaTime,0);
         break;
     case 'W':
-        element.move(-1 *deltaTime,0);
+        element.move(-.4 *deltaTime,0);
         break;
     }
-    spriteNum = (spriteNum + 1) % 32;
+    //cout<<distance<<endl;
+        distance += .4 *deltaTime;
+    if(distance > 40)
+    {
+
+        this -> state = Process::DEAD;
+    }
+        spriteNum = (spriteNum + 1) % 32;
+        window_ptr -> draw(element);
+
+    }
 }
 
 
-void Attack::createAttack(float x_pos, float y_pos, char dir)
+void BasicAttack::createAttack(float x_pos, float y_pos, char dir)
 {
 
     this -> element.setSize( sf::Vector2f( 128, 64 ) );
@@ -76,9 +92,17 @@ void Attack::createAttack(float x_pos, float y_pos, char dir)
         this -> element.setPosition(x_pos + 32, y_pos + 96);
         break;
     }
+    this -> state = Process::RUNNING;
+
+}
+void BasicAttack::initialize()
+{
+ this -> state = Process::RUNNING;
 }
 
-sf::RectangleShape Attack::getAttackElement()
+int BasicAttack::getState()
 {
-    return element;
+    cout<<"state"<<state<<endl;
+    return state;
 }
+

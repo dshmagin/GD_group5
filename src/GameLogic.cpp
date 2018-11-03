@@ -2,7 +2,11 @@
 
 using namespace std;
 
-
+GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr)
+{
+    this -> window_ptr = window_ptr;
+    pm = new ProcessManager();
+}
 
 void  GameLogic::setGameState( int GameState )
 {
@@ -32,7 +36,7 @@ sf::RectangleShape GameLogic::getPlayer()
 }
 sf::RectangleShape GameLogic::getAttack()
 {
-    return attack.getAttackElement();
+    //return (Attack) attack -> getAttackElement();
 }
 void GameLogic::setDirection(char dir,float deltaTime)
 {
@@ -40,13 +44,21 @@ void GameLogic::setDirection(char dir,float deltaTime)
 }
 void GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
-    attack = Attack();
-    attack.createAttack(player.getXPos(), player.getYPos(), dir);
+
+    shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr);
+
+    bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
+    cout<<" made an attack " << endl;
+    pm ->  attachProcess((shared_ptr<Process>) bAttack);
+
+
+
 }
 void GameLogic::update(float deltaTime)
 {
     player.update(deltaTime);
-    attack.update(deltaTime);
+    //attack.update(deltaTime);
+    pm -> updateProcessList(deltaTime);
 }
 void GameLogic::idle()
 {
@@ -58,3 +70,5 @@ sf::Vector2f GameLogic::getPlayerCoord()
     sf::Vector2f coords(player.getPlayerBody().getPosition().x,player.getPlayerBody().getPosition().y);
     return coords;
 }
+
+

@@ -3,8 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Player.h"
-#include "Attack.h"
+#include "BasicAttack.h"
+#include "ProcessManager.h"
+#include <memory>
 
+#include <string>
+#include <sstream>
+#include <iostream>
 class GameLogic
 {
     private:
@@ -13,16 +18,19 @@ class GameLogic
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
+        ProcessManager* pm;
+        shared_ptr<sf::RenderWindow> window_ptr;
 
 
 
     public:
         Player player;
-        Attack attack;
+        //BasicAttack bAttack;
 
-        GameLogic(){};
+        GameLogic();
+        GameLogic(shared_ptr<sf::RenderWindow> &window_ptr);
 
-        void  setGameState( int GameState );
+        void setGameState( int GameState );
         int  getGameState( void );
 
         void initiliaze(float bckgW, float bckgH, float screenW, float screenH, float bckgPixSize, float playerW, float playerH);
@@ -37,6 +45,7 @@ class GameLogic
         sf::Vector2f getPlayerCoord();
 
         void createPlayerAttack(char, float);
+
 
 
 
