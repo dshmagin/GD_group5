@@ -10,9 +10,10 @@ int main(int argc, char** argv)
     float deltaTime;
     sf::Clock clock;
     shared_ptr<sf::RenderWindow> window_ptr =make_shared<sf::RenderWindow>(sf::VideoMode(800,600,32), "Ground Break");
-    GameLogic* game = new GameLogic();
+    GameLogic* game = new GameLogic(window_ptr);
     GameViewPlayer gvp = GameViewPlayer(game, window_ptr);
     TitleScreen menu = TitleScreen(window_ptr);
+
     // create main window
     // start main loop
     gvp.setTitleScreen(&menu);
@@ -46,6 +47,7 @@ int main(int argc, char** argv)
         {
 
             gvp.update(deltaTime);
+            game -> update(deltaTime);
         }
 
         window_ptr->display();

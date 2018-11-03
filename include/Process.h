@@ -1,20 +1,23 @@
 #ifndef PROCESS_H_INCLUDED
 #define PROCESS_H_INCLUDED
 #define NULL nullptr
+#include<iostream>
+
+using namespace std;
 
 class Process
 {
     public:
-        enum state {RUNNING, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
+        enum state {RUNNING,DEAD, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
         int state;
         Process* child = nullptr;
 
         Process(){};
         virtual void initialize();
-        virtual void update(float deltaMs) = 0;
-        virtual void postSuccess();
-        virtual void postFailed();
-        virtual void postAbort();
+        virtual void update(float deltaTime) = 0;
+        //virtual void postSuccess();
+       // virtual void postFailed();
+       // virtual void postAbort();
 
         void Pause();
         void Unpause();

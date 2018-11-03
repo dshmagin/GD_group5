@@ -45,6 +45,7 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                         game -> initiliaze(bckgW, bckgH, screenW, screenH, bckgPixSize, playerW, playerH);
 
                         cout<< game -> getGameState()<<endl;
+
                     }
 
 
@@ -153,8 +154,9 @@ void GameViewPlayer::setTitleScreen(TitleScreen* screen)
 
 void GameViewPlayer::update(float deltaTime)
 {
-    game -> update(deltaTime);
+    //game -> update(deltaTime);
+
     window_ptr -> draw(background);
     window_ptr -> draw( game -> getPlayer());
-    window_ptr -> draw( game -> getAttack());
+    //window_ptr -> draw( game -> getAttack());
 }
