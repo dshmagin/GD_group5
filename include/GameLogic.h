@@ -18,6 +18,7 @@ class GameLogic
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
+        float spellCD = 300;
         ProcessManager* pm;
         shared_ptr<sf::RenderWindow> window_ptr;
 

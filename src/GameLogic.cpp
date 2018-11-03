@@ -44,13 +44,14 @@ void GameLogic::setDirection(char dir,float deltaTime)
 }
 void GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
-
-    shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr);
-
-    bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
-    cout<<" made an attack " << endl;
-    pm ->  attachProcess((shared_ptr<Process>) bAttack);
-
+    spellCD += deltaTime;
+    if(spellCD > 300)
+    {
+        spellCD = 0;
+        shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr);
+        bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
+        pm ->  attachProcess((shared_ptr<Process>) bAttack);
+    }
 
 
 }

@@ -1,6 +1,9 @@
 #ifndef PROCESS_H_INCLUDED
 #define PROCESS_H_INCLUDED
 #define NULL nullptr
+#include<iostream>
+
+using namespace std;
 
 class Process
 {
@@ -19,7 +22,7 @@ class Process
         void Pause();
         void Unpause();
         bool isDead();
-        virtual int getState();
+        int getState();
         bool hasChild();
         Process* getChild();
 };

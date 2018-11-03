@@ -19,6 +19,8 @@ BasicAttack::~BasicAttack()
 
 void BasicAttack::update(float deltaTime)
 {
+    float moveDistance = .4 *deltaTime;
+
     if(state == Process::RUNNING)
     {
 
@@ -41,24 +43,24 @@ void BasicAttack::update(float deltaTime)
     switch(dir)
     {
     case 'N':
-        element.move(0,-.4 *deltaTime);
+        element.move(0,-moveDistance);
         break;
     case 'S':
-        element.move(0,.4 *deltaTime);
+        element.move(0,moveDistance);
         break;
     case 'E':
-        element.move(.4 *deltaTime,0);
+        element.move(moveDistance,0);
         break;
     case 'W':
-        element.move(-.4 *deltaTime,0);
+        element.move(-moveDistance,0);
         break;
     }
-    //cout<<distance<<endl;
-        distance += .4 *deltaTime;
-    if(distance > 40)
-    {
 
+        distance += moveDistance;
+    if(distance > 600)
+    {
         this -> state = Process::DEAD;
+        distance = 0;
     }
         spriteNum = (spriteNum + 1) % 32;
         window_ptr -> draw(element);
@@ -100,9 +102,5 @@ void BasicAttack::initialize()
  this -> state = Process::RUNNING;
 }
 
-int BasicAttack::getState()
-{
-    cout<<"state"<<state<<endl;
-    return state;
-}
+
 

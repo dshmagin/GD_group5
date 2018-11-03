@@ -3,64 +3,46 @@
 #include "Process.h"
 #include "iostream"
 #include <vector>
+#include <list>
+
 using namespace std;
-
-
+//                 0     1     2       3      4       5         6
+// enum state {RUNNING,DEAD, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
 void ProcessManager::updateProcessList(float deltaMs)
 {
 
-//cout<<Process::UNINITIALIZED<<"  "<<Process::RUNNING<<" "<<Process::DEAD<<endl;
     int counter = 0;
-
-    //for(std::vector<shared_ptr<Process>>::iterator it = processList.begin(); it != processList.end(); it++)
-    for(shared_ptr<Process> p : processList)
+    shared_ptr<Process> p;
+    for (list<shared_ptr<Process>>::iterator it = processList.begin(); it != processList.end(); it++)
+   // for(shared_ptr<Process> p : processList)
     {
-       // cout<<"stuff here"<< p->getState()<<endl;
-
-
-        //cout<<"THE STATE IS "<< p->getState() <<endl;
-        if( p->getState()== Process::UNINITIALIZED)
-            p->initialize();
-
-        if(p->getState()== Process::RUNNING)
-            p->update(deltaMs);
-           // p->state=Process::DEAD;
-        if(p->getState()== Process::DEAD)
+        p = *it;
+        if(p != nullptr)
         {
-            processList.clear();
-            //cout<<processList.size()<< "ERAse"<<endl;
-            //processList.erase(processList.begin() + counter);
-            //counter-=1;
-            cout<<"************************"<<endl;
-        }
-        //it = processList.end();
-            /*
-        if(p->isDead())
-        {
+            if( p->getState()== Process::UNINITIALIZED)
+                p->initialize();
 
-            if(p->getState()==Process::SUCCESS)
+            if(p->getState()== Process::RUNNING)
+                p->update(deltaMs);
+
+            if(p->getState()== Process::DEAD)
             {
-                p->postSuccess();
-                if(p->hasChild())
-                {
-                    attachProcess(p->getChild());
-                }
+                removeProcess(p);
             }
-            if(p->getState()==Process::FAIL)
-                p->postFailed();
-            if(p->getState()==Process::ABORT)
-                p->postAbort();
+
 
         }
-        */
-    }
 
-   // std::cout<<processList.size() << "The size"  <<std::endl;
+    }
     counter ++;
 }
 
 void ProcessManager::attachProcess(shared_ptr<Process> bAttack)
 {
     processList.push_back(bAttack);
-    std::cout<<processList.size() << "ADDED" <<std::endl;
+}
+
+void ProcessManager::removeProcess(shared_ptr<Process> bAttack)
+{
+    processList.remove(bAttack);
 }

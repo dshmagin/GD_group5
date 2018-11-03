@@ -17,7 +17,6 @@ public:
     int damage = 25;
     char dir = 'S';
     int spriteNum = 0;
-    int state = Process::UNINITIALIZED;
     float distance;
     sf::RectangleShape element;
     sf::Texture image;
@@ -30,7 +29,7 @@ public:
     void createAttack(float x_pos, float y_pos, char dir);
     void update(float deltaTime);
     void initialize();
-    int getState();
+
     //sf::RectangleShape getAttackElement();
 
 };
