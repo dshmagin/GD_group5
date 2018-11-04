@@ -13,13 +13,14 @@
 class GameLogic
 {
     private:
-
+        int  startingElement ;
         bool gameStatus = false;
+        bool basicAttackOnCd = false;
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
-        float spellCD = 300;
-        ProcessManager* pm;
+        float basicAttackCd = 300;
+        shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
 
 
@@ -29,7 +30,7 @@ class GameLogic
         //BasicAttack bAttack;
 
         GameLogic();
-        GameLogic(shared_ptr<sf::RenderWindow> &window_ptr);
+        GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm);
 
         void setGameState( int GameState );
         int  getGameState( void );
@@ -46,6 +47,10 @@ class GameLogic
         sf::Vector2f getPlayerCoord();
 
         void createPlayerAttack(char, float);
+        int getStartingElement();
+        bool isBasicAttackOnCd();
+        void setStartingElement(int startingElement);
+        void resetPlayer();
 
 
 

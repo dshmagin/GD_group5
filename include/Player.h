@@ -34,6 +34,7 @@ public:
     sf::RectangleShape getPlayerBody();
     float getXPos();
     float getYPos();
+    void reset(float x_pos, float y_pos);
 };
 
 
