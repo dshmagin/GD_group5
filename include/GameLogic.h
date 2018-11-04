@@ -13,7 +13,7 @@
 class GameLogic
 {
     private:
-        int  startingElement = 1;
+        int  startingElement ;
         bool gameStatus = false;
         bool basicAttackOnCd = false;
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
@@ -49,6 +49,8 @@ class GameLogic
         void createPlayerAttack(char, float);
         int getStartingElement();
         bool isBasicAttackOnCd();
+        void setStartingElement(int startingElement);
+        void resetPlayer();
 
 
 

@@ -34,6 +34,7 @@ class GameViewPlayer
         int   spellTextNum;
         int   spellTextCdNum = 1;
         int   spellIconSize = 8;
+        float inputTimer = 0;
         float bckgW = 2400.0f;
         float bckgH = 1800.0f;
         float screenW = 800.0f;
@@ -48,6 +49,7 @@ class GameViewPlayer
         bool movingX;
         bool movingY;
         bool hasTextureLoaded = true;
+        bool chooseElement = false;
         shared_ptr<sf::RenderWindow> window_ptr;
 
     public:

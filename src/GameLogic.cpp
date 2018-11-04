@@ -99,3 +99,11 @@ bool GameLogic::isBasicAttackOnCd()
 {
     return basicAttackOnCd;
 }
+void GameLogic::setStartingElement(int startingElement)
+{
+    this -> startingElement = startingElement;
+}
+void GameLogic::resetPlayer()
+{
+    player.reset(bckgW/2 + (screenW/2 - playerW/2) ,bckgH/2 + (screenH/2 - playerH/2) );
+}

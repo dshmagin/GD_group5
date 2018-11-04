@@ -29,7 +29,7 @@ int main(int argc, char** argv)
         clock.restart();
         // process events
         sf::Event Event;
-        window_ptr->clear(sf::Color::Green);
+        window_ptr->clear(sf::Color::White);
 
         gvp.checkKeyEvents(deltaTime);
         while(window_ptr->pollEvent(Event))
@@ -42,10 +42,13 @@ int main(int argc, char** argv)
 
             menu.drawTitleScreen(deltaTime);
 
-
+        }
+        if( game -> getGameState() == 1 )
+        {
+            menu.drawElementOption(deltaTime);
         }
 
-        if ( game -> getGameState() == 1 )
+        if ( game -> getGameState() == 2 )
         {
             gvp.drawBg();
             pm -> updateProcessList(deltaTime);

@@ -38,19 +38,24 @@ void Player::setDirection(char dir,float deltaTime)
 {
     this -> dir = dir;
     moveKeyIsPressed = true;
+    float moveVal = .3 *deltaTime;
     switch(dir)
     {
     case 'N':
-        body.move(0,-.3 *deltaTime);
+        if(body.getPosition().y - moveVal >= 100 )
+            body.move(0,-moveVal);
         break;
     case 'S':
-        body.move(0,.3 *deltaTime);
+        if(body.getPosition().y + moveVal <= 1550 )
+            body.move(0,moveVal);
         break;
     case 'E':
-        body.move(.3 *deltaTime,0);
+        if(body.getPosition().x + moveVal <= 2285 )
+            body.move(moveVal,0);
         break;
     case 'W':
-        body.move(-.3 *deltaTime,0);
+        if(body.getPosition().x - moveVal >= 55 )
+            body.move(-moveVal,0);
         break;
     }
 }
@@ -184,4 +189,9 @@ void Player::update(float deltaTime)
 
 
         changeTimer += 0.04f *deltaTime;
+}
+
+void Player::reset(float x_pos, float y_pos)
+{
+    body.setPosition(x_pos,y_pos);
 }

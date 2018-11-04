@@ -71,7 +71,10 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
 
         if( game -> getGameState() == 0 )
         {
-
+            inputTimer += deltaTime;
+            if(inputTimer>50)
+            {
+                inputTimer = 0;
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
                     menu -> setSelected(-1);
@@ -81,24 +84,52 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                     menu -> setSelected(1);
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+                {
+
                     if( menu -> getSelected() == 0 )
                     {
-                        background.setSize(sf::Vector2f(bckgW,bckgH));
-                        playerView.reset(sf::FloatRect(bckgW/2,bckgH/2,screenW,screenH));
-                        background.setTextureRect(sf::IntRect(textureSize,textureSize,bckgW,bckgH));
-                        setBackgroundTexture(game -> getStartingElement());
-                        window_ptr -> setView(playerView);
-                        menu -> stopMusic();
                         game -> setGameState(1);
-                        game -> initiliaze(bckgW, bckgH, screenW, screenH, textureSize, playerW, playerH);
-
-                        cout<< game -> getGameState()<<endl;
-
                     }
+                }
+            }
 
 
         }
+
         if( game -> getGameState() == 1 )
+        {
+            inputTimer += deltaTime;
+            if(inputTimer > 100)
+            {
+                inputTimer = 0;
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                {
+                    menu -> setSelectedElement(-1);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                {
+                    menu -> setSelectedElement(1);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+                {
+                    background.setSize(sf::Vector2f(bckgW,bckgH));
+                    playerView.reset(sf::FloatRect(bckgW/2,bckgH/2,screenW,screenH));
+                    background.setTextureRect(sf::IntRect(textureSize,textureSize,bckgW,bckgH));
+                    setBackgroundTexture(menu -> getSelectedElement());
+                    window_ptr -> setView(playerView);
+                    menu -> stopMusic();
+                    game -> setGameState(2);
+                    game -> setStartingElement(menu -> getSelectedElement());
+                    game -> initiliaze(bckgW, bckgH, screenW, screenH, textureSize, playerW, playerH);
+                    game -> resetPlayer();
+
+
+                }
+            }
+
+
+        }
+        if( game -> getGameState() == 2 )
         {
             movingX = false;
             movingY = false;
@@ -186,7 +217,14 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                 {
                     game -> createPlayerAttack('E',deltaTime);
                 }
-
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                {
+                    game -> setGameState(0);
+                    elementalIcon.setPosition(bckgW/2 + 72  ,bckgH/2 + (screenH - 24 ));
+                    UIIcon.setPosition(bckgW/2 + 64  ,bckgH/2 + (screenH - 32 ));
+                    playerView.reset(sf::FloatRect(0,0,screenW,screenH));
+                    window_ptr -> setView(playerView);
+                }
 
 
             if(movingX == false && movingY == false)
@@ -228,6 +266,7 @@ void GameViewPlayer::drawBg()
 }
 void GameViewPlayer::setBackgroundTexture(int element)
 {
+    cout<<"ELEMENT"<<element<<endl;
     switch(element)
     {
     case 0:
