@@ -2,10 +2,10 @@
 
 using namespace std;
 
-GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr)
+GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm)
 {
     this -> window_ptr = window_ptr;
-    pm = new ProcessManager();
+    this -> pm = pm;
 }
 
 void  GameLogic::setGameState( int GameState )
@@ -44,22 +44,41 @@ void GameLogic::setDirection(char dir,float deltaTime)
 }
 void GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
-    spellCD += deltaTime;
-    if(spellCD > 300)
+    switch(dir)
     {
-        spellCD = 0;
-        shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr);
+    case 'N':
+        break;
+    case 'S':
+        break;
+    case 'W':
+        break;
+    case 'E':
+        break;
+
+    }
+    if(basicAttackCd > 300)
+    {
+        basicAttackCd = 0;
+        shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr,startingElement);
         bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
         pm ->  attachProcess((shared_ptr<Process>) bAttack);
     }
 
 
+
 }
 void GameLogic::update(float deltaTime)
 {
+    basicAttackCd += deltaTime;
     player.update(deltaTime);
-    //attack.update(deltaTime);
-    pm -> updateProcessList(deltaTime);
+    if(basicAttackCd > 300)
+    {
+      basicAttackOnCd = false;
+    }
+    else
+    {
+        basicAttackOnCd = true;
+    }
 }
 void GameLogic::idle()
 {
@@ -72,4 +91,11 @@ sf::Vector2f GameLogic::getPlayerCoord()
     return coords;
 }
 
-
+int GameLogic::getStartingElement()
+{
+    return startingElement;
+}
+bool GameLogic::isBasicAttackOnCd()
+{
+    return basicAttackOnCd;
+}

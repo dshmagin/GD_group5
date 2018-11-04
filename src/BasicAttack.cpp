@@ -1,15 +1,15 @@
 #include "BasicAttack.h"
 #include "ProcessManager.h"
 
-BasicAttack::BasicAttack(shared_ptr<sf::RenderWindow> window_ptr)
+BasicAttack::BasicAttack(shared_ptr<sf::RenderWindow> window_ptr, int startingElement)
 {
     this -> window_ptr = window_ptr;
     this -> pm = pm;
-    if( !image.loadFromFile( "../Assets/Images/fire_attack_base_1.png" ))
+    if( !image.loadFromFile( "../Assets/Images/elemental_attack.png" ))
         cout<<"Cannot load AttackSprite"<<endl;
 
-    element.setTextureRect(sf::IntRect(128 * 0 ,64 * 0,128 * 1,64 * 1));
-
+    element.setTextureRect(sf::IntRect(128 * 0 ,64 * startingElement,128 * 1,64 * 1));
+    this -> startingElement = startingElement;
 }
 
 BasicAttack::~BasicAttack()
@@ -27,16 +27,16 @@ void BasicAttack::update(float deltaTime)
     switch(spriteNum)
     {
     case 0:
-        element.setTextureRect(sf::IntRect(128 * 1 ,64 * 0,128 * 1,64 * 1));
+        element.setTextureRect(sf::IntRect(128 * 1 ,64 * startingElement,128 * 1,64 * 1));
         break;
     case 8:
-        element.setTextureRect(sf::IntRect(128 * 2 ,64 * 0,128 * 1,64 * 1));
+        element.setTextureRect(sf::IntRect(128 * 2 ,64 * startingElement,128 * 1,64 * 1));
         break;
     case 16:
-        element.setTextureRect(sf::IntRect(128 * 3 ,64 * 0,128 * 1,64 * 1));
+        element.setTextureRect(sf::IntRect(128 * 3 ,64 * startingElement,128 * 1,64 * 1));
         break;
     case 24:
-        element.setTextureRect(sf::IntRect(128 * 0 ,64 * 0,128 * 1,64 * 1));
+        element.setTextureRect(sf::IntRect(128 * 0 ,64 * startingElement,128 * 1,64 * 1));
         break;
     }
 

@@ -1,3 +1,5 @@
 Attacks:        128 x  64
 Sprites:         64 x 128
 Air Shield:     128 x 128
+Spell Bar:		 32 x  32
+Spell Icon	     32 x  32 			

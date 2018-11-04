@@ -3,6 +3,7 @@
 #include "TitleScreen.h"
 #include "GameViewPlayer.h"
 #include <memory>
+#include "ProcessManager.h"
 
 using namespace std;
 int main(int argc, char** argv)
@@ -10,7 +11,8 @@ int main(int argc, char** argv)
     float deltaTime;
     sf::Clock clock;
     shared_ptr<sf::RenderWindow> window_ptr =make_shared<sf::RenderWindow>(sf::VideoMode(800,600,32), "Ground Break");
-    GameLogic* game = new GameLogic(window_ptr);
+    shared_ptr<ProcessManager> pm  = make_shared<ProcessManager>();
+    GameLogic* game = new GameLogic(window_ptr,pm);
     GameViewPlayer gvp = GameViewPlayer(game, window_ptr);
     TitleScreen menu = TitleScreen(window_ptr);
 
@@ -45,7 +47,8 @@ int main(int argc, char** argv)
 
         if ( game -> getGameState() == 1 )
         {
-
+            gvp.drawBg();
+            pm -> updateProcessList(deltaTime);
             gvp.update(deltaTime);
             game -> update(deltaTime);
         }
