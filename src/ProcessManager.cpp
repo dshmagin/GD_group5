@@ -3,7 +3,6 @@
 #include "Process.h"
 #include "iostream"
 #include <vector>
-#include <list>
 
 using namespace std;
 //                 0     1     2       3      4       5         6
@@ -11,10 +10,10 @@ using namespace std;
 void ProcessManager::updateProcessList(float deltaMs)
 {
 
-    int counter = 0;
+    vector <shared_ptr<Process>> liveProcess;
     shared_ptr<Process> p;
-    for (list<shared_ptr<Process>>::iterator it = processList.begin(); it != processList.end(); it++)
-   // for(shared_ptr<Process> p : processList)
+    for (vector<shared_ptr<Process>>::iterator it = processList.begin(); it != processList.end(); it++)
+
     {
         p = *it;
         if(p != nullptr)
@@ -25,16 +24,16 @@ void ProcessManager::updateProcessList(float deltaMs)
             if(p->getState()== Process::RUNNING)
                 p->update(deltaMs);
 
-            if(p->getState()== Process::DEAD)
+            if(!p->getState()== Process::DEAD)
             {
-                removeProcess(p);
+                liveProcess.push_back(p);
             }
 
 
         }
 
     }
-    counter ++;
+    processList.swap(liveProcess);
 }
 
 void ProcessManager::attachProcess(shared_ptr<Process> bAttack)
@@ -42,7 +41,3 @@ void ProcessManager::attachProcess(shared_ptr<Process> bAttack)
     processList.push_back(bAttack);
 }
 
-void ProcessManager::removeProcess(shared_ptr<Process> bAttack)
-{
-    processList.remove(bAttack);
-}

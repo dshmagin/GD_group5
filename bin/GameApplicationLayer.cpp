@@ -54,6 +54,7 @@ int main(int argc, char** argv)
             pm -> updateProcessList(deltaTime);
             gvp.update(deltaTime);
             game -> update(deltaTime);
+            // do gvp and game in process.
         }
 
         window_ptr->display();
