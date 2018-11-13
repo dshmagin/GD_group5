@@ -58,19 +58,12 @@ void BasicAttack::update(float deltaTime)
 
         distance += moveDistance;
 
-    if (this -> element.getPosition().x > 2400 ||
-            this -> element.getPosition().x < 0 ||
-            this -> element.getPosition().y > 1600 ||
-            this -> element.getPosition().y < 0)
+    if(distance > 1200)
     {
         this -> state = Process::DEAD;
+        distance = 0;
     }
-    // if(distance > 600)
-    // {
-    //     this -> state = Process::DEAD;
-    //     distance = 0;
-    // }
-    
+
         spriteNum = (spriteNum + 1) % 32;
         window_ptr -> draw(element);
 
