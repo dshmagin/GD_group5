@@ -38,7 +38,7 @@ sf::RectangleShape GameLogic::getAttack()
 {
     //return (Attack) attack -> getAttackElement();
 }
-void GameLogic::setDirection(char dir,float deltaTime)
+void GameLogic::setDirection(int dir,float deltaTime)
 {
     player.setDirection(dir,deltaTime);
 }
