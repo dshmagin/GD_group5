@@ -56,15 +56,15 @@ void BasicAttack::update(float deltaTime)
         break;
     }
 
-        distance += moveDistance;
+    distance += moveDistance;
+
     if(distance > 1200)
     {
         this -> state = Process::DEAD;
         distance = 0;
     }
-        spriteNum = (spriteNum + 1) % 32;
-        window_ptr -> draw(element);
-
+    spriteNum = (spriteNum + 1) % 32;
+    window_ptr -> draw(element);
     }
 }
 
