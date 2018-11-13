@@ -57,7 +57,7 @@ void BasicAttack::update(float deltaTime)
     }
 
         distance += moveDistance;
-    if(distance > 600)
+    if(distance > 1200)
     {
         this -> state = Process::DEAD;
         distance = 0;

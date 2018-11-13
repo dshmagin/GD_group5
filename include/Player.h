@@ -23,12 +23,14 @@ private:
 
 
 public:
+    // Enum that matches the sprite sheets row
+    //          0      1    2      3
     enum dir {SOUTH, WEST, EAST, NORTH};
     bool moveKeyIsPressed=false;
     sf::IntRect uvRect;
     Player(){};
     Player(float playerH, float playerW);
-    void setDirection(char dir,float deltaTime);
+    void setDirection(int dir,float deltaTime);
     void update(float deltaTime);
     void animation( float deltaTime, char dir);
     void createPlayer(float x_pos, float y_pos);

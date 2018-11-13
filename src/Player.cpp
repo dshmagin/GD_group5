@@ -34,7 +34,7 @@ float Player::getYPos()
 }
 
 
-void Player::setDirection(char dir,float deltaTime)
+void Player::setDirection(int dir,float deltaTime)
 {
     this -> dir = dir;
     moveKeyIsPressed = true;
@@ -61,22 +61,28 @@ void Player::setDirection(char dir,float deltaTime)
 }
 void Player::update(float deltaTime)
 {
-        this -> dir = dir;
-        switch(spriteNum )
-        {
-        case 0:
-            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir, playerW, playerH));
-            break;
-        case 1:
-            body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * dir,playerW ,playerH ));
-            break;
-        case 2:
-            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir,playerW ,playerH ));
-            break;
-        case 3:
-            body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * dir,playerW ,playerH ));
-            break;
-        }
+    //Grab the players direction and display the correct column in the sprite sheet.
+    this -> dir = dir;
+    switch(spriteNum )
+    {
+    case 0:
+        body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir, playerW, playerH));
+        break;
+    case 1:
+        body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * dir,playerW ,playerH ));
+        break;
+    case 2:
+        body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir,playerW ,playerH ));
+        break;
+    case 3:
+        body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * dir,playerW ,playerH ));
+        break;
+    }
+    /* moveKeyIsPressed is set to false in gameLogic whenever a
+    * key is no longer pressed
+    * updates the changeTimer by deltaTime * movespeed.
+    * when the spriteNum is updated reset changeTimer to 0 again
+    */
     if(moveKeyIsPressed)
     {
       if( changeTimer > 10 )
