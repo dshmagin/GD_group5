@@ -21,7 +21,7 @@ public:
     int spriteNum = 0;
     int spellWidth = 128;
     int spellHeight = 64;
-    float distance;
+    float distance = 0;
     sf::RectangleShape element;
     sf::Texture image;
     ProcessManager* pm;
