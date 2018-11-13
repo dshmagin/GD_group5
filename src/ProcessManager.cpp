@@ -28,10 +28,7 @@ void ProcessManager::updateProcessList(float deltaMs)
             {
                 liveProcess.push_back(p);
             }
-
-
         }
-
     }
     processList.swap(liveProcess);
 }

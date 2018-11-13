@@ -9,7 +9,7 @@ class Player
 {
 private:
     int health = 100;
-    char dir = 'S';
+    int dir = SOUTH;
     int spriteNum = 0;
     float changeTimer = 0;
     float totalTime=0;
@@ -23,6 +23,7 @@ private:
 
 
 public:
+    enum dir {SOUTH, WEST, EAST, NORTH};
     bool moveKeyIsPressed=false;
     sf::IntRect uvRect;
     Player(){};

@@ -137,7 +137,7 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                 {
                     movingY = true;
-                    game -> setDirection('N',deltaTime);
+                    game -> setDirection(Player::NORTH,deltaTime);
 
                     sf::Vector2f vect(game -> getPlayerCoord());
 
@@ -155,7 +155,7 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                 {
                     movingY = true;
                     sf::Vector2f vect(game -> getPlayerCoord());
-                    game -> setDirection('S',deltaTime);
+                    game -> setDirection(Player::SOUTH,deltaTime);
 
                     if ((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH)))
                     {
@@ -170,7 +170,7 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                 {
                     movingX = true;
                     sf::Vector2f vect(game -> getPlayerCoord());
-                    game -> setDirection('E',deltaTime);
+                    game -> setDirection(Player::EAST,deltaTime);
 
                     if ((vect.x + playerW/2) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW)))
                     {
@@ -186,8 +186,8 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                 {
                     movingX = true;
                     sf::Vector2f vect(game -> getPlayerCoord());
-                    game -> setDirection('W',deltaTime);
-                    if ((vect.x + playerW/2) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW)))
+                    game -> setDirection(Player::WEST,deltaTime);
+                    if ((vect.x + playerW) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW)))
                     {
                         playerView.move( -camMoveSpeed * deltaTime ,0 );
                         window_ptr -> setView(playerView);
