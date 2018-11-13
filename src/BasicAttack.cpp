@@ -58,6 +58,8 @@ void BasicAttack::update(float deltaTime)
 
         distance += moveDistance;
 
+    // Checks if attack is outside of map. If so, it is removed
+    // NOTE: the map is 2400x1600 not 800x600
     if (this -> element.getPosition().x > 2400 ||
             this -> element.getPosition().x < 0 ||
             this -> element.getPosition().y > 1600 ||
@@ -70,7 +72,7 @@ void BasicAttack::update(float deltaTime)
     //     this -> state = Process::DEAD;
     //     distance = 0;
     // }
-    
+
         spriteNum = (spriteNum + 1) % 32;
         window_ptr -> draw(element);
 
