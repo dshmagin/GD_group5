@@ -51,12 +51,13 @@ class GameViewPlayer
         bool hasTextureLoaded = true;
         bool chooseElement = false;
         shared_ptr<sf::RenderWindow> window_ptr;
+	bool wait = false;
 
     public:
 
         GameViewPlayer(){};
         GameViewPlayer(GameLogic* game, shared_ptr<sf::RenderWindow> &window_ptr);
-        void checkKeyEvents( float deltaTime);
+        bool checkKeyEvents( float deltaTime, sf::Keyboard::Key keycode);
         void setTitleScreen(TitleScreen* screen);
         void update(float deltaTime);
         void drawBg();
