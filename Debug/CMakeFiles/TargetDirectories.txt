@@ -1,4 +1,0 @@
-/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/Debug/CMakeFiles/edit_cache.dir
-/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/Debug/CMakeFiles/rebuild_cache.dir
-/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/Debug/CMakeFiles/GameApplicationLayer.dir
-/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/Debug/CMakeFiles/GD_group5_core.dir
