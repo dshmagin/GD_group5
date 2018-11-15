@@ -64,8 +64,13 @@ void GameLogic::createPlayerAttack(char dir, float deltaTime)
         pm ->  attachProcess((shared_ptr<Process>) bAttack);
     }
 
+}
 
-
+void GameLogic::createRangedEnemy(float deltaTime)
+{
+    shared_ptr<RangedEnemy> rEnemy =make_shared<RangedEnemy>(window_ptr,startingElement);
+    rEnemy->createRangedEnemy(1500, 1500);
+    pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
 void GameLogic::update(float deltaTime)
 {

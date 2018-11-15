@@ -196,6 +196,10 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                     }
                 }
 
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
+                {
+                    game -> createRangedEnemy(deltaTime);
+                }
 
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
