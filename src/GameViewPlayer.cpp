@@ -66,7 +66,7 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
 
 
 
-void GameViewPlayer::checkKeyEvents( float deltaTime )
+bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode)
 {
 
         if( game -> getGameState() == 0 )
@@ -90,6 +90,10 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
                     {
                         game -> setGameState(1);
                     }
+                    if( menu -> getSelected() == 1 )
+		    {
+                        game -> setGameState(3);
+		    }
                 }
             }
 
@@ -126,9 +130,41 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
 
                 }
             }
-
-
         }
+
+        if( game -> getGameState() == 3 )
+        {
+		inputTimer += deltaTime;
+		if(inputTimer > 100 && !wait)
+		{
+			inputTimer = 0;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+			{
+				menu -> setSelectedKeybind(-1);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			{
+				menu -> setSelectedKeybind(1);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+			{
+				menu -> choosingKeybind();
+				wait = true;	
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				game -> setGameState(0);
+			}
+		}
+		else if(wait){
+			inputTimer = 0;
+		    	if(keycode != sf::Keyboard::Unknown){	
+				menu -> newKeybind(keycode);
+				wait = false;
+			}
+		}
+	}						
+        
         if( game -> getGameState() == 2 )
         {
             movingX = false;
@@ -237,8 +273,7 @@ void GameViewPlayer::checkKeyEvents( float deltaTime )
             }
 
         }
-
-
+    return wait;
 }
 
 
