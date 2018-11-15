@@ -34,3 +34,8 @@ void RangedEnemy::initialize()
 {
  this -> state = Process::RUNNING;
 }
+
+void RangedEnemy::update(float deltaTime)
+{
+    window_ptr -> draw(body);
+}
