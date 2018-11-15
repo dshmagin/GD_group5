@@ -16,10 +16,15 @@ class TitleScreen
 {
     private:
         int selected = 0;
+        int elementSelected = 0;
         sf::Font GameFont;
         shared_ptr<sf::RenderWindow> window_ptr;
         sf::Text Option;
         sf::Text Start;
+        sf::Text fire;
+        sf::Text water;;
+        sf::Text earth;
+        sf::Text air;
         sf::Texture BackgroundTexture;
         sf::Sprite TitleBackground;
         sf::SoundBuffer menuSong;
@@ -35,7 +40,10 @@ class TitleScreen
         TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr );
         void setSelected( int direction);
         int  getSelected();
+        void setSelectedElement( int direction);
+        int  getSelectedElement();
         void drawTitleScreen( float deltaTime );
+        void drawElementOption( float deltaTime );
         void startMusic();
         void stopMusic();
 };

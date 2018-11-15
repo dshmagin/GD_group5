@@ -9,7 +9,7 @@ class Player
 {
 private:
     int health = 100;
-    char dir = 'S';
+    int dir = SOUTH;
     int spriteNum = 0;
     float changeTimer = 0;
     float totalTime=0;
@@ -23,17 +23,21 @@ private:
 
 
 public:
+    // Enum that matches the sprite sheets row
+    //          0      1    2      3
+    enum dir {SOUTH, WEST, EAST, NORTH};
     bool moveKeyIsPressed=false;
     sf::IntRect uvRect;
     Player(){};
     Player(float playerH, float playerW);
-    void setDirection(char dir,float deltaTime);
+    void setDirection(int dir,float deltaTime);
     void update(float deltaTime);
     void animation( float deltaTime, char dir);
     void createPlayer(float x_pos, float y_pos);
     sf::RectangleShape getPlayerBody();
     float getXPos();
     float getYPos();
+    void reset(float x_pos, float y_pos);
 };
 
 

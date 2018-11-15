@@ -2,7 +2,11 @@
 
 using namespace std;
 
-
+GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm)
+{
+    this -> window_ptr = window_ptr;
+    this -> pm = pm;
+}
 
 void  GameLogic::setGameState( int GameState )
 {
@@ -32,21 +36,54 @@ sf::RectangleShape GameLogic::getPlayer()
 }
 sf::RectangleShape GameLogic::getAttack()
 {
-    return attack.getAttackElement();
+    //return (Attack) attack -> getAttackElement();
 }
-void GameLogic::setDirection(char dir,float deltaTime)
+void GameLogic::setDirection(int dir,float deltaTime)
 {
     player.setDirection(dir,deltaTime);
 }
 void GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
-    attack = Attack();
-    attack.createAttack(player.getXPos(), player.getYPos(), dir);
+    switch(dir)
+    {
+    case 'N':
+        break;
+    case 'S':
+        break;
+    case 'W':
+        break;
+    case 'E':
+        break;
+
+    }
+    if(basicAttackCd > 300)
+    {
+        basicAttackCd = 0;
+        shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr,startingElement);
+        bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
+        pm ->  attachProcess((shared_ptr<Process>) bAttack);
+    }
+
+}
+
+void GameLogic::createRangedEnemy(float deltaTime)
+{
+    shared_ptr<RangedEnemy> rEnemy =make_shared<RangedEnemy>(window_ptr,startingElement);
+    rEnemy->createRangedEnemy(1500, 1500);
+    pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
 void GameLogic::update(float deltaTime)
 {
+    basicAttackCd += deltaTime;
     player.update(deltaTime);
-    attack.update(deltaTime);
+    if(basicAttackCd > 300)
+    {
+      basicAttackOnCd = false;
+    }
+    else
+    {
+        basicAttackOnCd = true;
+    }
 }
 void GameLogic::idle()
 {
@@ -57,4 +94,21 @@ sf::Vector2f GameLogic::getPlayerCoord()
 {
     sf::Vector2f coords(player.getPlayerBody().getPosition().x,player.getPlayerBody().getPosition().y);
     return coords;
+}
+
+int GameLogic::getStartingElement()
+{
+    return startingElement;
+}
+bool GameLogic::isBasicAttackOnCd()
+{
+    return basicAttackOnCd;
+}
+void GameLogic::setStartingElement(int startingElement)
+{
+    this -> startingElement = startingElement;
+}
+void GameLogic::resetPlayer()
+{
+    player.reset(bckgW/2 + (screenW/2 - playerW/2) ,bckgH/2 + (screenH/2 - playerH/2) );
 }

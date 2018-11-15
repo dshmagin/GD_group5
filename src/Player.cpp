@@ -34,145 +34,55 @@ float Player::getYPos()
 }
 
 
-void Player::setDirection(char dir,float deltaTime)
+void Player::setDirection(int dir,float deltaTime)
 {
     this -> dir = dir;
     moveKeyIsPressed = true;
+    float moveVal = .3 *deltaTime;
     switch(dir)
     {
-    case 'N':
-        body.move(0,-.3 *deltaTime);
+    case NORTH:
+        if(body.getPosition().y - moveVal >= 100 )
+            body.move(0,-moveVal);
         break;
-    case 'S':
-        body.move(0,.3 *deltaTime);
+    case SOUTH:
+        if(body.getPosition().y + moveVal <= 1550 )
+            body.move(0,moveVal);
         break;
-    case 'E':
-        body.move(.3 *deltaTime,0);
+    case EAST:
+        if(body.getPosition().x + moveVal <= 2285 )
+            body.move(moveVal,0);
         break;
-    case 'W':
-        body.move(-.3 *deltaTime,0);
+    case WEST:
+        if(body.getPosition().x - moveVal >= 55 )
+            body.move(-moveVal,0);
         break;
     }
 }
 void Player::update(float deltaTime)
 {
-    if(this -> dir != dir )
+    //Grab the players direction and display the correct column in the sprite sheet.
+    this -> dir = dir;
+    switch(spriteNum )
     {
-        this -> dir = dir;
-        switch(this -> dir)
-        {
-        case 'S':
-            body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 0,playerW ,playerH ));
-            spriteNum = 0;
-            changeTimer = 1.9;
-            break;
-
-        case 'N':
-            body.setTextureRect(sf::IntRect(playerW*1 ,playerH *3 ,playerW,playerH ));
-            spriteNum = 0;
-            changeTimer = 1.9;
-            break;
-
-        case 'E':
-            body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 2,playerW,playerH ));
-            spriteNum = 0;
-            changeTimer = 1.9;
-            break;
-
-        case 'W':
-            body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 1,playerW ,playerH ));
-            spriteNum = 0;
-            changeTimer = 1.9;
-            break;
-        }
+    case 0:
+        body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir, playerW, playerH));
+        break;
+    case 1:
+        body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * dir,playerW ,playerH ));
+        break;
+    case 2:
+        body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir,playerW ,playerH ));
+        break;
+    case 3:
+        body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * dir,playerW ,playerH ));
+        break;
     }
-    else if( dir == 'S')
-    {
-        switch(spriteNum )
-        {
-        case 0:
-            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 0, playerW, playerH));
-            break;
-        case 1:
-            body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * 0,playerW ,playerH ));
-            break;
-        case 2:
-            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 0,playerW ,playerH ));
-            break;
-        case 3:
-            body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * 0,playerW ,playerH ));
-            break;
-
-        }
-
-
-    }
-    else if( dir == 'E')
-    {
-        switch(spriteNum )
-        {
-        case 0:
-            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 2, playerW , playerH ));
-            break;
-        case 1:
-            body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * 2, playerW , playerH ));
-            break;
-        case 2:
-            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 2, playerW , playerH ));
-            break;
-        case 3:
-            body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * 2, playerW , playerH ));
-            break;
-
-        }
-
-
-    }
-    else if( dir == 'W')
-    {
-        switch(spriteNum )
-        {
-        case 0:
-            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 1, playerW , playerH ));
-            break;
-        case 1:
-            body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * 1, playerW , playerH ));
-            break;
-        case 2:
-            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * 1, playerW , playerH ));
-            break;
-        case 3:
-            body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * 1, playerW , playerH ));
-            break;
-
-        }
-
-
-    }
-    else if( dir == 'N')
-    {
-
-        switch(spriteNum )
-        {
-        case 0:
-            body.setTextureRect(sf::IntRect(playerW * 1 , playerH * 3 ,64 , playerH ));
-            break;
-        case 1:
-            body.setTextureRect(sf::IntRect(playerW * 0 , playerH * 3 ,64 , playerH ));
-            break;
-        case 2:
-            body.setTextureRect(sf::IntRect(playerW * 1 , playerH * 3 ,64 , playerH ));
-            break;
-        case 3:
-            body.setTextureRect(sf::IntRect(playerW * 2 , playerH * 3 ,64 , playerH ));
-            break;
-
-        }
-
-
-    }
-
-
+    /* moveKeyIsPressed is set to false in gameLogic whenever a
+    * key is no longer pressed
+    * updates the changeTimer by deltaTime * movespeed.
+    * when the spriteNum is updated reset changeTimer to 0 again
+    */
     if(moveKeyIsPressed)
     {
       if( changeTimer > 10 )
@@ -182,6 +92,10 @@ void Player::update(float deltaTime)
         }
     }
 
-
         changeTimer += 0.04f *deltaTime;
+}
+
+void Player::reset(float x_pos, float y_pos)
+{
+    body.setPosition(x_pos,y_pos);
 }
