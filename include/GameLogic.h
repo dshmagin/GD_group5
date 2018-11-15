@@ -4,6 +4,7 @@
 #include <SFML/Audio.hpp>
 #include "Player.h"
 #include "BasicAttack.h"
+#include "RangedEnemy.h"
 #include "ProcessManager.h"
 #include <memory>
 
@@ -47,6 +48,7 @@ class GameLogic
         sf::Vector2f getPlayerCoord();
 
         void createPlayerAttack(char, float);
+        void createRangedEnemy(float deltaTime);
         int getStartingElement();
         bool isBasicAttackOnCd();
         void setStartingElement(int startingElement);
