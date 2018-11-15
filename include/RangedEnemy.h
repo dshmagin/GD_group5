@@ -29,8 +29,8 @@ public:
     float playerW = 64;
 
     RangedEnemy(){};
-    RangedEnemy(float playerH, float playerW);
-    //void update(float deltaTime);
+    RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
+    void update(float deltaTime);
     //void animation( float deltaTime, char dir);
     void createRangedEnemy(float x_pos, float y_pos);
     sf::RectangleShape getEnemyBody();
