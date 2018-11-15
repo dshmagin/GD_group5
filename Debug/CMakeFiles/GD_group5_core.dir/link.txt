@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libGD_group5_core.a  CMakeFiles/GD_group5_core.dir/src/BasicAttack.cpp.o CMakeFiles/GD_group5_core.dir/src/GameLogic.cpp.o CMakeFiles/GD_group5_core.dir/src/GameViewPlayer.cpp.o CMakeFiles/GD_group5_core.dir/src/Player.cpp.o CMakeFiles/GD_group5_core.dir/src/Process.cpp.o CMakeFiles/GD_group5_core.dir/src/ProcessManager.cpp.o CMakeFiles/GD_group5_core.dir/src/RangedEnemy.cpp.o CMakeFiles/GD_group5_core.dir/src/TitleScreen.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libGD_group5_core.a

@@ -1,0 +1,158 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/BasicAttack.h
+iostream
+-
+SFML/Graphics.hpp
+-
+Process.h
+../include/Process.h
+ProcessManager.h
+../include/ProcessManager.h
+memory
+-
+
+../include/GameLogic.h
+SFML/Graphics.hpp
+-
+SFML/Audio.hpp
+-
+Player.h
+../include/Player.h
+BasicAttack.h
+../include/BasicAttack.h
+RangedEnemy.h
+../include/RangedEnemy.h
+ProcessManager.h
+../include/ProcessManager.h
+memory
+-
+string
+-
+sstream
+-
+iostream
+-
+
+../include/GameViewPlayer.h
+SFML/Graphics.hpp
+-
+string
+-
+TitleScreen.h
+../include/TitleScreen.h
+GameLogic.h
+../include/GameLogic.h
+string
+-
+sstream
+-
+iostream
+-
+memory
+-
+
+../include/Player.h
+iostream
+-
+SFML/Graphics.hpp
+-
+
+../include/Process.h
+iostream
+-
+
+../include/ProcessManager.h
+Process.h
+../include/Process.h
+list
+-
+vector
+-
+memory
+-
+
+../include/RangedEnemy.h
+iostream
+-
+SFML/Graphics.hpp
+-
+Process.h
+../include/Process.h
+ProcessManager.h
+../include/ProcessManager.h
+memory
+-
+
+../include/TitleScreen.h
+SFML/Graphics.hpp
+-
+iostream
+-
+memory
+-
+SFML/Graphics.hpp
+-
+string
+-
+string
+-
+sstream
+-
+iostream
+-
+memory
+-
+SFML/Audio.hpp
+-
+
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/BasicAttack.cpp
+BasicAttack.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/BasicAttack.h
+ProcessManager.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/ProcessManager.h
+
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/GameLogic.cpp
+GameLogic.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/GameLogic.h
+
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/GameViewPlayer.cpp
+GameViewPlayer.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/GameViewPlayer.h
+
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/Player.cpp
+Player.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/Player.h
+
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/Process.cpp
+Process.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/Process.h
+
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/ProcessManager.cpp
+ProcessManager.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/ProcessManager.h
+SFML/Graphics.hpp
+-
+Process.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/Process.h
+iostream
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/iostream
+vector
+-
+
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/RangedEnemy.cpp
+RangedEnemy.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/RangedEnemy.h
+ProcessManager.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/ProcessManager.h
+
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/TitleScreen.cpp
+TitleScreen.h
+/Users/dshmagin/Desktop/Game Design/Ground Break/GD_group5/src/TitleScreen.h
+

@@ -9,6 +9,8 @@ using namespace std;
 int main(int argc, char** argv)
 {
     float deltaTime;
+    sf::Keyboard::Key keycode = sf::Keyboard::Unknown;
+    bool need_key_value = false;
     sf::Clock clock;
     shared_ptr<sf::RenderWindow> window_ptr =make_shared<sf::RenderWindow>(sf::VideoMode(800,600,32), "Ground Break");
     shared_ptr<ProcessManager> pm  = make_shared<ProcessManager>();
@@ -31,12 +33,25 @@ int main(int argc, char** argv)
         sf::Event Event;
         window_ptr->clear(sf::Color::White);
 
-        gvp.checkKeyEvents(deltaTime);
         while(window_ptr->pollEvent(Event))
         {
             if(Event.type == sf::Event::Closed)
+	    {
                 window_ptr->close();
-        }
+	    }
+	    else if(need_key_value && Event.type == sf::Event::KeyReleased)
+	    {
+		if(Event.key.code != sf::Keyboard::Return){
+			keycode = Event.key.code;
+		}
+            }
+	}
+         
+        need_key_value = gvp.checkKeyEvents( deltaTime, keycode);
+	if(!need_key_value){
+		keycode = sf::Keyboard::Unknown;
+	}	
+	
         if( game -> getGameState() == 0 )
         {
 
@@ -47,6 +62,10 @@ int main(int argc, char** argv)
         {
             menu.drawElementOption(deltaTime);
         }
+        if( game -> getGameState() == 3 )
+	{
+	    menu.drawOptionsScreen(deltaTime);
+	}
 
         if ( game -> getGameState() == 2 )
         {
@@ -56,7 +75,6 @@ int main(int argc, char** argv)
             game -> update(deltaTime);
             // do gvp and game in process.
         }
-
         window_ptr->display();
     }
 
