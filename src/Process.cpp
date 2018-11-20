@@ -16,4 +16,7 @@ int  Process::getState(){
 bool Process::hasChild(){return child != nullptr;}
 Process* Process::getChild() {return child;}
 
-
+void Process::setType(enum type)
+{
+    this->type = type;
+}

@@ -12,8 +12,9 @@ class ProcessManager
     public:
 
         std::vector <shared_ptr<Process>> processList;
+        std::vector <shared_ptr<Process>> enemyList;
         void updateProcessList(float deltaMs);
-        void attachProcess(shared_ptr<Process> bAttack);
+        void attachProcess(shared_ptr<Process> process);
         void abortAllProcess();
 
         ProcessManager(){};

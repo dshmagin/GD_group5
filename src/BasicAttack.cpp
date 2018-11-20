@@ -95,11 +95,13 @@ void BasicAttack::createAttack(float x_pos, float y_pos, char dir)
         break;
     }
     this -> state = Process::RUNNING;
+    initialize();
 
 }
 void BasicAttack::initialize()
 {
  this -> state = Process::RUNNING;
+ this -> type  = Process::ATTACK;
 }
 
 
