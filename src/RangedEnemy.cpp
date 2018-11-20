@@ -1,5 +1,6 @@
 #include "RangedEnemy.h"
 #include "ProcessManager.h"
+#include <cstdlib>
 
 RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
 {
@@ -16,8 +17,11 @@ void RangedEnemy::createRangedEnemy(float x_pos, float y_pos)
 {
 
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
-    this -> body.setPosition(x_pos, y_pos);
+    float loc_x = rand() % 2400;
+    float loc_y = rand() % 1800;
+    this -> body.setPosition(loc_x, loc_y);
     this -> body.setTexture(&image);
+    initialize();
 }
 
 sf::RectangleShape RangedEnemy::getEnemyBody()
@@ -33,6 +37,7 @@ void RangedEnemy::reset(float x_pos, float y_pos)
 void RangedEnemy::initialize()
 {
  this -> state = Process::RUNNING;
+ this -> type  = Process::R_ENEMY;
 }
 
 void RangedEnemy::update(float deltaTime)

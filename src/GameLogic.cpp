@@ -44,18 +44,6 @@ void GameLogic::setDirection(int dir,float deltaTime)
 }
 void GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
-    switch(dir)
-    {
-    case 'N':
-        break;
-    case 'S':
-        break;
-    case 'W':
-        break;
-    case 'E':
-        break;
-
-    }
     if(basicAttackCd > 300)
     {
         basicAttackCd = 0;

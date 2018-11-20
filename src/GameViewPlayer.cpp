@@ -149,7 +149,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 			{
 				menu -> choosingKeybind();
-				wait = true;	
+				wait = true;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
@@ -158,13 +158,13 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 		}
 		else if(wait){
 			inputTimer = 0;
-		    	if(keycode != sf::Keyboard::Unknown){	
+		    	if(keycode != sf::Keyboard::Unknown){
 				menu -> newKeybind(keycode);
 				wait = false;
 			}
 		}
-	}						
-        
+	}
+
         if( game -> getGameState() == 2 )
         {
             movingX = false;
@@ -223,7 +223,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     movingX = true;
                     sf::Vector2f vect(game -> getPlayerCoord());
                     game -> setDirection(Player::WEST,deltaTime);
-                    if ((vect.x + playerW) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW)))
+                    if ((vect.x + playerW/2) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW)))
                     {
                         playerView.move( -camMoveSpeed * deltaTime ,0 );
                         window_ptr -> setView(playerView);
@@ -295,9 +295,9 @@ void GameViewPlayer::update(float deltaTime)
     {
         elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*game->getStartingElement(),0*spellTextNum,itemTextureSize,itemTextureSize));
     }
+    window_ptr -> draw( game -> getPlayer());
     window_ptr -> draw(UIIcon);
     window_ptr -> draw(elementalIcon);
-    window_ptr -> draw( game -> getPlayer());
 }
 void GameViewPlayer::drawBg()
 {

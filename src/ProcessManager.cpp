@@ -33,8 +33,14 @@ void ProcessManager::updateProcessList(float deltaMs)
     processList.swap(liveProcess);
 }
 
-void ProcessManager::attachProcess(shared_ptr<Process> bAttack)
+void ProcessManager::attachProcess(shared_ptr<Process> process)
 {
-    processList.push_back(bAttack);
+    cout<<" THE TYPE IS " << process -> type <<endl;
+    if(process -> type == Process::R_ENEMY)
+    {
+        cout<<"ADDED A NEW ENEMY\n";
+        enemyList.push_back(process);
+    }
+    processList.push_back(process);
 }
 

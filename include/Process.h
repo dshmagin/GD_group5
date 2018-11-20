@@ -9,7 +9,9 @@ class Process
 {
     public:
         enum state {RUNNING,DEAD, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
+        enum type {ATTACK, R_ENEMY};
         int state;
+        int type;
         Process* child = nullptr;
 
         Process(){};
@@ -22,6 +24,7 @@ class Process
         void Pause();
         void Unpause();
         bool isDead();
+        void setType(enum type);
         int getState();
         bool hasChild();
         Process* getChild();

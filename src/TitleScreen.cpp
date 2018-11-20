@@ -207,7 +207,7 @@ void TitleScreen::drawOptionsScreen( float deltaTime )
 	    special_2.setColor(sf::Color::Black);
 	    special_3.setColor(sf::Color::Black);
 	    special_4.setColor(sf::Color::Black);
-	  
+
 	    switch(keybindSelected)
 	    {
 	    case 0:
@@ -309,7 +309,7 @@ void TitleScreen::choosingKeybind()
 void TitleScreen::newKeybind(const sf::Keyboard::Key& key )
 {
     switch(keybindSelected)
-    {   
+    {
         case 0:
             walk_left_key = key;
             break;
