@@ -16,16 +16,13 @@ public:
 
     shared_ptr<sf::RenderWindow> window_ptr;
     int startingElement;
-    int damage = 25;
     char dir = 'S';
     int spriteNum = 0;
     int spellWidth = 128;
     int spellHeight = 64;
     float distance = 0;
-    sf::RectangleShape element;
     sf::Texture image;
     ProcessManager* pm;
-
     BasicAttack(){};
     BasicAttack(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
 
@@ -33,8 +30,7 @@ public:
     void createAttack(float x_pos, float y_pos, char dir);
     void update(float deltaTime);
     void initialize();
-
-    //sf::RectangleShape getAttackElement();
+    sf::RectangleShape getAttackElement();
 
 };
 
