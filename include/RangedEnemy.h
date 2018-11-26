@@ -15,18 +15,17 @@ private:
 public:
     shared_ptr<sf::RenderWindow> window_ptr;
     int attackElement;
-    int health = 100;
     char dir = 'S';
     int spriteNum = 0;
     float changeTimer = 0;
     float totalTime=0;
     float switchTime=100.0f;
     float enemyH, enemyW;
-    sf::RectangleShape body;
     sf::Texture image;
     ProcessManager* pm;
     float playerH = 128;
     float playerW = 64;
+
 
     RangedEnemy(){};
     RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
@@ -39,6 +38,8 @@ public:
     void reset(float x_pos, float y_pos);
     //void rangedAttack(int attackElement);
     void initialize();
+    void damageEnemy( float enemy );
+    void killEnemy( void );
 };
 
 #endif

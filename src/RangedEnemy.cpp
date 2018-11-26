@@ -42,5 +42,18 @@ void RangedEnemy::initialize()
 
 void RangedEnemy::update(float deltaTime)
 {
+    if(health <= 0 )
+    {
+        state = Process::DEAD;
+    }
     window_ptr -> draw(body);
+}
+
+void RangedEnemy::killEnemy()
+{
+    this -> state = Process::DEAD;
+}
+void RangedEnemy::damageEnemy(float damage)
+{
+    this -> health= this ->health - damage;
 }
