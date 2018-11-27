@@ -51,6 +51,11 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         UIIcon.setTextureRect(sf::IntRect(0,0,384,64));
         UIText.setRepeated(true);
         UIIcon.setTexture(&UIText);
+        itemIcon.setRadius(spellIconSize);
+        itemIcon.setPointCount(60);
+        itemIcon.setTextureRect(sf::IntRect(itemTextureSize*1,1*spellTextNum,itemTextureSize,itemTextureSize));
+        itemIcon.setTexture(&elementalText);
+        itemIcon.setPosition(bckgW/2 + 72 + 64  ,bckgH/2 + (screenH - 24 ));
         cout<< "SUCESS"<<endl;
     }
     this -> game = game;
@@ -183,6 +188,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         window_ptr -> setView(playerView);
                         UIIcon.move(0, -camMoveSpeed *deltaTime);
                         elementalIcon.move(0, -camMoveSpeed *deltaTime);
+                        itemIcon.move(0, -camMoveSpeed *deltaTime);
                     }
 
 
@@ -199,6 +205,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         window_ptr -> setView(playerView);
                         UIIcon.move(0, camMoveSpeed *deltaTime);
                         elementalIcon.move(0, camMoveSpeed *deltaTime);
+                        itemIcon.move(0, camMoveSpeed *deltaTime);
                     }
 
                 }
@@ -214,6 +221,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         window_ptr -> setView(playerView);
                         UIIcon.move( camMoveSpeed * deltaTime,0 );
                         elementalIcon.move( camMoveSpeed * deltaTime,0 );
+                        itemIcon.move( camMoveSpeed * deltaTime,0 );
                     }
 
 
@@ -229,9 +237,20 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         window_ptr -> setView(playerView);
                         UIIcon.move( -camMoveSpeed * deltaTime ,0 );
                         elementalIcon.move( -camMoveSpeed * deltaTime ,0 );
+                        itemIcon.move( -camMoveSpeed * deltaTime ,0 );
                     }
                 }
+                //Pick up item
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+                {
+                    game -> grabItem();
+                    int itemDisplay = game->player.currentItem();
+                    if( itemDisplay > 0 )
+                    {
+                        itemIcon.setTextureRect(sf::IntRect(itemTextureSize*itemDisplay,itemTextureSize*1,itemTextureSize,itemTextureSize));
+                    }
 
+                }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
                 {
                     game -> createRangedEnemy(deltaTime);
@@ -261,9 +280,11 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 {
                     game -> setGameState(0);
                     elementalIcon.setPosition(bckgW/2 + 72  ,bckgH/2 + (screenH - 24 ));
+                    itemIcon.setPosition(bckgW/2 + 72 + 64   ,bckgH/2 + (screenH - 24 ));
                     UIIcon.setPosition(bckgW/2 + 64  ,bckgH/2 + (screenH - 32 ));
                     playerView.reset(sf::FloatRect(0,0,screenW,screenH));
                     window_ptr -> setView(playerView);
+                    game -> clearGame();
                 }
 
 
@@ -298,6 +319,12 @@ void GameViewPlayer::update(float deltaTime)
     window_ptr -> draw( game -> getPlayer());
     window_ptr -> draw(UIIcon);
     window_ptr -> draw(elementalIcon);
+
+    if(game ->player.currentItem() > 0 )
+    {
+           window_ptr -> draw(itemIcon);
+    }
+
 }
 void GameViewPlayer::drawBg()
 {

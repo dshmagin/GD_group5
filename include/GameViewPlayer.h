@@ -24,6 +24,7 @@ class GameViewPlayer
         sf::Texture elementalText;
         sf::Texture UIText;
         sf::CircleShape elementalIcon;
+        sf::CircleShape itemIcon;
         sf::RectangleShape UIIcon;
         sf::View playerView;
         GameLogic* game;
@@ -51,7 +52,7 @@ class GameViewPlayer
         bool hasTextureLoaded = true;
         bool chooseElement = false;
         shared_ptr<sf::RenderWindow> window_ptr;
-	bool wait = false;
+        bool wait = false;
 
     public:
 
