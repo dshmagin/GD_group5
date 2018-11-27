@@ -71,7 +71,7 @@ void TitleScreen::drawElementOption( float deltaTime )
     fire.setOutlineThickness(2);
     water.setFont(GameFont);
     water.setString("Water");
-    water.setPosition(300,500);
+    water.setPosition(500,500);
     water.setColor(sf::Color::Blue);
     water.setOutlineColor( sf::Color( 0, 0, 0 ) );
     water.setOutlineThickness(2);
@@ -83,7 +83,7 @@ void TitleScreen::drawElementOption( float deltaTime )
     earth.setOutlineThickness(2);
     air.setFont(GameFont);
     air.setString("Air");
-    air.setPosition(500,500);
+    air.setPosition(300,500);
     air.setColor(sf::Color::White);
     air.setOutlineColor( sf::Color( 0, 0, 0 ) );
     air.setOutlineThickness(2);
@@ -94,13 +94,13 @@ void TitleScreen::drawElementOption( float deltaTime )
         fire.setColor(sf::Color::Yellow);
         break;
     case 1:
-        water.setColor(sf::Color::Yellow);
+        air.setColor(sf::Color::Yellow);
         break;
     case 2:
         earth.setColor(sf::Color::Yellow);
         break;
     case 3:
-        air.setColor(sf::Color::Yellow);
+        water.setColor(sf::Color::Yellow);
         break;
     }
     window_ptr -> draw( fire );

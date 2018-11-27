@@ -20,6 +20,7 @@ class ProcessManager
         void abortAllProcess();
         int itemNearBy(sf::RectangleShape body);
         void clearManager();
+        int checkEnemies();
         ProcessManager(){};
 };
 

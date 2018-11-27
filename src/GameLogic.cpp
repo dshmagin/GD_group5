@@ -54,10 +54,10 @@ void GameLogic::createPlayerAttack(char dir, float deltaTime)
 
 }
 
-void GameLogic::createRangedEnemy(float deltaTime)
+void GameLogic::createRangedEnemy()
 {
     shared_ptr<RangedEnemy> rEnemy =make_shared<RangedEnemy>(window_ptr,startingElement);
-    rEnemy->createRangedEnemy(1500, 1500);
+    rEnemy->createRangedEnemy();
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
 void GameLogic::update(float deltaTime)
@@ -72,6 +72,13 @@ void GameLogic::update(float deltaTime)
     {
         basicAttackOnCd = true;
     }
+    if(pm -> checkEnemies() <= 0)
+    {
+        wave++;
+        startWave();
+        level++;
+    }
+
 }
 void GameLogic::idle()
 {
@@ -113,4 +120,27 @@ void GameLogic::clearGame()
 {
     pm -> clearManager();
     player.item( Process::NONE );
+}
+
+void GameLogic::setLevel(int level)
+{
+    this -> level = level;
+    this -> wave = 1;
+}
+int GameLogic::getLevel()
+{
+    return level;
+}
+
+void GameLogic::startWave()
+{
+    totalEnemies = 1 * wave;
+
+    cout<<"totalEnemies enemy " << totalEnemies << endl;
+    for (int enemies = 0; enemies<totalEnemies; enemies++)
+    {
+        cout<<"Created enemy " << enemies << endl;
+        createRangedEnemy();
+    }
+
 }
