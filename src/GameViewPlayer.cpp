@@ -121,18 +121,23 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
                 {
+                    currentLevel = game -> getLevel();
                     background.setSize(sf::Vector2f(bckgW,bckgH));
                     playerView.reset(sf::FloatRect(bckgW/2,bckgH/2,screenW,screenH));
                     background.setTextureRect(sf::IntRect(textureSize,textureSize,bckgW,bckgH));
-                    setBackgroundTexture(menu -> getSelectedElement());
+                    game -> setStartingElement(menu -> getSelectedElement());
+                    setBackgroundTexture((menu -> getSelectedElement() + game ->getLevel()) % 4);
+                    currentBckg = (menu -> getSelectedElement() + game ->getLevel()) % 4;
+                    elementalAttack = game -> getStartingElement();
                     window_ptr -> setView(playerView);
                     menu -> stopMusic();
+                    game -> startWave();
                     game -> setGameState(2);
-                    game -> setStartingElement(menu -> getSelectedElement());
                     game -> initiliaze(bckgW, bckgH, screenW, screenH, textureSize, playerW, playerH);
                     game -> resetPlayer();
-
-
+                    currentLevel = game -> getLevel();
+                    elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
+                    cout<< "SELENA GOMEZ "<<(menu -> getSelectedElement() + game ->getLevel()) % 4<< endl;
                 }
             }
         }
@@ -251,11 +256,12 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     }
 
                 }
+                /*
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
                 {
                     game -> createRangedEnemy(deltaTime);
                 }
-
+                */
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
@@ -278,7 +284,9 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 {
+                    game -> setLevel(1);
                     game -> setGameState(0);
+                    elementalAttack = game -> getStartingElement();
                     elementalIcon.setPosition(bckgW/2 + 72  ,bckgH/2 + (screenH - 24 ));
                     itemIcon.setPosition(bckgW/2 + 72 + 64   ,bckgH/2 + (screenH - 24 ));
                     UIIcon.setPosition(bckgW/2 + 64  ,bckgH/2 + (screenH - 32 ));
@@ -308,13 +316,20 @@ void GameViewPlayer::setTitleScreen(TitleScreen* screen)
 
 void GameViewPlayer::update(float deltaTime)
 {
+    if(currentLevel != game -> getLevel())
+    {
+        currentBckg = ((currentBckg + 1) % 4) ;
+        cout<<"current bg " << currentBckg << endl;
+        setBackgroundTexture(currentBckg);
+        currentLevel = game -> getLevel();
+    }
     if(game -> isBasicAttackOnCd())
     {
         elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*0,itemTextureSize*1,itemTextureSize,itemTextureSize));
     }
     else
     {
-        elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*game->getStartingElement(),0*spellTextNum,itemTextureSize,itemTextureSize));
+        elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
     }
     window_ptr -> draw( game -> getPlayer());
     window_ptr -> draw(UIIcon);
@@ -339,13 +354,13 @@ void GameViewPlayer::setBackgroundTexture(int element)
         background.setTexture(&fireBg);
         break;
     case 1:
-        background.setTexture(&waterBg);
+        background.setTexture(&airBg);
         break;
     case 2:
         background.setTexture(&earthBg);
         break;
     case 3:
-        background.setTexture(&airBg);
+        background.setTexture(&waterBg);
         break;
     }
 }

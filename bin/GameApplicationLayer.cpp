@@ -46,12 +46,12 @@ int main(int argc, char** argv)
 			keycode = Event.key.code;
 		}
             }
-	}
+        }
 
         need_key_value = gvp.checkKeyEvents( deltaTime, keycode);
-	if(!need_key_value){
-		keycode = sf::Keyboard::Unknown;
-	}
+        if(!need_key_value){
+            keycode = sf::Keyboard::Unknown;
+        }
 
         if( game -> getGameState() == 0 )
         {
@@ -64,9 +64,9 @@ int main(int argc, char** argv)
             menu.drawElementOption(deltaTime);
         }
         if( game -> getGameState() == 3 )
-	{
+        {
 	    menu.drawOptionsScreen(deltaTime);
-	}
+        }
 
         if ( game -> getGameState() == 2 )
         {

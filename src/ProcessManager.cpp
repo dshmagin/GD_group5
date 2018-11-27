@@ -3,7 +3,6 @@
 #include "Process.h"
 #include "iostream"
 #include <vector>
-#include "Items.h"
 #include <cstdlib>
 
 using namespace std;
@@ -55,7 +54,7 @@ void ProcessManager::updateProcessList(float deltaMs)
                             if(enemy -> health <= 0 )
                             {
                                 int itemDropRate = rand() % 100;
-                                int itemType = rand() % 3 + 1;
+                                int itemType = (rand() % 3) + 1;
                                 if( itemDropRate >= 30 )
                                 {
                                 itemList.push_back(enemy);
@@ -127,4 +126,9 @@ void ProcessManager::clearManager()
     processList.clear();
     itemList.clear();
     enemyList.clear();
+}
+
+int ProcessManager::checkEnemies()
+{
+    return enemyList.size();
 }

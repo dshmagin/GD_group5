@@ -28,6 +28,9 @@ class GameViewPlayer
         sf::RectangleShape UIIcon;
         sf::View playerView;
         GameLogic* game;
+        float elementalAttack;
+        int  currentBckg;
+        int  currentLevel ;
         float movementSpeed = .4f;
         int   bckgTextNum;
         int   spellAssetCol = 0;

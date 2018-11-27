@@ -20,6 +20,8 @@ class GameLogic
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
+        int level = 1;
+        int wave = 1;
         float basicAttackCd = 300;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
@@ -28,6 +30,7 @@ class GameLogic
 
     public:
         Player player;
+        int totalEnemies;
         //BasicAttack bAttack;
 
         GameLogic();
@@ -45,11 +48,14 @@ class GameLogic
         void idle();
         void update(float deltaTime);
         void createPlayerAttack(char, float);
-        void createRangedEnemy(float deltaTime);
+        void createRangedEnemy();
         void setStartingElement(int startingElement);
         void resetPlayer();
         void grabItem();
         void clearGame();
+        void startWave();
+        void setLevel(int level);
+        int  getLevel();
         //void dropItem(loc_x, loc_y);
 
 

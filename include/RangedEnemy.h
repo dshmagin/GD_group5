@@ -5,7 +5,6 @@
 #include "Process.h"
 #include "ProcessManager.h"
 #include <memory>
-#include "EventManager.h"
 
 using namespace std;
 
@@ -32,7 +31,7 @@ public:
     RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
     void update(float deltaTime);
     //void animation( float deltaTime, char dir);
-    void createRangedEnemy(float x_pos, float y_pos);
+    void createRangedEnemy();
     sf::RectangleShape getEnemyBody();
     //float getXPos();
     //float getYPos();

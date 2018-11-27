@@ -1,7 +1,6 @@
 #include "RangedEnemy.h"
 #include "ProcessManager.h"
 #include <cstdlib>
-#include "Items.h"
 
 RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
 {
@@ -15,12 +14,12 @@ RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElem
     this -> attackElement = attackElement;
 }
 
-void RangedEnemy::createRangedEnemy(float x_pos, float y_pos)
+void RangedEnemy::createRangedEnemy()
 {
 
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
-    float loc_x = rand() % 2400;
-    float loc_y = rand() % 1800;
+    float loc_x = (rand() % (1200 - 200) + 100);
+    float loc_y = (rand() % (900 - 200) + 100);
     this -> body.setPosition(loc_x, loc_y);
     this -> body.setTexture(&image);
     initialize();

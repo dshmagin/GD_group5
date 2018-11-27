@@ -8,7 +8,7 @@ BasicAttack::BasicAttack(shared_ptr<sf::RenderWindow> window_ptr, int startingEl
     if( !image.loadFromFile( "../Assets/Images/elemental_attack.png" ))
         cout<<"Cannot load AttackSprite"<<endl;
 
-    body.setTextureRect(sf::IntRect(128 * 0 ,64 * startingElement,128 * 1,64 * 1));
+    body.setTextureRect(sf::IntRect(128 * 0 ,64 * 1,128 * 1,64 * 1));
     this -> startingElement = startingElement;
 }
 
