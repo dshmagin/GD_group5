@@ -1,13 +1,15 @@
 #include "RangedEnemy.h"
 #include "ProcessManager.h"
 #include <cstdlib>
+#include "Items.h"
 
 RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
 {
     this -> window_ptr = window_ptr;
-    this -> pm = pm;
     if( !image.loadFromFile( "../Assets/Images/BenderAi.png" ))
         cout<<"Cannot load BenderAi"<<endl;
+    if( !itemImg.loadFromFile( "../Assets/Images/items.png" ))
+        cout<<"Cannot load items"<<endl;
 
     body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 0,playerW ,playerH ));
     this -> attackElement = attackElement;
@@ -42,18 +44,18 @@ void RangedEnemy::initialize()
 
 void RangedEnemy::update(float deltaTime)
 {
-    if(health <= 0 )
+
+
+    if(!ifItemNotSet && type == Process::ITEM)
     {
-        state = Process::DEAD;
+        cout<<"ITEM HERE"<< this -> toDrop <<endl;
+        ifItemNotSet = true;
+        body.setPosition(body.getPosition().x + 16, body.getPosition().y + 64);
+        body.setSize(sf::Vector2f(32 ,32));
+        body.setTextureRect(sf::IntRect(32* this -> toDrop,32 * 1,32 ,32 ));
+        body.setTexture(&itemImg);
     }
     window_ptr -> draw(body);
 }
 
-void RangedEnemy::killEnemy()
-{
-    this -> state = Process::DEAD;
-}
-void RangedEnemy::damageEnemy(float damage)
-{
-    this -> health= this ->health - damage;
-}
+

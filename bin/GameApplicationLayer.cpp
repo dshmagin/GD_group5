@@ -14,6 +14,7 @@ int main(int argc, char** argv)
     sf::Clock clock;
     shared_ptr<sf::RenderWindow> window_ptr =make_shared<sf::RenderWindow>(sf::VideoMode(800,600,32), "Ground Break");
     shared_ptr<ProcessManager> pm  = make_shared<ProcessManager>();
+    //shared_ptr<GameLogic> game  = make_shared<GameLogic>(window_ptr,pm);
     GameLogic* game = new GameLogic(window_ptr,pm);
     GameViewPlayer gvp = GameViewPlayer(game, window_ptr);
     TitleScreen menu = TitleScreen(window_ptr);
@@ -46,12 +47,12 @@ int main(int argc, char** argv)
 		}
             }
 	}
-         
+
         need_key_value = gvp.checkKeyEvents( deltaTime, keycode);
 	if(!need_key_value){
 		keycode = sf::Keyboard::Unknown;
-	}	
-	
+	}
+
         if( game -> getGameState() == 0 )
         {
 

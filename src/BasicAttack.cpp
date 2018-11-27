@@ -105,6 +105,7 @@ void BasicAttack::initialize()
  this -> type  =Process::ATTACK;
 }
 
+
 sf::RectangleShape BasicAttack::getAttackElement()
 {
     return body;

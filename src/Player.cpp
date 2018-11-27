@@ -99,3 +99,11 @@ void Player::reset(float x_pos, float y_pos)
 {
     body.setPosition(x_pos,y_pos);
 }
+void Player::item(int curItem)
+{
+    this -> curItem = curItem;
+}
+int Player::currentItem()
+{
+    return curItem;
+}

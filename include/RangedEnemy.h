@@ -5,6 +5,7 @@
 #include "Process.h"
 #include "ProcessManager.h"
 #include <memory>
+#include "EventManager.h"
 
 using namespace std;
 
@@ -22,10 +23,10 @@ public:
     float switchTime=100.0f;
     float enemyH, enemyW;
     sf::Texture image;
-    ProcessManager* pm;
+    sf::Texture itemImg;
     float playerH = 128;
     float playerW = 64;
-
+    bool ifItemNotSet = false;
 
     RangedEnemy(){};
     RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
@@ -38,8 +39,6 @@ public:
     void reset(float x_pos, float y_pos);
     //void rangedAttack(int attackElement);
     void initialize();
-    void damageEnemy( float enemy );
-    void killEnemy( void );
 };
 
 #endif

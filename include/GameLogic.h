@@ -33,26 +33,24 @@ class GameLogic
         GameLogic();
         GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm);
 
-        void setGameState( int GameState );
+        bool isBasicAttackOnCd();
+        int getStartingElement();
         int  getGameState( void );
-
-        void initiliaze(float bckgW, float bckgH, float screenW, float screenH, float bckgPixSize, float playerW, float playerH);
-
-
         sf::RectangleShape getPlayer();
         sf::RectangleShape getAttack();
+        sf::Vector2f getPlayerCoord();
+        void setGameState( int GameState );
+        void initiliaze(float bckgW, float bckgH, float screenW, float screenH, float bckgPixSize, float playerW, float playerH);
         void setDirection(int dir, float deltaTime );
         void idle();
         void update(float deltaTime);
-
-        sf::Vector2f getPlayerCoord();
-
         void createPlayerAttack(char, float);
         void createRangedEnemy(float deltaTime);
-        int getStartingElement();
-        bool isBasicAttackOnCd();
         void setStartingElement(int startingElement);
         void resetPlayer();
+        void grabItem();
+        void clearGame();
+        //void dropItem(loc_x, loc_y);
 
 
 

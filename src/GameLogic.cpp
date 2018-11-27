@@ -100,3 +100,17 @@ void GameLogic::resetPlayer()
 {
     player.reset(bckgW/2 + (screenW/2 - playerW/2) ,bckgH/2 + (screenH/2 - playerH/2) );
 }
+void GameLogic::grabItem()
+{
+    int curItem = pm ->itemNearBy(getPlayer());
+    if(curItem > 0)
+    {
+        player.item(curItem);
+    }
+}
+
+void GameLogic::clearGame()
+{
+    pm -> clearManager();
+    player.item( Process::NONE );
+}

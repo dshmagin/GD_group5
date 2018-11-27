@@ -1,6 +1,7 @@
 #ifndef PLAYER_H_INCLUDED
 #define PLAYER_H_INCLUDED
 #include <iostream>
+#include "Process.h"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
@@ -8,6 +9,7 @@ using namespace std;
 class Player
 {
 private:
+    int curItem = Process::NONE;
     int health = 100;
     int dir = SOUTH;
     int spriteNum = 0;
@@ -38,6 +40,8 @@ public:
     float getXPos();
     float getYPos();
     void reset(float x_pos, float y_pos);
+    void item(int curItem);
+    int currentItem();
 };
 
 
