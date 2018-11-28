@@ -1,4 +1,5 @@
 #include "GameLogic.h"
+#include "RangedEnemy.h"
 
 using namespace std;
 
@@ -56,8 +57,8 @@ void GameLogic::createPlayerAttack(char dir, float deltaTime)
 
 void GameLogic::createRangedEnemy()
 {
-    shared_ptr<RangedEnemy> rEnemy =make_shared<RangedEnemy>(window_ptr,startingElement);
-    rEnemy->createRangedEnemy();
+    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,startingElement);
+    rEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
 void GameLogic::update(float deltaTime)

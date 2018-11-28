@@ -4,7 +4,7 @@
 #include <SFML/Audio.hpp>
 #include "Player.h"
 #include "BasicAttack.h"
-#include "RangedEnemy.h"
+//#include "RangedEnemy.h"
 #include "ProcessManager.h"
 #include <memory>
 

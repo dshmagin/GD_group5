@@ -38,7 +38,7 @@ void Player::setDirection(int dir,float deltaTime)
 {
     this -> dir = dir;
     moveKeyIsPressed = true;
-    float moveVal = .3 *deltaTime;
+    float moveVal = .3 * deltaTime;
     switch(dir)
     {
     case NORTH:
