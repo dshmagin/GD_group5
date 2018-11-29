@@ -102,7 +102,7 @@ void BasicAttack::initialize()
 {
  this -> damage = 25;
  this -> state = Process::RUNNING;
- this -> type  =Process::ATTACK;
+ this -> type  = Process::ATTACK;
 }
 
 

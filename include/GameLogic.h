@@ -4,6 +4,7 @@
 #include <SFML/Audio.hpp>
 #include "Player.h"
 #include "BasicAttack.h"
+#include "Buff.h"
 //#include "RangedEnemy.h"
 #include "ProcessManager.h"
 #include <memory>
@@ -22,7 +23,9 @@ class GameLogic
         int GameState = 0;
         int level = 1;
         int wave = 1;
-        float basicAttackCd = 300;
+        float basicAttackCd = 1000;
+        float airShieldCd= 30000;
+        bool paused = false;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
 
@@ -37,6 +40,7 @@ class GameLogic
         GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm);
 
         bool isBasicAttackOnCd();
+        bool isAirShieldOnCd();
         int getStartingElement();
         int  getGameState( void );
         sf::RectangleShape getPlayer();
@@ -48,6 +52,7 @@ class GameLogic
         void idle();
         void update(float deltaTime);
         void createPlayerAttack(char, float);
+        void createBuff(int buffType);
         void createRangedEnemy();
         void setStartingElement(int startingElement);
         void resetPlayer();
@@ -56,6 +61,7 @@ class GameLogic
         void startWave();
         void setLevel(int level);
         int  getLevel();
+        bool isPaused();
         //void dropItem(loc_x, loc_y);
 
 

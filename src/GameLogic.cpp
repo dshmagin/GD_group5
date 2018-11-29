@@ -29,6 +29,8 @@ void GameLogic::initiliaze( float bckgW, float bckgH, float screenW, float scree
     this -> bckgPixSize = bckgPixSize;
     player = Player( playerH, playerW);
     player.createPlayer(bckgW/2 + (screenW/2 - playerW/2) ,bckgH/2 + (screenH/2 - playerH/2) );
+    // need to refactor
+    pm->setPlayer(&player);
 }
 
 sf::RectangleShape GameLogic::getPlayer()
@@ -45,7 +47,7 @@ void GameLogic::setDirection(int dir,float deltaTime)
 }
 void GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
-    if(basicAttackCd > 300)
+    if(basicAttackCd > 600)
     {
         basicAttackCd = 0;
         shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr,startingElement);
@@ -53,6 +55,15 @@ void GameLogic::createPlayerAttack(char dir, float deltaTime)
         pm ->  attachProcess((shared_ptr<Process>) bAttack);
     }
 
+}
+
+void GameLogic::createBuff(int buffType) {
+	if (airShieldCd > 30000) {
+		airShieldCd = 0;
+		shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
+		buff->createBuff(buffType);
+		pm->attachProcess((shared_ptr<Process>)buff);
+	}
 }
 
 void GameLogic::createRangedEnemy()
@@ -64,8 +75,9 @@ void GameLogic::createRangedEnemy()
 void GameLogic::update(float deltaTime)
 {
     basicAttackCd += deltaTime;
+    airShieldCd += deltaTime;
     player.update(deltaTime);
-    if(basicAttackCd > 300)
+    if(basicAttackCd > 600)
     {
       basicAttackOnCd = false;
     }
@@ -144,4 +156,8 @@ void GameLogic::startWave()
         createRangedEnemy();
     }
 
+}
+
+bool GameLogic::isPaused() {
+	return paused;
 }

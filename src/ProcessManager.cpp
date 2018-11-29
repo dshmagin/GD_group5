@@ -47,7 +47,7 @@ void ProcessManager::updateProcessList(float deltaMs)
                         if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
                         {
                            cout<< "ENEMY Damaged by "<< p -> damage << endl;
-                           enemy -> health -= p-> damage;
+                           enemy -> health -= p-> damage * player_ptr->getDM();
                            p->state = Process::DEAD;
 
                         //kill the enemy if health reaches below zero
@@ -131,4 +131,7 @@ void ProcessManager::clearManager()
 int ProcessManager::checkEnemies()
 {
     return enemyList.size();
+}
+void ProcessManager::setPlayer(Player* player) {
+	player_ptr = player;
 }

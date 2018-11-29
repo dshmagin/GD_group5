@@ -1,6 +1,7 @@
 #ifndef PROCESSMANAGER_H_INCLUDED
 #define PROCESSMANAGER_H_INCLUDED
 #include "Process.h"
+#include "Player.h"
 #include <list>
 #include <vector>
 #include <memory>
@@ -9,6 +10,8 @@ class ProcessManager
 {
     private:
         int curItem = Process::NONE;
+        Player* player_ptr;
+
     public:
 
         shared_ptr<sf::RenderWindow> window_ptr;
@@ -22,6 +25,7 @@ class ProcessManager
         void clearManager();
         int checkEnemies();
         ProcessManager(){};
+        void setPlayer(Player* player);
 };
 
 #endif // PROCESSMANAGER_H_INCLUDED

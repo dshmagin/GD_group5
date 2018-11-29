@@ -12,11 +12,12 @@ using namespace std;
 class RangedEnemy : public Process
 {
 private:
+	float speed = 0.2;
 
 public:
     shared_ptr<sf::RenderWindow> window_ptr;
     int attackElement;
-    int dir = 0;
+    char dir = 'S';
     int spriteNum = 0;
     float changeTimer = 0;
     float totalTime=0;
@@ -33,8 +34,7 @@ public:
     RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
     sf::Vector2f findPlayer(float deltaTime);
     void update(float deltaTime);
-    void setDirection(int dir, int spriteNum);
-    int getDirection(sf::Vector2f toPlayer);
+    void setDirection(int dir);
     //void animation( float deltaTime, char dir);
     void createRangedEnemy(GameLogic* gameLogic);
     sf::RectangleShape getEnemyBody();
