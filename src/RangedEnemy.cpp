@@ -6,7 +6,7 @@
 RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
 {
     this -> window_ptr = window_ptr;
-    if( !image.loadFromFile( "../Assets/Images/BenderAi.png" ))
+    if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
         cout<<"Cannot load BenderAi"<<endl;
     if( !itemImg.loadFromFile( "../Assets/Images/items.png" ))
         cout<<"Cannot load items"<<endl;
@@ -55,10 +55,16 @@ void RangedEnemy::update(float deltaTime)
         body.setTexture(&itemImg);
     }
 
-    if (type != Process::ITEM){
+    if (this -> type != Process::ITEM){
         sf::Vector2f toPlayer = findPlayer(deltaTime);
+        if( changeTimer > 10 )
+            {
+              spriteNum = (spriteNum + 1) % 4;
+              changeTimer = 0;
+            }
+        changeTimer += 0.04f *deltaTime;
         this -> body.move(toPlayer.x, toPlayer.y);
-
+        setDirection(getDirection(toPlayer), spriteNum);
     }
 
     window_ptr -> draw(this -> body);
@@ -68,7 +74,7 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
 {
     float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
     float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
-    //float compInvSqrt = inverse_rsqrt(xComp * xComp + yComp * yComp);
+
     std::cout << xComp << "\n";
     std::cout << yComp << "\n";
 
@@ -80,80 +86,85 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
     return toPlayer;
 }
 
-void RangedEnemy::setDirection(int dir)
+int RangedEnemy::getDirection(sf::Vector2f toPlayer)
 {
-    switch(dir)
+    if (toPlayer.x > 0 && toPlayer.y > 0)
+    {
+        if (abs(toPlayer.x) < abs(toPlayer.y))
+        {
+            //Face East
+            //this.setDirection(2);
+            return 0;
+        }
+        else
+        {
+            //Face South
+            //this.setDirection(0);
+            return 2;
+        }
+    }
+    else if (toPlayer.x > 0 && toPlayer.y < 0)
+    {
+        if (abs(toPlayer.x) < abs(toPlayer.y))
+        {
+            //Face East
+            //this.setDirection(2);
+            return 3;
+        }
+        else
+        {
+            //Face North
+            //this.setDirection(3);
+            return 2;
+        }
+    }
+    else if (toPlayer.x < 0 && toPlayer.y > 0)
+    {
+        if (abs(toPlayer.x) < abs(toPlayer.y))
+        {
+            //Face West
+            //this.setDirection(1);
+            return 0;
+        }
+        else
+        {
+            //Face South
+            //this.setDirection(0);
+            return 1;
+        }
+    }
+    else
+    {
+        if (abs(toPlayer.x) < abs(toPlayer.y))
+        {
+            //Face West
+            //this.setDirection(1);
+            return 3;
+        }
+        else
+        {
+            //Face North
+            //this.setDirection(3);
+            return 1;
+        }
+    }
+}
+
+void RangedEnemy::setDirection(int dir, int spriteNum)
+{
+    switch(spriteNum )
     {
         case 0:
-            switch(spriteNum )
-            {
-                case 0:
-                    body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir, playerW, playerH));
-                    break;
-                case 1:
-                    body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * dir,playerW ,playerH ));
-                    break;
-                case 2:
-                    body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir,playerW ,playerH ));
-                    break;
-                case 3:
-                    body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * dir,playerW ,playerH ));
-                    break;
-            }
+            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir, playerW, playerH));
             break;
-
         case 1:
-            switch(spriteNum )
-            {
-                case 0:
-                    body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir, playerW, playerH));
-                    break;
-                case 1:
-                    body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * dir,playerW ,playerH ));
-                    break;
-                case 2:
-                    body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir,playerW ,playerH ));
-                    break;
-                case 3:
-                    body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * dir,playerW ,playerH ));
-                    break;
-            }
+            body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * dir, playerW ,playerH ));
             break;
-
         case 2:
-            switch(spriteNum )
-            {
-                case 0:
-                    body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir, playerW, playerH));
-                    break;
-                case 1:
-                    body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * dir,playerW ,playerH ));
-                    break;
-                case 2:
-                    body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir,playerW ,playerH ));
-                    break;
-                case 3:
-                    body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * dir,playerW ,playerH ));
-                    break;
-            }
+            body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir, playerW ,playerH ));
             break;
-
         case 3:
-            switch(spriteNum )
-            {
-                case 0:
-                    body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir, playerW, playerH));
-                    break;
-                case 1:
-                    body.setTextureRect(sf::IntRect(playerW * 0 ,playerH * dir,playerW ,playerH ));
-                    break;
-                case 2:
-                    body.setTextureRect(sf::IntRect(playerW * 1 ,playerH * dir,playerW ,playerH ));
-                    break;
-                case 3:
-                    body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * dir,playerW ,playerH ));
-                    break;
-            }
+            body.setTextureRect(sf::IntRect(playerW * 2 ,playerH * dir, playerW ,playerH ));
             break;
     }
 }

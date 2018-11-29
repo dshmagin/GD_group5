@@ -38,7 +38,7 @@ void Player::setDirection(int dir,float deltaTime)
 {
     this -> dir = dir;
     moveKeyIsPressed = true;
-    float moveVal = .3 * deltaTime;
+    float moveVal = .3 *deltaTime;
     switch(dir)
     {
     case NORTH:
@@ -87,7 +87,7 @@ void Player::update(float deltaTime)
     {
       if( changeTimer > 10 )
         {
-            spriteNum = (spriteNum +1) % 4;
+            spriteNum = (spriteNum + 1) % 4;
             changeTimer = 0;
         }
     }
