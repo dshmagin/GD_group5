@@ -71,14 +71,14 @@ int main(int argc, char** argv)
         if ( game -> getGameState() == 2 )
         {
             gvp.drawBg();
-            pm -> updateProcessList(deltaTime);
             gvp.update(deltaTime);
-            game -> update(deltaTime);
-            // do gvp and game in process.
+            if (!game->isPaused()) {
+            	game -> update(deltaTime);
+            	pm -> updateProcessList(deltaTime);
+            }
         }
         window_ptr->display();
     }
-
     // Done.
     return 0;
 }

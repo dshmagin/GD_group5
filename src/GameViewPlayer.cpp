@@ -25,6 +25,7 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         hasTextureLoaded = false;
         cout << "Cannot load air background " << endl;
     }
+
     if( !elementalText.loadFromFile( "../Assets/Images/items.png" ) )
     {
         hasTextureLoaded = false;
@@ -177,6 +178,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 
         if( game -> getGameState() == 2 )
         {
+        	camMoveSpeed = game->player.getSpeed();
             movingX = false;
             movingY = false;
 
@@ -281,6 +283,9 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                 {
                     game -> createPlayerAttack('E',deltaTime);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+                	game->createBuff(0);
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 {

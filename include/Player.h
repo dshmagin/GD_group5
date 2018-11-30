@@ -19,10 +19,10 @@ private:
     float playerH, playerW;
     sf::RectangleShape body;
     sf::Texture image;
-
-
-
-
+    float speed;
+    float damageMultiplier = 1;
+    float damageReceivedMultiplier = 1;
+    float dodge = 0;
 
 public:
     // Enum that matches the sprite sheets row
@@ -42,6 +42,17 @@ public:
     void reset(float x_pos, float y_pos);
     void item(int curItem);
     int currentItem();
+
+    void setSpeed(float s);
+    void updateSpeed(float multiplier);
+    float getSpeed();
+
+    void updateDM(float multilpier); // dm = damage multiplier
+    float getDM();
+    void updateDRM(float multiplier); // drm = damage received multiplier
+    float getDRM();
+    void updateDodge(float multiplier);
+    float getDodge();
 };
 
 

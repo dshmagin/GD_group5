@@ -31,7 +31,6 @@ class GameViewPlayer
         float elementalAttack;
         int  currentBckg;
         int  currentLevel ;
-        float movementSpeed = .4f;
         int   bckgTextNum;
         int   spellAssetCol = 0;
         int   itemsAssetsCol = 2;
@@ -56,6 +55,7 @@ class GameViewPlayer
         bool chooseElement = false;
         shared_ptr<sf::RenderWindow> window_ptr;
         bool wait = false;
+        //AbilityBar abilityBar;
 
     public:
 

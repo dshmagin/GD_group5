@@ -7,7 +7,8 @@ Player::Player(float playerH, float playerW)
     if( !image.loadFromFile( "../Assets/Images/Simu.png" ) )
         cout<<"Cannot PlayerSprite"<<endl;
 
-        body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 0,playerW ,playerH ));
+    body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 0,playerW ,playerH ));
+    setSpeed(.3);
 }
 
 void Player::createPlayer(float x_pos, float y_pos)
@@ -38,7 +39,7 @@ void Player::setDirection(int dir,float deltaTime)
 {
     this -> dir = dir;
     moveKeyIsPressed = true;
-    float moveVal = .3 *deltaTime;
+    float moveVal = speed * deltaTime;
     switch(dir)
     {
     case NORTH:
@@ -87,7 +88,7 @@ void Player::update(float deltaTime)
     {
       if( changeTimer > 10 )
         {
-            spriteNum = (spriteNum + 1) % 4;
+            spriteNum = (spriteNum +1) % 4;
             changeTimer = 0;
         }
     }
@@ -107,3 +108,40 @@ int Player::currentItem()
 {
     return curItem;
 }
+
+void Player::setSpeed(float s) {
+	speed = s;
+}
+
+void Player::updateSpeed(float multiplier) {
+	speed *= multiplier;
+}
+
+float Player::getSpeed() {
+	return speed;
+}
+
+void Player::updateDM(float multiplier) {
+	damageMultiplier *= multiplier;
+}
+
+float Player::getDM() {
+	return damageMultiplier;
+}
+
+void Player::updateDRM(float multiplier) {
+	damageReceivedMultiplier *= multiplier;
+}
+
+float Player::getDRM() {
+	return damageReceivedMultiplier;
+}
+
+void Player::updateDodge(float multiplier) {
+	dodge *= multiplier;
+}
+
+float Player::getDodge() {
+	return dodge;
+}
+

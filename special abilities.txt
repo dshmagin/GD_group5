@@ -1,0 +1,48 @@
+all the numbers are tentative and subject to change
+skills:
+
+air:
+air shield: Distort the air around the character and decrease the damage he/she takes. (upgrades: has 20% chance to totally dodge an attack)
+
+wind step: Use the power of air to enhance the character’s movement. The character moves 30% faster and will not be blocked by other characters. (upgrade: moving through other characters does damage to them)
+
+air thrust: knock back enemies in front of the character, dealing moderate damage. (upgrade: also slows the enemy knocked back, and increase damage)
+
+vacuum: squeeze enemies in front of the character together, deal damage in the area. (upgrade: root the enemies squeezed)
+
+tornado: lifting enemies in front of the character, they cannot attack or be attacked in the duration. (upgrade: enemies receive damage when the fall to the ground)
+
+
+fire:
+ring of flame:  A ring of fire expands from the character, dealing fire damage. (upgrade: set character damaged by ring of fire on fire, dealing dot damage)
+
+overheat: passive ability, each time the character cast an ability, increase his/her fire damage by 10%, can stack up to 10 stacks. (upgrade: also increase the player’s movement speed and shortens attack intervals)
+
+meteor: A meteor falls to the point 128 pixels in front of the character, dealing damage to all enemies in 128 pixels. (upgrade: stunning them as well)
+
+fire blast: bursts out a huge wave of heat energy from the character, moving along the direction he/she is facing when casted, dealing enormous damage to every enemy on the way. The damage attenuates each time the spell hits and enemy. (upgrade: decrease the attenuation)
+
+scorch wounds: removes all the debuffs, and heal for a small amount (upgrade: gets 3 stacks of overheat)
+
+
+earth:
+rock armor: conjure a shield absorbing 500 damage. (upgrade: damage received during the shield activation is reduced)
+
+wall of obstruction: call upon a wall in front of the player, obstructing enemies. enemies can attack the wall to break it. (upgrade: the wall becomes immune to attack)
+
+well of gravity: stuns enemies in the area and deal damage each second. (upgrade: the damage increases gradually)
+
+earthquake: shatter the earth in front of the character, slowing enemies in the area and deal damage each second. (upgrade: enemies damaged by the ability get shattered, receive more damage, can stack up to 5 stacks)
+
+King of mountains: after activation, the character’s basic attack increases and has a chance to stun enemies, but the movement speed is decreased (upgrade: remove speed decrease, and decrease damage recieved)
+
+water:
+blizzard: conjure a blizzard in front of the character, dealing damage to all enemies in the area every second, last 5 seconds. (upgrade: any enemies staying in the area for 2 seconds get frozen)
+
+healing bubble: generate a healing bubble to surround the character, provides a shield of 300 hp and heal the character gradually, lasts 10 seconds or expire after the shield point is below 0. (upgrade: after the bubble explodes, deal area damage to all enemies 128 pixels around the character)
+
+chilling touch: after activation, basic attack deal more water damage and slows the enemy. (upgrade: deal 3x damage to frozen enemies)
+
+frost nova: blasts enemies within 128 pixels of you, freezing them, dealing moderate amount of damage. (upgrade: increase the damage)
+
+soaked: when activated, the character moves faster and gets immune to all effects (stun, knock back, etc.) and fire damage. (upgrade: deal more water damage)
