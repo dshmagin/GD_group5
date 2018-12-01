@@ -14,8 +14,11 @@ private:
 	sf::CircleShape* elementalIcon_ptr;
 	sf::CircleShape* itemIcon_ptr;
 
+	bool dashed = false;
     int dir;
     float distance;
+    float x;
+    float y;
 
 public:
     Dash(){};

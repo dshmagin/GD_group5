@@ -56,6 +56,8 @@ public:
 
     void move(float x, float y);
     int getDirection();
+    float getPlayerH();
+    float getPlayerW();
 };
 
 

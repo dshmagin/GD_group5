@@ -152,3 +152,11 @@ void Player::move(float x, float y) {
 int Player::getDirection() {
 	return (int)dir;
 }
+
+float Player::getPlayerH() {
+	return playerH;
+}
+
+float Player::getPlayerW() {
+	return playerW;
+}
