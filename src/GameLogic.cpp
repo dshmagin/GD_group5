@@ -45,7 +45,7 @@ void GameLogic::setDirection(int dir,float deltaTime)
 {
     player.setDirection(dir,deltaTime);
 }
-void GameLogic::createPlayerAttack(char dir, float deltaTime)
+int GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
     if(basicAttackCd > 600)
     {
@@ -53,7 +53,9 @@ void GameLogic::createPlayerAttack(char dir, float deltaTime)
         shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr,startingElement);
         bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
         pm ->  attachProcess((shared_ptr<Process>) bAttack);
+	return 1;
     }
+    return 0;
 
 }
 
