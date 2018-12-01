@@ -76,6 +76,7 @@ int main(int argc, char** argv)
             	game -> update(deltaTime);
             	pm -> updateProcessList(deltaTime);
             }
+	    gvp.drawTransition(deltaTime);
         }
         window_ptr->display();
     }

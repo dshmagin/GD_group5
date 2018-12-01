@@ -89,10 +89,21 @@ void GameLogic::update(float deltaTime)
     }
     if(pm -> checkEnemies() <= 0)
     {
-        wave++;
-        startWave();
-        level++;
+	changing_level = true;
+	transition += deltaTime;
+	if(transition >= 1000.0 && !changed_background){
+            level++;
+	    changed_background = true;
+        }
+	if(transition >= 1500.0){
+	    wave++;
+	    startWave();
+	    transition = 0;
+	    changing_level = false;
+	    changed_background = false;
+	}
     }
+    
 
 }
 void GameLogic::idle()
@@ -162,4 +173,8 @@ void GameLogic::startWave()
 
 bool GameLogic::isPaused() {
 	return paused;
+}
+
+bool GameLogic::changingLevel(){
+	return changing_level;
 }

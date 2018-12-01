@@ -1,6 +1,7 @@
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <string>
 #include "TitleScreen.h"
 #include "GameLogic.h"
@@ -16,6 +17,8 @@ class GameViewPlayer
     private:
     //AI Movements
         TitleScreen* menu;
+	sf::Sound sound;
+	sf::SoundBuffer basicAttackSound;
         sf::Texture fireBg;
         sf::Texture waterBg;
         sf::Texture earthBg;
@@ -56,6 +59,9 @@ class GameViewPlayer
         shared_ptr<sf::RenderWindow> window_ptr;
         bool wait = false;
         //AbilityBar abilityBar;
+        bool transition_started;
+	sf::RectangleShape transitionBox1;
+	sf::RectangleShape transitionBox2;
 
     public:
 
@@ -66,6 +72,7 @@ class GameViewPlayer
         void update(float deltaTime);
         void drawBg();
         void setBackgroundTexture(int background);
+        void drawTransition(float deltaTime);
 
 };
 
