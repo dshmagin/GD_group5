@@ -57,6 +57,11 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         itemIcon.setTextureRect(sf::IntRect(itemTextureSize*1,1*spellTextNum,itemTextureSize,itemTextureSize));
         itemIcon.setTexture(&elementalText);
         itemIcon.setPosition(bckgW/2 + 72 + 64  ,bckgH/2 + (screenH - 24 ));
+        airShieldIcon.setRadius(spellIconSize);
+        airShieldIcon.setPointCount(60);
+        airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
+        airShieldIcon.setTexture(&elementalText);
+        airShieldIcon.setPosition(bckgW/2 + 72 + 32  ,bckgH/2 + (screenH - 24 ));
         cout<< "SUCESS"<<endl;
     }
     this -> game = game;
@@ -137,6 +142,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     game -> initiliaze(bckgW, bckgH, screenW, screenH, textureSize, playerW, playerH);
                     game -> resetPlayer();
                     currentLevel = game -> getLevel();
+                    airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
                     elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
                     cout<< "SELENA GOMEZ "<<(menu -> getSelectedElement() + game ->getLevel()) % 4<< endl;
                 }
@@ -195,6 +201,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         window_ptr -> setView(playerView);
                         UIIcon.move(0, -camMoveSpeed *deltaTime);
                         elementalIcon.move(0, -camMoveSpeed *deltaTime);
+                        airShieldIcon.move(0, -camMoveSpeed *deltaTime);
                         itemIcon.move(0, -camMoveSpeed *deltaTime);
                     }
 
@@ -212,6 +219,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         window_ptr -> setView(playerView);
                         UIIcon.move(0, camMoveSpeed *deltaTime);
                         elementalIcon.move(0, camMoveSpeed *deltaTime);
+                        airShieldIcon.move(0, camMoveSpeed *deltaTime);
                         itemIcon.move(0, camMoveSpeed *deltaTime);
                     }
 
@@ -228,6 +236,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         window_ptr -> setView(playerView);
                         UIIcon.move( camMoveSpeed * deltaTime,0 );
                         elementalIcon.move( camMoveSpeed * deltaTime,0 );
+                        airShieldIcon.move( camMoveSpeed * deltaTime,0 );
                         itemIcon.move( camMoveSpeed * deltaTime,0 );
                     }
 
@@ -244,6 +253,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         window_ptr -> setView(playerView);
                         UIIcon.move( -camMoveSpeed * deltaTime ,0 );
                         elementalIcon.move( -camMoveSpeed * deltaTime ,0 );
+                        airShieldIcon.move( -camMoveSpeed * deltaTime ,0 );
                         itemIcon.move( -camMoveSpeed * deltaTime ,0 );
                     }
                 }
@@ -293,6 +303,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     game -> setGameState(0);
                     elementalAttack = game -> getStartingElement();
                     elementalIcon.setPosition(bckgW/2 + 72  ,bckgH/2 + (screenH - 24 ));
+                    airShieldIcon.setPosition(bckgW/2 + 72 + 32  ,bckgH/2 + (screenH - 24 ));
                     itemIcon.setPosition(bckgW/2 + 72 + 64   ,bckgH/2 + (screenH - 24 ));
                     UIIcon.setPosition(bckgW/2 + 64  ,bckgH/2 + (screenH - 32 ));
                     playerView.reset(sf::FloatRect(0,0,screenW,screenH));
@@ -336,9 +347,20 @@ void GameViewPlayer::update(float deltaTime)
     {
         elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
     }
+
+    if(game -> isAirShieldOnCd())
+    {
+        airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*0,itemTextureSize*1,itemTextureSize,itemTextureSize));
+    }
+    else
+    {
+        airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
+    }
+
     window_ptr -> draw( game -> getPlayer());
     window_ptr -> draw(UIIcon);
     window_ptr -> draw(elementalIcon);
+    window_ptr -> draw(airShieldIcon);
 
     if(game ->player.currentItem() > 0 )
     {

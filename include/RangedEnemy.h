@@ -26,7 +26,6 @@ public:
     sf::Texture itemImg;
     float playerH = 128;
     float playerW = 64;
-    bool ifItemNotSet = false;
     GameLogic* game;
 
     RangedEnemy(){};

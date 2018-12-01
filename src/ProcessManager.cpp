@@ -1,5 +1,6 @@
 #include "ProcessManager.h"
 #include <SFML/Graphics.hpp>
+#include "Items.h"
 #include "Process.h"
 #include "iostream"
 #include <vector>
@@ -7,24 +8,50 @@
 
 using namespace std;
 
+void ProcessManager::setRenderWindow(shared_ptr<sf::RenderWindow> &window_ptr)
+{
+    this -> window_ptr = window_ptr;
+}
 
 //                 0     1     2       3      4       5         6
 // enum state {RUNNING,DEAD, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
 void ProcessManager::updateProcessList(float deltaMs)
 {
-    vector <shared_ptr<Process>> liveProcess;
     shared_ptr<Process> p;
+    /*
+    for (vector<shared_ptr<Process>>::iterator it1 = itemList.begin(); it1 != itemList.end(); it1++)
+    {
+        p = *it1;
+        if(p->getState()== Process::RUNNING)
+            p->update(deltaMs);
+    }
+    for (vector<shared_ptr<Process>>::iterator it2 = enemyList.begin(); it2 != enemyList.end(); it2++)
+    {
+        p = *it2;
+        if(p->getState()== Process::RUNNING)
+            p->update(deltaMs);
+    }
+    for (vector<shared_ptr<Process>>::iterator it3 = attackList.begin(); it3 != attackList.end(); it3++)
+    {
+        p = *it3;
+        if(p->getState()== Process::RUNNING)
+            p->update(deltaMs);
+    }
+    */
+
+
+    vector <shared_ptr<Process>> liveProcess;
     for (vector<shared_ptr<Process>>::iterator it = processList.begin(); it != processList.end(); it++)
 
     {
         p = *it;
         if(p != nullptr)
         {
-            if( p->getState()== Process::UNINITIALIZED)
-                p->initialize();
 
             if(p->getState()== Process::RUNNING)
                 p->update(deltaMs);
+            if( p->getState()== Process::UNINITIALIZED)
+                p->initialize();
 
             if(!p->getState()== Process::DEAD)
             {
@@ -42,55 +69,65 @@ void ProcessManager::updateProcessList(float deltaMs)
                     // check the if the attack hits something in the enemy list
                     // damage enemys health by the process's attack
                     // kill the process
-                    if(enemy -> type != Process::ITEM)
+
+                    if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
                     {
-                        if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
-                        {
-                           cout<< "ENEMY Damaged by "<< p -> damage << endl;
-                           enemy -> health -= p-> damage * player_ptr->getDM();
-                           p->state = Process::DEAD;
+                       cout<< "ENEMY Damaged by "<< p -> damage << endl;
+                       enemy -> health -= p-> damage * player_ptr->getDM();
+                       p->state = Process::DEAD;
 
-                        //kill the enemy if health reaches below zero
-                            if(enemy -> health <= 0 )
+                    //kill the enemy if health reaches below zero
+                        if(enemy -> health <= 0 )
+                        {
+                            int itemDropRate = rand() % 100;
+                            int itemType = (rand() % 3) + 1;
+                            if( itemDropRate >= 70 )
                             {
-                                int itemDropRate = rand() % 100;
-                                int itemType = (rand() % 3) + 1;
-                                if( itemDropRate >= 30 )
-                                {
-                                itemList.push_back(enemy);
-                                cout<<"Enemy has died and ITEM DROPPED!!!!!"<<endl;
-                                enemy ->type = Process::ITEM;
-                                enemy -> toDrop = itemType;
-                                }
-                                else
-                                {
-                                cout<<"Enemy has died!!!!!"<<endl;
-                                enemy -> state = Process::DEAD;
-                                }
+                                shared_ptr<Items> itemToDrop = make_shared<Items>(window_ptr);
+                                itemToDrop -> toDrop = itemType;
+                                itemToDrop -> initialize();
+                                itemToDrop -> dropItem(enemy -> body.getPosition().x + 16 , enemy -> body.getPosition().y +64);
 
+                                liveProcess.push_back((shared_ptr<Process>) itemToDrop);
+                                itemList.push_back((shared_ptr<Process>) itemToDrop);
+
+                                enemy -> state = Process::DEAD;
                             }
-                        }
-                        if(!enemy->getState()== Process::DEAD )
-                        {
-                            liveEnemy.push_back(enemy);
+                            else
+                            {
+                            cout<<"Enemy has died!!!!!"<<endl;
+                            enemy -> state = Process::DEAD;
+                            }
+
                         }
                     }
+                    if(!enemy->getState()== Process::DEAD )
+                    {
+                        liveEnemy.push_back(enemy);
+                    }
+
                     // add live enemies to new list
                 }
                 // swap list
                 enemyList.swap(liveEnemy);
             }
         }
-
     }
     processList.swap(liveProcess);
 }
 
 void ProcessManager::attachProcess(shared_ptr<Process> process)
 {
+
     if(process -> type == Process::R_ENEMY)
     {
         enemyList.push_back(process);
+    }
+
+  if(process -> type == Process::ATTACK)
+    {
+        attackList.push_back(process);
+        cout<<" ITEM TYPE"<<endl;
     }
     processList.push_back(process);
 }
