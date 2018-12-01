@@ -21,6 +21,7 @@ public:
     int spellWidth = 128;
     int spellHeight = 64;
     float distance = 0;
+    float afterHitDist = 0;
     sf::Texture image;
     ProcessManager* pm;
     BasicAttack(){};

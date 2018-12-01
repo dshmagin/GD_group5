@@ -45,27 +45,18 @@ void RangedEnemy::initialize()
 
 void RangedEnemy::update(float deltaTime)
 {
-    if(!ifItemNotSet && type == Process::ITEM)
-    {
-        cout<<"ITEM HERE"<< this -> toDrop <<endl;
-        ifItemNotSet = true;
-        body.setPosition(body.getPosition().x + 16, this -> body.getPosition().y + 64);
-        body.setSize(sf::Vector2f(32 ,32));
-        body.setTextureRect(sf::IntRect(32* this -> toDrop,32 * 1,32 ,32 ));
-        body.setTexture(&itemImg);
-    }
 
-    if (this -> type != Process::ITEM){
-        sf::Vector2f toPlayer = findPlayer(deltaTime);
-        if( changeTimer > 10 )
-            {
-              spriteNum = (spriteNum + 1) % 4;
-              changeTimer = 0;
-            }
-        changeTimer += 0.04f *deltaTime;
-        this -> body.move(toPlayer.x, toPlayer.y);
-        setDirection(getDirection(toPlayer), spriteNum);
-    }
+
+    sf::Vector2f toPlayer = findPlayer(deltaTime);
+    if( changeTimer > 10 )
+        {
+          spriteNum = (spriteNum + 1) % 4;
+          changeTimer = 0;
+        }
+    changeTimer += 0.04f *deltaTime;
+    this -> body.move(toPlayer.x, toPlayer.y);
+    setDirection(getDirection(toPlayer), spriteNum);
+
 
     window_ptr -> draw(this -> body);
 }
@@ -75,8 +66,6 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
     float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
     float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
 
-    std::cout << xComp << "\n";
-    std::cout << yComp << "\n";
 
     sf::Vector2f toPlayer;
 

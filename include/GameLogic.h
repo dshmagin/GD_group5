@@ -18,6 +18,7 @@ class GameLogic
         int  startingElement ;
         bool gameStatus = false;
         bool basicAttackOnCd = false;
+        bool airShieldOnCd = false;
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
@@ -25,6 +26,8 @@ class GameLogic
         int wave = 1;
         float basicAttackCd = 1000;
         float airShieldCd= 30000;
+        float basicAttackTimer= 600;
+        float airShieldTimer = 30000;
         bool paused = false;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;

@@ -11,12 +11,13 @@ class ProcessManager
     private:
         int curItem = Process::NONE;
         Player* player_ptr;
+        shared_ptr<sf::RenderWindow> window_ptr;
 
     public:
 
-        shared_ptr<sf::RenderWindow> window_ptr;
         std::vector <shared_ptr<Process>> processList;
         std::vector <shared_ptr<Process>> itemList;
+        std::vector <shared_ptr<Process>> attackList;
         std::vector <shared_ptr<Process>> enemyList;
         void updateProcessList(float deltaMs);
         void attachProcess(shared_ptr<Process> process);
@@ -25,6 +26,7 @@ class ProcessManager
         void clearManager();
         int checkEnemies();
         ProcessManager(){};
+        void setRenderWindow(shared_ptr<sf::RenderWindow> &window_ptr);
         void setPlayer(Player* player);
 };
 

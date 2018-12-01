@@ -7,6 +7,7 @@ GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<Proces
 {
     this -> window_ptr = window_ptr;
     this -> pm = pm;
+    this -> pm -> setRenderWindow(window_ptr);
 }
 
 void  GameLogic::setGameState( int GameState )
@@ -47,7 +48,7 @@ void GameLogic::setDirection(int dir,float deltaTime)
 }
 int GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
-    if(basicAttackCd > 600)
+    if(basicAttackCd > basicAttackTimer)
     {
         basicAttackCd = 0;
         shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr,startingElement);
@@ -60,6 +61,8 @@ int GameLogic::createPlayerAttack(char dir, float deltaTime)
 }
 
 void GameLogic::createBuff(int buffType) {
+
+
 	if (airShieldCd > 30000) {
 		airShieldCd = 0;
 		shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
@@ -78,15 +81,19 @@ void GameLogic::update(float deltaTime)
 {
     basicAttackCd += deltaTime;
     airShieldCd += deltaTime;
+
     player.update(deltaTime);
-    if(basicAttackCd > 600)
-    {
+
+    if(basicAttackCd > basicAttackTimer)
       basicAttackOnCd = false;
-    }
     else
-    {
         basicAttackOnCd = true;
-    }
+
+    if(airShieldCd > airShieldTimer)
+        airShieldOnCd = false;
+    else
+        airShieldOnCd = true;
+
     if(pm -> checkEnemies() <= 0)
     {
 	changing_level = true;
@@ -124,6 +131,10 @@ int GameLogic::getStartingElement()
 bool GameLogic::isBasicAttackOnCd()
 {
     return basicAttackOnCd;
+}
+bool GameLogic::isAirShieldOnCd()
+{
+    return airShieldOnCd;
 }
 void GameLogic::setStartingElement(int startingElement)
 {
