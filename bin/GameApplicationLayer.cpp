@@ -76,6 +76,7 @@ int main(int argc, char** argv)
             	pm -> updateProcessList(deltaTime);
             }
             gvp.update(deltaTime);
+			gvp.drawTransition(deltaTime);
         }
         window_ptr->display();
     }

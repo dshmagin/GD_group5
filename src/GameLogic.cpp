@@ -46,7 +46,7 @@ void GameLogic::setDirection(int dir,float deltaTime)
 {
     player.setDirection(dir,deltaTime);
 }
-void GameLogic::createPlayerAttack(char dir, float deltaTime)
+int GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
     if(basicAttackCd > basicAttackTimer)
     {
@@ -54,7 +54,9 @@ void GameLogic::createPlayerAttack(char dir, float deltaTime)
         shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr,startingElement);
         bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
         pm ->  attachProcess((shared_ptr<Process>) bAttack);
+	return 1;
     }
+    return 0;
 
 }
 
@@ -94,10 +96,21 @@ void GameLogic::update(float deltaTime)
 
     if(pm -> checkEnemies() <= 0)
     {
-        wave++;
-        startWave();
-        level++;
+	changing_level = true;
+	transition += deltaTime;
+	if(transition >= 1000.0 && !changed_background){
+            level++;
+	    changed_background = true;
+        }
+	if(transition >= 1500.0){
+	    wave++;
+	    startWave();
+	    transition = 0;
+	    changing_level = false;
+	    changed_background = false;
+	}
     }
+    
 
 }
 void GameLogic::idle()
@@ -171,4 +184,8 @@ void GameLogic::startWave()
 
 bool GameLogic::isPaused() {
 	return paused;
+}
+
+bool GameLogic::changingLevel(){
+	return changing_level;
 }
