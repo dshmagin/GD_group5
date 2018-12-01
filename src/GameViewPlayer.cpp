@@ -179,74 +179,59 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
         if( game -> getGameState() == 2 )
         {
         	camMoveSpeed = game->player.getSpeed();
-            movingX = false;
-            movingY = false;
+        	movingX = false;
+        	movingY = false;
+        	camMoveDistance = camMoveSpeed * deltaTime;
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-                {
-                    movingY = true;
-                    game -> setDirection(Player::NORTH,deltaTime);
+        	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        		movingY = true;
+        	    game -> setDirection(Player::NORTH,deltaTime);
+        	    sf::Vector2f vect(game -> getPlayerCoord());
+        	    if ((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH))) {
+        	    	moveCam(0, -camMoveDistance);
+        	        UIIcon.move(0, -camMoveDistance);
+        	        elementalIcon.move(0, -camMoveDistance);
+        	        itemIcon.move(0, -camMoveDistance);
+        	    }
+        	}
 
-                    sf::Vector2f vect(game -> getPlayerCoord());
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            	movingY = true;
+            	sf::Vector2f vect(game -> getPlayerCoord());
+            	game -> setDirection(Player::SOUTH,deltaTime);
+            	if ((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH))) {
+            		 moveCam(0, camMoveDistance);
+            		 UIIcon.move(0, camMoveDistance);
+            		 elementalIcon.move(0, camMoveDistance);
+            		 itemIcon.move(0, camMoveDistance);
+				}
+            }
 
-                    if ((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH)))
-                    {
-                        playerView.move(0, -camMoveSpeed *deltaTime);
-                        window_ptr -> setView(playerView);
-                        UIIcon.move(0, -camMoveSpeed *deltaTime);
-                        elementalIcon.move(0, -camMoveSpeed *deltaTime);
-                        itemIcon.move(0, -camMoveSpeed *deltaTime);
-                    }
-
-
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            	movingX = true;
+            	sf::Vector2f vect(game -> getPlayerCoord());
+            	game -> setDirection(Player::EAST,deltaTime);
+            	if ((vect.x + playerW/2) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW))) {
+            		moveCam(camMoveDistance, 0);
+            		UIIcon.move( camMoveDistance,0 );
+            		elementalIcon.move( camMoveDistance,0 );
+            		itemIcon.move( camMoveDistance,0 );
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-                {
-                    movingY = true;
-                    sf::Vector2f vect(game -> getPlayerCoord());
-                    game -> setDirection(Player::SOUTH,deltaTime);
+            }
 
-                    if ((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH)))
-                    {
-                        playerView.move(0, camMoveSpeed *deltaTime);
-                        window_ptr -> setView(playerView);
-                        UIIcon.move(0, camMoveSpeed *deltaTime);
-                        elementalIcon.move(0, camMoveSpeed *deltaTime);
-                        itemIcon.move(0, camMoveSpeed *deltaTime);
-                    }
-
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+               	movingX = true;
+                sf::Vector2f vect(game -> getPlayerCoord());
+                game -> setDirection(Player::WEST,deltaTime);
+                if ((vect.x + playerW/2) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW))) {
+                	moveCam(-camMoveDistance, 0);
+                	UIIcon.move( -camMoveDistance ,0 );
+                	elementalIcon.move( -camMoveDistance ,0 );
+                	itemIcon.move( -camMoveDistance ,0 );
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-                {
-                    movingX = true;
-                    sf::Vector2f vect(game -> getPlayerCoord());
-                    game -> setDirection(Player::EAST,deltaTime);
-
-                    if ((vect.x + playerW/2) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW)))
-                    {
-                        playerView.move( camMoveSpeed * deltaTime,0 );
-                        window_ptr -> setView(playerView);
-                        UIIcon.move( camMoveSpeed * deltaTime,0 );
-                        elementalIcon.move( camMoveSpeed * deltaTime,0 );
-                        itemIcon.move( camMoveSpeed * deltaTime,0 );
-                    }
+            }
 
 
-                }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-                {
-                    movingX = true;
-                    sf::Vector2f vect(game -> getPlayerCoord());
-                    game -> setDirection(Player::WEST,deltaTime);
-                    if ((vect.x + playerW/2) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW)))
-                    {
-                        playerView.move( -camMoveSpeed * deltaTime ,0 );
-                        window_ptr -> setView(playerView);
-                        UIIcon.move( -camMoveSpeed * deltaTime ,0 );
-                        elementalIcon.move( -camMoveSpeed * deltaTime ,0 );
-                        itemIcon.move( -camMoveSpeed * deltaTime ,0 );
-                    }
-                }
                 //Pick up item
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
                 {
@@ -287,6 +272,10 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
                 	game->createBuff(0);
                 }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+                    game->createDash(&playerView, &UIIcon, &elementalIcon, &itemIcon);
+                }
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 {
                     game -> setLevel(1);
@@ -368,4 +357,9 @@ void GameViewPlayer::setBackgroundTexture(int element)
         background.setTexture(&waterBg);
         break;
     }
+}
+
+void GameViewPlayer::moveCam(float x, float y) {
+	playerView.move(x, y);
+	window_ptr -> setView(playerView);
 }

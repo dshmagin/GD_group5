@@ -66,6 +66,16 @@ void GameLogic::createBuff(int buffType) {
 	}
 }
 
+void GameLogic::createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
+		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* itemIcon_ptr) {
+	if (dashCd > 8000) {
+		dashCd = 0;
+		shared_ptr<Dash> dash = make_shared<Dash>(window_ptr, &player, playerView_ptr, UIIcon_ptr,
+				elementalIcon_ptr, itemIcon_ptr);
+		pm->attachProcess((shared_ptr<Process>)dash);
+	}
+}
+
 void GameLogic::createRangedEnemy()
 {
     shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,startingElement);
@@ -76,6 +86,7 @@ void GameLogic::update(float deltaTime)
 {
     basicAttackCd += deltaTime;
     airShieldCd += deltaTime;
+    dashCd += deltaTime;
     player.update(deltaTime);
     if(basicAttackCd > 600)
     {

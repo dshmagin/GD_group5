@@ -49,6 +49,7 @@ class GameViewPlayer
         float camXview = bckgW/2;
         float camYview = bckgH/2;
         float camMoveSpeed = 0.3f;
+        float camMoveDistance;
         bool movingX;
         bool movingY;
         bool hasTextureLoaded = true;
@@ -66,6 +67,7 @@ class GameViewPlayer
         void update(float deltaTime);
         void drawBg();
         void setBackgroundTexture(int background);
+        void moveCam(float x, float y);
 
 };
 

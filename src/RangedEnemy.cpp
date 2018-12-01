@@ -75,8 +75,8 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
     float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
     float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
 
-    std::cout << xComp << "\n";
-    std::cout << yComp << "\n";
+    //std::cout << xComp << "\n";
+    //std::cout << yComp << "\n";
 
     sf::Vector2f toPlayer;
 

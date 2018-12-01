@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "BasicAttack.h"
 #include "Buff.h"
+#include "Dash.h"
 //#include "RangedEnemy.h"
 #include "ProcessManager.h"
 #include <memory>
@@ -25,6 +26,7 @@ class GameLogic
         int wave = 1;
         float basicAttackCd = 1000;
         float airShieldCd= 30000;
+        float dashCd = 8000;
         bool paused = false;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
@@ -53,6 +55,8 @@ class GameLogic
         void update(float deltaTime);
         void createPlayerAttack(char, float);
         void createBuff(int buffType);
+        void createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
+        		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* itemIcon_ptr);
         void createRangedEnemy();
         void setStartingElement(int startingElement);
         void resetPlayer();

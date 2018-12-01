@@ -53,6 +53,9 @@ public:
     float getDRM();
     void updateDodge(float multiplier);
     float getDodge();
+
+    void move(float x, float y);
+    int getDirection();
 };
 
 

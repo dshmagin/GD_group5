@@ -145,3 +145,10 @@ float Player::getDodge() {
 	return dodge;
 }
 
+void Player::move(float x, float y) {
+	body.move(x, y);
+}
+
+int Player::getDirection() {
+	return (int)dir;
+}
