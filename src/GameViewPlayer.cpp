@@ -36,6 +36,10 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         hasTextureLoaded = false;
         cout << "Cannot load items.png " << endl;
     }
+    if (!basicAttackSound.loadFromFile( "../Assets/Sounds/basicAttackSound.wav") ){
+        cout << "Cannot load basicAttackSound.wav" << endl;
+    }
+
     if(hasTextureLoaded)
     {
         fireBg.setRepeated(true);
@@ -267,23 +271,35 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
-                    game -> createPlayerAttack('N',deltaTime);
-                }
+                    if(game -> createPlayerAttack('N',deltaTime)){
+                        sound.setBuffer(basicAttackSound);
+		        sound.play();
+		    }
+		}
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 {
-                    game -> createPlayerAttack('S',deltaTime);
-                }
+                    if(game -> createPlayerAttack('S',deltaTime)){
+                        sound.setBuffer(basicAttackSound);
+		        sound.play();
+		    }               
+		}
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
                 {
-                    game -> createPlayerAttack('W',deltaTime);
-                }
+                    if(game -> createPlayerAttack('W',deltaTime)){
+                        sound.setBuffer(basicAttackSound);
+		        sound.play();
+		    }
+		}
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                 {
-                    game -> createPlayerAttack('E',deltaTime);
-                }
+                    if(game -> createPlayerAttack('E',deltaTime)){
+                        sound.setBuffer(basicAttackSound);
+		        sound.play();
+		    }               
+		}
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
                 	game->createBuff(0);
                 }
