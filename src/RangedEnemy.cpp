@@ -69,14 +69,10 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
     float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
     float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
 
-    cout<<xComp<<endl;
-    cout<<yComp<<endl;
-
     sf::Vector2f toPlayer;
 
     toPlayer.x = (xComp/(abs(xComp) + abs(yComp))) * (.2 + randF) * deltaTime;
     toPlayer.y = (yComp/(abs(xComp) + abs(yComp))) * (.2 + randF) * deltaTime;
-
 
     if (abs(xComp) > 50 || abs(yComp) > 50)
     {
