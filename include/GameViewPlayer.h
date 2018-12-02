@@ -74,7 +74,7 @@ class GameViewPlayer
         void drawBg();
         void setBackgroundTexture(int background);
         void drawTransition(float deltaTime);
-
+        void centerView();
 };
 
 #endif

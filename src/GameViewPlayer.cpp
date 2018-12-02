@@ -50,9 +50,9 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         elementalIcon.setPointCount(60);
         elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*game->getStartingElement(),0*spellTextNum,itemTextureSize,itemTextureSize));
         elementalIcon.setTexture(&elementalText);
-        elementalIcon.setPosition(bckgW/2 + 72  ,bckgH/2 + (screenH - 24 ));
+        elementalIcon.setPosition(bckgW/2 + 8  ,bckgH/2 + (screenH - 24 ));
         UIIcon.setSize(sf::Vector2f(192,32));
-        UIIcon.setPosition(bckgW/2 + 64  ,bckgH/2 + (screenH - 32 ));
+        UIIcon.setPosition(bckgW/2   ,bckgH/2 + (screenH - 32 ));
         UIIcon.setTextureRect(sf::IntRect(0,0,384,64));
         UIText.setRepeated(true);
         UIIcon.setTexture(&UIText);
@@ -60,13 +60,14 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         itemIcon.setPointCount(60);
         itemIcon.setTextureRect(sf::IntRect(itemTextureSize*1,1*spellTextNum,itemTextureSize,itemTextureSize));
         itemIcon.setTexture(&elementalText);
-        itemIcon.setPosition(bckgW/2 + 72 + 64  ,bckgH/2 + (screenH - 24 ));
+        itemIcon.setPosition(bckgW/2 + 8 + 64  ,bckgH/2 + (screenH - 24 ));
         airShieldIcon.setRadius(spellIconSize);
         airShieldIcon.setPointCount(60);
         airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
         airShieldIcon.setTexture(&elementalText);
-        airShieldIcon.setPosition(bckgW/2 + 72 + 32  ,bckgH/2 + (screenH - 24 ));
+        airShieldIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
         cout<< "SUCESS"<<endl;
+
     }
     this -> game = game;
     this -> window_ptr = window_ptr;
@@ -148,7 +149,8 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     currentLevel = game -> getLevel();
                     airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
                     elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
-                    cout<< "SELENA GOMEZ "<<(menu -> getSelectedElement() + game ->getLevel()) % 4<< endl;
+
+
                 }
             }
         }
@@ -203,12 +205,9 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 				{
 					playerView.move(0, -camMoveSpeed *deltaTime);
 					window_ptr -> setView(playerView);
-					UIIcon.move(0, -camMoveSpeed *deltaTime);
-					elementalIcon.move(0, -camMoveSpeed *deltaTime);
-					airShieldIcon.move(0, -camMoveSpeed *deltaTime);
-					itemIcon.move(0, -camMoveSpeed *deltaTime);
-				}
 
+				}
+                centerView();
 
 			}
 
@@ -223,12 +222,8 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     {
                         playerView.move(0, camMoveSpeed *deltaTime);
                         window_ptr -> setView(playerView);
-                        UIIcon.move(0, camMoveSpeed *deltaTime);
-                        elementalIcon.move(0, camMoveSpeed *deltaTime);
-                        airShieldIcon.move(0, camMoveSpeed *deltaTime);
-                        itemIcon.move(0, camMoveSpeed *deltaTime);
                     }
-
+                    centerView();
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
@@ -240,12 +235,8 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     {
                         playerView.move( camMoveSpeed * deltaTime,0 );
                         window_ptr -> setView(playerView);
-                        UIIcon.move( camMoveSpeed * deltaTime,0 );
-                        elementalIcon.move( camMoveSpeed * deltaTime,0 );
-                        airShieldIcon.move( camMoveSpeed * deltaTime,0 );
-                        itemIcon.move( camMoveSpeed * deltaTime,0 );
                     }
-
+                    centerView();
 
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -257,13 +248,9 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     {
                         playerView.move( -camMoveSpeed * deltaTime ,0 );
                         window_ptr -> setView(playerView);
-                        UIIcon.move( -camMoveSpeed * deltaTime ,0 );
-                        elementalIcon.move( -camMoveSpeed * deltaTime ,0 );
-                        airShieldIcon.move( -camMoveSpeed * deltaTime ,0 );
-                        itemIcon.move( -camMoveSpeed * deltaTime ,0 );
                     }
+                    centerView();
                 }
-
 			}
 
 
@@ -436,4 +423,18 @@ void GameViewPlayer::drawTransition(float deltaTime){
     {
         transition_started = false;
     }
+}
+void GameViewPlayer::centerView()
+{
+    sf::Vector2f vect(game -> getPlayerCoord());
+    if((((vect.x + playerW/2) < ((bckgW - screenW/2) - playerW) && ((vect.x + playerW/2) > (screenW/2 + playerW)))) &&((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH))))
+       {
+            playerView.reset(sf::FloatRect( game -> getPlayer().getPosition().x - (screenW/2 - playerW/2), game -> getPlayer().getPosition().y - (screenH/2 - playerH/2),screenW,screenH));
+            window_ptr -> setView(playerView);
+       }
+
+    UIIcon.setPosition(playerView.getCenter().x- screenW/2 ,playerView.getCenter().y + (screenH/2 - 32));
+    elementalIcon.setPosition(playerView.getCenter().x - (screenW/2 - 8) ,playerView.getCenter().y + (screenH/2 - 24));
+    airShieldIcon.setPosition(playerView.getCenter().x- (screenW/2 - 40) ,playerView.getCenter().y + (screenH/2 - 24));
+    itemIcon.setPosition(playerView.getCenter().x- (screenW/2 - 72) ,playerView.getCenter().y + (screenH/2 - 24));
 }
