@@ -21,28 +21,25 @@ public:
     float changeTimer = 0;
     float totalTime=0;
     float switchTime=100.0f;
-    float enemyH, enemyW;
     sf::Texture image;
     sf::Texture itemImg;
     float playerH = 128;
     float playerW = 64;
-    bool ifItemNotSet = false;
     GameLogic* game;
-
+    float randF;
     RangedEnemy(){};
     RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
+    void init();
     sf::Vector2f findPlayer(float deltaTime);
     void update(float deltaTime);
     void setDirection(int dir, int spriteNum);
     int getDirection(sf::Vector2f toPlayer);
-    //void animation( float deltaTime, char dir);
     void createRangedEnemy(GameLogic* gameLogic);
     sf::RectangleShape getEnemyBody();
-    //float getXPos();
-    //float getYPos();
     void reset(float x_pos, float y_pos);
+    void initializeProcess();
     //void rangedAttack(int attackElement);
-    void initialize();
+    //void animation( float deltaTime, char dir);
 };
 
 #endif

@@ -10,6 +10,7 @@ private:
 	float timeLimit;
 	float timeRemaining;
 	float shieldPoint;
+    bool spellBuff = true;
 	int stacks;
 	int stackLimit;
 	int spriteNum;

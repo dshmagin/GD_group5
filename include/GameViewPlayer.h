@@ -1,6 +1,7 @@
 #ifndef GAMEVIEW_H
 #define GAMEVIEW_H
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <string>
 #include "TitleScreen.h"
 #include "GameLogic.h"
@@ -16,6 +17,8 @@ class GameViewPlayer
     private:
     //AI Movements
         TitleScreen* menu;
+	sf::Sound sound;
+	sf::SoundBuffer basicAttackSound;
         sf::Texture fireBg;
         sf::Texture waterBg;
         sf::Texture earthBg;
@@ -24,6 +27,7 @@ class GameViewPlayer
         sf::Texture elementalText;
         sf::Texture UIText;
         sf::CircleShape elementalIcon;
+        sf::CircleShape airShieldIcon;
         sf::CircleShape itemIcon;
         sf::RectangleShape UIIcon;
         sf::View playerView;
@@ -49,7 +53,6 @@ class GameViewPlayer
         float camXview = bckgW/2;
         float camYview = bckgH/2;
         float camMoveSpeed = 0.3f;
-        float camMoveDistance;
         bool movingX;
         bool movingY;
         bool hasTextureLoaded = true;
@@ -57,6 +60,9 @@ class GameViewPlayer
         shared_ptr<sf::RenderWindow> window_ptr;
         bool wait = false;
         //AbilityBar abilityBar;
+        bool transition_started;
+	sf::RectangleShape transitionBox1;
+	sf::RectangleShape transitionBox2;
 
     public:
 
@@ -67,8 +73,8 @@ class GameViewPlayer
         void update(float deltaTime);
         void drawBg();
         void setBackgroundTexture(int background);
-        void moveCam(float x, float y);
-
+        void drawTransition(float deltaTime);
+        void centerView();
 };
 
 #endif

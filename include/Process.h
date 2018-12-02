@@ -10,14 +10,16 @@ class Process
 {
     public:
         enum state {RUNNING,DEAD, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
-        enum type {ATTACK, R_ENEMY, E_ATTACK, ITEM, BUFF, OTHER};
-        enum itemDropped { NONE,DMG_ITEM, HLT_ITEM, SPD_ITEM};
+        enum type {ATTACK, R_ENEMY, E_ATTACK, ITEM, BUFF};
+        enum itemDropped { NONE, BLUE_ITEM,RED_ITEM, YELLOW_ITEM};
         sf::RectangleShape item;
         int state;
         int type;
         int toDrop;
         float damage;
         float health = 100;
+        int enemyHitted;
+        int hitLimit;
         Process* child = nullptr;
         sf::RectangleShape body;
         Process(){};
