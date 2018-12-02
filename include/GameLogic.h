@@ -38,6 +38,8 @@ class GameLogic
     public:
         Player player;
         int totalEnemies;
+        int meleeEnemies;
+        int rangedEnemies;
         //BasicAttack bAttack;
 
         GameLogic();
@@ -58,6 +60,7 @@ class GameLogic
         int createPlayerAttack(char, float);
         void createBuff(int buffType);
         void createRangedEnemy();
+        void createMeleeEnemy();
         void setStartingElement(int startingElement);
         void resetPlayer();
         void grabItem();
