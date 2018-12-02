@@ -1,5 +1,6 @@
 #include "GameLogic.h"
 #include "RangedEnemy.h"
+#include "MeleeEnemy.h"
 
 using namespace std;
 
@@ -78,6 +79,13 @@ void GameLogic::createRangedEnemy()
 {
     shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,startingElement);
     rEnemy->createRangedEnemy(this);
+    pm ->  attachProcess((shared_ptr<Process>) rEnemy);
+}
+
+void GameLogic::createMeleeEnemy()
+{
+    shared_ptr<MeleeEnemy> rEnemy = make_shared<MeleeEnemy>(window_ptr,startingElement);
+    rEnemy->createMeleeEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
 void GameLogic::update(float deltaTime)
@@ -181,14 +189,23 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
-    totalEnemies = 10 * wave;
+    rangedEnemies = 10 * wave;
+
+    meleeEnemies = 5 * wave;
+
+    totalEnemies = meleeEnemies + rangedEnemies;
 
     cout<<"totalEnemies enemy " << totalEnemies << endl;
 
-    for (int enemies = 0; enemies<totalEnemies; enemies++)
+    for (int enemies = 0; enemies<rangedEnemies; enemies++)
     {
-        cout<<"Created enemy " << enemies << endl;
+        cout<<"Created ranged enemy " << enemies << endl;
         createRangedEnemy();
+    }
+    for (int enemies = 0; enemies<meleeEnemies; enemies++)
+    {
+        cout<<"Created melee enemy " << enemies << endl;
+        createMeleeEnemy();
     }
 
 }
@@ -223,7 +240,7 @@ void GameLogic::useItem()
             pm->attachProcess((shared_ptr<Process>)buff);
             break;
     }
-    
+
     player.item(Process::NONE);
 
     cout<<"ITEM USED"<<endl;
