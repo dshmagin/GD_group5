@@ -1,16 +1,16 @@
-#include "RangedEnemy.h"
+#include "MeleeEnemy.h"
 //#include "ProcessManager.h"
 #include <cstdlib>
 #include <cmath>
 
-RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
+MeleeEnemy::MeleeEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
 {
     init();
     this -> window_ptr = window_ptr;
     this -> attackElement = attackElement;
 }
 
-void RangedEnemy::init()
+void MeleeEnemy::init()
 {
     if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
         cout<<"Cannot load BenderAi"<<endl;
@@ -20,7 +20,7 @@ void RangedEnemy::init()
     body.setTextureRect(sf::IntRect(playerW * 1, playerH * 0, playerW, playerH));
 }
 
-void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
+void MeleeEnemy::createMeleeEnemy(GameLogic* gameLogic)
 {
 
     this -> randF = (((float) (rand() % 100))/ 1000.0f);
@@ -33,22 +33,22 @@ void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
     initializeProcess();
 }
 
-void RangedEnemy::initializeProcess()
+void MeleeEnemy::initializeProcess()
 {
  this -> state = Process::RUNNING;
  this -> type  = Process::R_ENEMY;
 }
 
-sf::RectangleShape RangedEnemy::getEnemyBody() {
+sf::RectangleShape MeleeEnemy::getEnemyBody() {
     return body;
 }
 
-void RangedEnemy::reset(float x_pos, float y_pos)
+void MeleeEnemy::reset(float x_pos, float y_pos)
 {
     body.setPosition(x_pos,y_pos);
 }
 
-void RangedEnemy::update(float deltaTime)
+void MeleeEnemy::update(float deltaTime)
 {
     sf::Vector2f toPlayer = findPlayer(deltaTime);
 
@@ -64,7 +64,7 @@ void RangedEnemy::update(float deltaTime)
     window_ptr -> draw(this -> body);
 }
 
-sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
+sf::Vector2f MeleeEnemy::findPlayer(float deltaTime)
 {
     float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
     float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
@@ -85,7 +85,7 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
     return toPlayer;
 }
 
-int RangedEnemy::getDirection(sf::Vector2f toPlayer)
+int MeleeEnemy::getDirection(sf::Vector2f toPlayer)
 {
     if (toPlayer.x > 0 && toPlayer.y > 0)
     {
@@ -141,7 +141,7 @@ int RangedEnemy::getDirection(sf::Vector2f toPlayer)
     }
 }
 
-void RangedEnemy::setDirection(int dir, int spriteNum)
+void MeleeEnemy::setDirection(int dir, int spriteNum)
 {
     switch(spriteNum )
     {
