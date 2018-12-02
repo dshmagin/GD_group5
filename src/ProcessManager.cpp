@@ -108,7 +108,6 @@ void ProcessManager::updateProcessList(float deltaMs)
                     {
                         liveEnemy.push_back(enemy);
                     }
-
                     // add live enemies to new list
                 }
                 // swap list
@@ -130,7 +129,6 @@ void ProcessManager::attachProcess(shared_ptr<Process> process)
   if(process -> type == Process::ATTACK)
     {
         attackList.push_back(process);
-        cout<<" ITEM TYPE"<<endl;
     }
     processList.push_back(process);
 }

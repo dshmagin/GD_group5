@@ -12,6 +12,8 @@ using namespace std;
 class RangedEnemy : public Process
 {
 private:
+    sf::RectangleShape healthBar;
+    sf::RectangleShape healthBg;
 
 public:
     shared_ptr<sf::RenderWindow> window_ptr;
