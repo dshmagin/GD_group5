@@ -72,8 +72,8 @@ int main(int argc, char** argv)
         {
             gvp.drawBg();
             if (!game->isPaused()) {
-            	game -> update(deltaTime);
             	pm -> updateProcessList(deltaTime);
+            	game -> update(deltaTime);
             }
             gvp.update(deltaTime);
 			gvp.drawTransition(deltaTime);

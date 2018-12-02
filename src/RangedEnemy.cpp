@@ -72,6 +72,9 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
     toPlayer.x = (xComp/(abs(xComp) + abs(yComp))) * .2 * deltaTime;
     toPlayer.y = (yComp/(abs(xComp) + abs(yComp))) * .2 * deltaTime;
 
+    if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()))
+        game->player.healPlayer(-0.05);
+
     return toPlayer;
 }
 

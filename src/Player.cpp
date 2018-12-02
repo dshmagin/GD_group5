@@ -1,7 +1,8 @@
 #include "Player.h"
 
-Player::Player(float playerH, float playerW)
+Player::Player(float playerH, float playerW,shared_ptr<sf::RenderWindow> &window_ptr)
 {
+    this -> window_ptr = window_ptr;
     this -> playerH = playerH;
     this -> playerW = playerW;
     if( !image.loadFromFile( "../Assets/Images/Simu.png" ) )
@@ -13,6 +14,10 @@ Player::Player(float playerH, float playerW)
 
 void Player::createPlayer(float x_pos, float y_pos)
 {
+    this -> healthBar.setSize(sf::Vector2f( 50, 10 ));
+    this -> healthBar.setFillColor(sf::Color::Green);
+    this -> healthBg.setSize(sf::Vector2f( 54, 14 ));
+    this -> healthBg.setFillColor(sf::Color::Black);
 
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     this -> body.setPosition(x_pos, y_pos);
@@ -62,6 +67,9 @@ void Player::setDirection(int dir,float deltaTime)
 }
 void Player::update(float deltaTime)
 {
+    healthBg.setPosition(body.getPosition().x + 5,body.getPosition().y +3);
+    healthBar.setPosition(body.getPosition().x + 7,body.getPosition().y +5 );
+    healthBar.setSize(sf::Vector2f(health/2.0, 10));
     //Grab the players direction and display the correct column in the sprite sheet.
     this -> dir = dir;
     switch(spriteNum )
@@ -94,6 +102,9 @@ void Player::update(float deltaTime)
     }
 
         changeTimer += 0.04f *deltaTime;
+        window_ptr -> draw(body);
+        window_ptr -> draw(healthBg);
+        window_ptr -> draw(healthBar);
 }
 
 void Player::reset(float x_pos, float y_pos)
@@ -145,11 +156,15 @@ float Player::getDodge() {
 	return dodge;
 }
 
-void Player::healPlayer(int amount)
+void Player::healPlayer(float amount)
 {
     if(health + amount > 100)
     {
         health = 100;
+    }
+    else if(health + amount < 0)
+    {
+        health = 0;
     }
     else
         health += amount;

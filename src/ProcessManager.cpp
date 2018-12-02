@@ -18,13 +18,14 @@ void ProcessManager::setRenderWindow(shared_ptr<sf::RenderWindow> &window_ptr)
 void ProcessManager::updateProcessList(float deltaMs)
 {
     shared_ptr<Process> p;
-    /*
+
     for (vector<shared_ptr<Process>>::iterator it1 = itemList.begin(); it1 != itemList.end(); it1++)
     {
         p = *it1;
         if(p->getState()== Process::RUNNING)
             p->update(deltaMs);
     }
+    /*
     for (vector<shared_ptr<Process>>::iterator it2 = enemyList.begin(); it2 != enemyList.end(); it2++)
     {
         p = *it2;
@@ -48,7 +49,7 @@ void ProcessManager::updateProcessList(float deltaMs)
         if(p != nullptr)
         {
 
-            if(p->getState()== Process::RUNNING)
+            if(p->getState()== Process::RUNNING && p -> type != Process::ITEM)
                 p->update(deltaMs);
             if( p->getState()== Process::UNINITIALIZED)
                 p->initialize();

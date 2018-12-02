@@ -14,8 +14,10 @@ private:
     shared_ptr<sf::RenderWindow> window_ptr;
     sf::Texture image;
     sf::Texture itemImg;
+    float displayItem = 250;
     float itemW = 64;
     float itemH = 64;
+    float timer = 7000;
 
 
 
