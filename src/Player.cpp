@@ -43,19 +43,19 @@ void Player::setDirection(int dir,float deltaTime)
     switch(dir)
     {
     case NORTH:
-        if(body.getPosition().y - moveVal >= 100 )
+        if(body.getPosition().y - moveVal >= 128 )
             body.move(0,-moveVal);
         break;
     case SOUTH:
-        if(body.getPosition().y + moveVal <= 1550 )
+        if(body.getPosition().y + moveVal <= 1800 -256 )
             body.move(0,moveVal);
         break;
     case EAST:
-        if(body.getPosition().x + moveVal <= 2285 )
+        if(body.getPosition().x + moveVal <= 2400 - 128 )
             body.move(moveVal,0);
         break;
     case WEST:
-        if(body.getPosition().x - moveVal >= 55 )
+        if(body.getPosition().x - moveVal >= 64 )
             body.move(-moveVal,0);
         break;
     }
