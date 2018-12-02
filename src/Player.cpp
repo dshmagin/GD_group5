@@ -145,3 +145,12 @@ float Player::getDodge() {
 	return dodge;
 }
 
+void Player::healPlayer(int amount)
+{
+    if(health + amount > 100)
+    {
+        health = 100;
+    }
+    else
+        health += amount;
+}
