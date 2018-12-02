@@ -25,7 +25,7 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
     {
         music.setBuffer(menuSong);
     }
-*/
+
     if( !keySound.loadFromFile( "../Assets/Sounds/keySound.wav" ) )
     {
         cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
@@ -36,6 +36,7 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
     {
         sound.setBuffer(keySound);
     }
+    */
 }
 
 

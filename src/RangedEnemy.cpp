@@ -23,6 +23,11 @@ void RangedEnemy::init()
 void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
 {
 
+    this -> healthBar.setSize(sf::Vector2f( 50, 10 ));
+    this -> healthBar.setFillColor(sf::Color::Red);
+    this -> healthBg.setSize(sf::Vector2f( 54, 14 ));
+    this -> healthBg.setFillColor(sf::Color::Black);
+
     this-> randF = (((float) (rand() % 100))/ 1000.0f);
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     float loc_x = (rand() % (1200 - 200) + 100);
@@ -52,6 +57,9 @@ void RangedEnemy::update(float deltaTime)
 {
     sf::Vector2f toPlayer = findPlayer(deltaTime);
 
+    healthBg.setPosition(body.getPosition().x + 5,body.getPosition().y +3);
+    healthBar.setPosition(body.getPosition().x + 7,body.getPosition().y +5 );
+    healthBar.setSize(sf::Vector2f(health/2.0, 10));
     if( changeTimer > 10 )
         {
           spriteNum = (spriteNum + 1) % 4;
@@ -62,6 +70,8 @@ void RangedEnemy::update(float deltaTime)
     changeTimer += 0.04f * deltaTime;
     setDirection(getDirection(toPlayer), spriteNum);
     window_ptr -> draw(this -> body);
+    window_ptr -> draw(healthBg);
+    window_ptr -> draw(healthBar);
 }
 
 sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
