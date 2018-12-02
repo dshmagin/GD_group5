@@ -18,6 +18,8 @@ void Dash::initialize() {
 	damage = 20;
 	type  = Process::ATTACK;
 	state = Process::RUNNING;
+	enemyHit = 0;
+	hitLimit = 32;
 }
 
 void Dash::update(float deltaTime) {
@@ -29,54 +31,56 @@ void Dash::update(float deltaTime) {
     	switch (dir) {
     	case 0:
     		//south
-    		if (y + distance >= 1550 )  distance = 1550 - y;
-    		player_ptr->move(0, distance);
+    		if (y + distance + 128 >= 1600 )  distance = 1600 - y - 128;
+    		player_ptr->movePlayer(0, distance);
     		playerView_ptr->move(0, distance);
     		UIIcon_ptr->move(0, distance);
     		elementalIcon_ptr->move(0, distance);
     		itemIcon_ptr->move(0, distance);
     		this->body.setPosition(x, y);
-    		this->body.setSize(sf::Vector2f(player_ptr->getPlayerW(), player_ptr->getPlayerH() + distance));
+    		this->body.setSize(sf::Vector2f(64, 128 + distance));
     		break;
     	case 1:
     		//west
-    		if (x - distance <= 55) distance = x - 55;
-    		player_ptr->move(-distance, 0);
+    		if (x - distance <= 0) distance = x;
+    		player_ptr->movePlayer(-distance, 0);
     		playerView_ptr->move(-distance, 0);
     		UIIcon_ptr->move(-distance, 0);
     		elementalIcon_ptr->move(-distance, 0);
     		itemIcon_ptr->move(-distance, 0);
     		this->body.setPosition(x - distance, y);
-    		this->body.setSize(sf::Vector2f(player_ptr->getPlayerW() + distance, player_ptr->getPlayerH()));
+    		this->body.setSize(sf::Vector2f(64 + distance, 128));
     		break;
     	case 2:
     		//east
-    		if (x + distance >= 2285 )  distance = 2285 - x;
-    		player_ptr->move(distance, 0);
+    		if (x + distance + 64>= 2400 )  distance = 2400 - x - 64;
+    		player_ptr->movePlayer(distance, 0);
     		playerView_ptr->move(distance, 0);
     		UIIcon_ptr->move(distance, 0);
     		elementalIcon_ptr->move(distance, 0);
        		itemIcon_ptr->move(distance, 0);
        		this->body.setPosition(x, y);
-       		this->body.setSize(sf::Vector2f(player_ptr->getPlayerW() + distance, player_ptr->getPlayerH()));
+       		this->body.setSize(sf::Vector2f(64 + distance, 128));
     		break;
     	case 3:
     		//north
-    		if (y - distance <= 100 )  distance = y - 100;
-    		player_ptr->move(0, -distance);
+    		if (y - distance <= 0 )  distance = y;
+    		player_ptr->movePlayer(0, -distance);
     		playerView_ptr->move(0, -distance);
     		UIIcon_ptr->move(0, -distance);
     		elementalIcon_ptr->move(0, -distance);
        		itemIcon_ptr->move(0, -distance);
        		this->body.setPosition(x, y - distance);
-       		this->body.setSize(sf::Vector2f(player_ptr->getPlayerW(), player_ptr->getPlayerH() + distance));
+       		this->body.setSize(sf::Vector2f(64, 128 + distance));
     		break;
     	default:
     		cout<<"direction mismatch"<<endl;
     		break;
     	}
     	window_ptr->setView(*playerView_ptr);
+    	player_ptr->draw();
     }
+    cout<<"dashed"<<endl;
     dashed = true;
 }
 

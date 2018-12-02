@@ -18,7 +18,7 @@ class Process
         int toDrop;
         float damage;
         float health = 100;
-        int enemyHitted;
+        int enemyHit;
         int hitLimit;
         Process* child = nullptr;
         sf::RectangleShape body;

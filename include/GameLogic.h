@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "BasicAttack.h"
 #include "Buff.h"
+#include "Dash.h"
 //#include "RangedEnemy.h"
 #include "ProcessManager.h"
 #include <memory>

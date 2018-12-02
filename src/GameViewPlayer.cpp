@@ -309,6 +309,14 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 	game->useItem();
                 }
 
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
+                	game->createDash(&playerView, &UIIcon, &elementalIcon, &itemIcon);
+                }
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
+                    game->useItem();
+                }
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 {
                     game -> setLevel(1);

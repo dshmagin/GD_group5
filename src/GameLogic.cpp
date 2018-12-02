@@ -78,6 +78,9 @@ void GameLogic::createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_
 		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* itemIcon_ptr) {
 	if (dashCd > dashTimer) {
 		dashCd = 0;
+		shared_ptr<Dash> dash = make_shared<Dash>(window_ptr, &player, playerView_ptr, UIIcon_ptr,
+				elementalIcon_ptr, itemIcon_ptr);
+		pm->attachProcess((shared_ptr<Process>)dash);
 	}
 }
 
@@ -113,7 +116,7 @@ void GameLogic::update(float deltaTime)
         airShieldOnCd = true;
 
     if (dashCd > dashTimer) dashOnCd = false;
-    else dashCd = true;
+    else dashOnCd = true;
 
     if (splitAttackCd > splitAttackTimer) splitAttackOnCd = false;
     else splitAttackOnCd = true;

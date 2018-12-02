@@ -70,13 +70,13 @@ void ProcessManager::updateProcessList(float deltaMs)
                     // check the if the attack hits something in the enemy list
                     // damage enemys health by the process's attack
                     // kill the process
-                    if(p->enemyHitted < p->hitLimit)
+                    if(p->enemyHit < p->hitLimit)
                         {
                         if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
                         {
                            cout<< "ENEMY Damaged by "<< p -> damage << endl;
                            enemy -> health -= p-> damage * player_ptr->getDM();
-                           p->enemyHitted++;
+                           p->enemyHit++;
                            p->state = Process::DEAD;
 
                         //kill the enemy if health reaches below zero
