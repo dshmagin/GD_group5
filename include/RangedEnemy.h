@@ -27,7 +27,7 @@ public:
     float playerH = 128;
     float playerW = 64;
     GameLogic* game;
-
+    float randF;
     RangedEnemy(){};
     RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
     sf::Vector2f findPlayer(float deltaTime);

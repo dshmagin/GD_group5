@@ -263,7 +263,6 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 {
                     if(game->player.currentItem() == Process::NONE)
                     {
-
                         game -> grabItem();
                         int itemDisplay = game->player.currentItem();
                         if( itemDisplay > 0 )
