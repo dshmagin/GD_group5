@@ -69,36 +69,38 @@ void ProcessManager::updateProcessList(float deltaMs)
                     // check the if the attack hits something in the enemy list
                     // damage enemys health by the process's attack
                     // kill the process
-
-                    if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
-                    {
-                       cout<< "ENEMY Damaged by "<< p -> damage << endl;
-                       enemy -> health -= p-> damage * player_ptr->getDM();
-                       p->state = Process::DEAD;
-
-                    //kill the enemy if health reaches below zero
-                        if(enemy -> health <= 0 )
+                    if(p->state !=Process::DEAD)
                         {
-                            int itemDropRate = rand() % 100;
-                            int itemType = (rand() % 3) + 1;
-                            if( itemDropRate >= 0 )
+                        if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
+                        {
+                           cout<< "ENEMY Damaged by "<< p -> damage << endl;
+                           enemy -> health -= p-> damage * player_ptr->getDM();
+                           p->state = Process::DEAD;
+
+                        //kill the enemy if health reaches below zero
+                            if(enemy -> health <= 0 )
                             {
-                                shared_ptr<Items> itemToDrop = make_shared<Items>(window_ptr);
-                                itemToDrop -> toDrop = itemType;
-                                itemToDrop -> initialize();
-                                itemToDrop -> dropItem(enemy -> body.getPosition().x + 16 , enemy -> body.getPosition().y +64);
+                                int itemDropRate = rand() % 100;
+                                int itemType = (rand() % 3) + 1;
+                                if( itemDropRate >= 0 )
+                                {
+                                    shared_ptr<Items> itemToDrop = make_shared<Items>(window_ptr);
+                                    itemToDrop -> toDrop = itemType;
+                                    itemToDrop -> initialize();
+                                    itemToDrop -> dropItem(enemy -> body.getPosition().x + 16 , enemy -> body.getPosition().y +64);
 
-                                liveProcess.push_back((shared_ptr<Process>) itemToDrop);
-                                itemList.push_back((shared_ptr<Process>) itemToDrop);
+                                    liveProcess.push_back((shared_ptr<Process>) itemToDrop);
+                                    itemList.push_back((shared_ptr<Process>) itemToDrop);
 
+                                    enemy -> state = Process::DEAD;
+                                }
+                                else
+                                {
+                                cout<<"Enemy has died!!!!!"<<endl;
                                 enemy -> state = Process::DEAD;
-                            }
-                            else
-                            {
-                            cout<<"Enemy has died!!!!!"<<endl;
-                            enemy -> state = Process::DEAD;
-                            }
+                                }
 
+                            }
                         }
                     }
                     if(!enemy->getState()== Process::DEAD )
