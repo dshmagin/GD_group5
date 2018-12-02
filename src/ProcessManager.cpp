@@ -142,6 +142,7 @@ int ProcessManager::itemNearBy(sf::RectangleShape body)
     //List for enemy who hasnt died when damaged
     vector <shared_ptr<Process>> unpickedItem;
     //Loop through all the enemy to see if the attack hits any of them
+    curItem = Process::NONE;
     for (vector<shared_ptr<Process>>::iterator it3 = itemList.begin(); it3 != itemList.end(); it3++)
     {
            item = *it3;

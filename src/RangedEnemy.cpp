@@ -22,6 +22,8 @@ void RangedEnemy::init()
 
 void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
 {
+
+    this-> randF = (((float) (rand() % 100))/ 1000.0f);
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     float loc_x = (rand() % (1200 - 200) + 100);
     float loc_y = (rand() % (900 - 200) + 100);
@@ -55,8 +57,9 @@ void RangedEnemy::update(float deltaTime)
           spriteNum = (spriteNum + 1) % 4;
           changeTimer = 0;
         }
-    changeTimer += 0.04f * deltaTime;
 
+
+    changeTimer += 0.04f * deltaTime;
     this -> body.move(toPlayer.x, toPlayer.y);
     setDirection(getDirection(toPlayer), spriteNum);
     window_ptr -> draw(this -> body);
@@ -69,8 +72,8 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
 
     sf::Vector2f toPlayer;
 
-    toPlayer.x = (xComp/(abs(xComp) + abs(yComp))) * .2 * deltaTime;
-    toPlayer.y = (yComp/(abs(xComp) + abs(yComp))) * .2 * deltaTime;
+    toPlayer.x = (xComp/(abs(xComp) + abs(yComp))) * (.2 + randF) * deltaTime;
+    toPlayer.y = (yComp/(abs(xComp) + abs(yComp))) * (.2 + randF) * deltaTime;
 
     if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()))
         game->player.healPlayer(-0.05);
