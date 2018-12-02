@@ -101,19 +101,16 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
                 {
-
                     if( menu -> getSelected() == 0 )
                     {
                         game -> setGameState(1);
                     }
                     if( menu -> getSelected() == 1 )
-		    {
+                    {
                         game -> setGameState(3);
-		    }
+                    }
                 }
             }
-
-
         }
 
         if( game -> getGameState() == 1 )
@@ -149,68 +146,64 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     currentLevel = game -> getLevel();
                     airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
                     elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
-
-
                 }
             }
         }
 
         if( game -> getGameState() == 3 )
         {
-		inputTimer += deltaTime;
-		if(inputTimer > 100 && !wait)
-		{
-			inputTimer = 0;
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			{
-				menu -> setSelectedKeybind(-1);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			{
-				menu -> setSelectedKeybind(1);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
-			{
-				menu -> choosingKeybind();
-				wait = true;
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-			{
-				game -> setGameState(0);
-			}
-		}
-		else if(wait){
-			inputTimer = 0;
-		    	if(keycode != sf::Keyboard::Unknown){
-				menu -> newKeybind(keycode);
-				wait = false;
-			}
-		}
-	}
+            inputTimer += deltaTime;
+            if(inputTimer > 100 && !wait)
+            {
+                inputTimer = 0;
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+                {
+                    menu -> setSelectedKeybind(-1);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                {
+                    menu -> setSelectedKeybind(1);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+                {
+                    menu -> choosingKeybind();
+                    wait = true;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                {
+                    game -> setGameState(0);
+                }
+            }
+            else if(wait){
+                inputTimer = 0;
+                if(keycode != sf::Keyboard::Unknown){
+                    menu -> newKeybind(keycode);
+                    wait = false;
+                }
+            }
+        }
 
         if( game -> getGameState() == 2 )
         {
         	camMoveSpeed = game->player.getSpeed();
             movingX = false;
             movingY = false;
-		if(!(game -> changingLevel())){
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			{
-			    movingY = true;
-			    game -> setDirection(Player::NORTH,deltaTime);
+            if(!(game -> changingLevel())){
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+                {
+                    movingY = true;
+                    game -> setDirection(Player::NORTH,deltaTime);
 
-			    sf::Vector2f vect(game -> getPlayerCoord());
+                    sf::Vector2f vect(game -> getPlayerCoord());
 
-				if ((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH)))
-				{
-					playerView.move(0, -camMoveSpeed *deltaTime);
-					window_ptr -> setView(playerView);
+                    if ((vect.y + playerH/2) < ((bckgH - screenH/2) - playerH) && ((vect.y + playerH/2) > (screenH/2 + playerH)))
+                    {
+                        playerView.move(0, -camMoveSpeed *deltaTime);
+                        window_ptr -> setView(playerView);
+                    }
 
-				}
-                centerView();
-
-			}
-
+                    centerView();
+                }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 {
@@ -225,6 +218,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     }
                     centerView();
                 }
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 {
                     movingX = true;
@@ -239,6 +233,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     centerView();
 
                 }
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 {
                     movingX = true;
@@ -251,12 +246,12 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     }
                     centerView();
                 }
-			}
+            }
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
                 {
                     game -> player.health -=1;
                 }
-
 
                 //Pick up item
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
@@ -305,12 +300,15 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         sound.play();
                         }
                 }
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
                 	game->createBuff(0);
                 }
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
                 	game->useItem();
                 }
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 {
                     game -> setLevel(1);
@@ -325,19 +323,13 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     game -> clearGame();
                 }
 
-
             if(movingX == false && movingY == false)
             {
                 game -> idle();
             }
-
         }
     return wait;
 }
-
-
-
-
 
 void GameViewPlayer::setTitleScreen(TitleScreen* screen)
 {
@@ -353,6 +345,7 @@ void GameViewPlayer::update(float deltaTime)
         setBackgroundTexture(currentBckg);
         currentLevel = game -> getLevel();
     }
+
     if(game -> isBasicAttackOnCd())
     {
         elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*0,itemTextureSize*1,itemTextureSize,itemTextureSize));
@@ -376,16 +369,17 @@ void GameViewPlayer::update(float deltaTime)
     window_ptr -> draw(elementalIcon);
     window_ptr -> draw(airShieldIcon);
 
-
     if(game ->player.currentItem() != Process::NONE )
     {
            window_ptr -> draw(itemIcon);
     }
 }
+
 void GameViewPlayer::drawBg()
 {
     window_ptr -> draw(background);
 }
+
 void GameViewPlayer::setBackgroundTexture(int element)
 {
     cout<<"ELEMENT"<<element<<endl;
@@ -429,6 +423,7 @@ void GameViewPlayer::drawTransition(float deltaTime){
         transition_started = false;
     }
 }
+
 void GameViewPlayer::centerView()
 {
     sf::Vector2f vect(game -> getPlayerCoord());
