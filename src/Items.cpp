@@ -25,5 +25,17 @@
     }
     void Items::update(float deltaTime)
     {
-        window_ptr -> draw(this -> body);
+        timer -= deltaTime;
+        if(timer < 2000)
+        {
+            displayItem -=deltaTime;
+            if(displayItem < 0)
+            {
+                displayItem = 250;
+            }
+        }
+        if(timer<=0)
+            state = Process::DEAD;
+        if(displayItem>125)
+            window_ptr -> draw(this -> body);
     }

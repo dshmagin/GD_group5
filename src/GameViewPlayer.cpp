@@ -252,18 +252,24 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     centerView();
                 }
 			}
-
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
+                {
+                    game -> player.health -=1;
+                }
 
 
                 //Pick up item
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
                 {
-
-                    game -> grabItem();
-                    int itemDisplay = game->player.currentItem();
-                    if( itemDisplay > 0 )
+                    if(game->player.currentItem() == Process::NONE)
                     {
-                        itemIcon.setTextureRect(sf::IntRect(itemTextureSize*itemDisplay,itemTextureSize*1,itemTextureSize,itemTextureSize));
+
+                        game -> grabItem();
+                        int itemDisplay = game->player.currentItem();
+                        if( itemDisplay > 0 )
+                        {
+                            itemIcon.setTextureRect(sf::IntRect(itemTextureSize*itemDisplay,itemTextureSize*1,itemTextureSize,itemTextureSize));
+                        }
                     }
 
                 }
@@ -366,7 +372,7 @@ void GameViewPlayer::update(float deltaTime)
         airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
     }
 
-    window_ptr -> draw( game -> getPlayer());
+    //window_ptr -> draw( game -> getPlayer());
     window_ptr -> draw(UIIcon);
     window_ptr -> draw(elementalIcon);
     window_ptr -> draw(airShieldIcon);

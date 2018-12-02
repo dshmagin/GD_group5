@@ -28,7 +28,7 @@ void GameLogic::initiliaze( float bckgW, float bckgH, float screenW, float scree
     this -> screenH = screenH;
     this -> screenW = screenW;
     this -> bckgPixSize = bckgPixSize;
-    player = Player( playerH, playerW);
+    player = Player( playerH, playerW, window_ptr);
     player.createPlayer(bckgW/2 + (screenW/2 - playerW/2) ,bckgH/2 + (screenH/2 - playerH/2) );
     // need to refactor
     pm->setPlayer(&player);

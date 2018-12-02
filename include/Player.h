@@ -3,14 +3,15 @@
 #include <iostream>
 #include "Process.h"
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 using namespace std;
 
 class Player
 {
 private:
+    shared_ptr<sf::RenderWindow> window_ptr;
     int curItem = Process::NONE;
-    int health = 100;
     int dir = SOUTH;
     int spriteNum = 0;
     float changeTimer = 0;
@@ -18,6 +19,8 @@ private:
     float switchTime=100.0f;
     float playerH, playerW;
     sf::RectangleShape body;
+    sf::RectangleShape healthBar;
+    sf::RectangleShape healthBg;
     sf::Texture image;
     float speed;
     float itemUseTimer = 10000;
@@ -27,12 +30,13 @@ private:
 
 public:
     // Enum that matches the sprite sheets row
+    float health = 100;
     //          0      1    2      3
     enum dir {SOUTH, WEST, EAST, NORTH};
     bool moveKeyIsPressed=false;
     sf::IntRect uvRect;
     Player(){};
-    Player(float playerH, float playerW);
+    Player(float playerH, float playerW,shared_ptr<sf::RenderWindow> &window_ptr);
     void setDirection(int dir,float deltaTime);
     void update(float deltaTime);
     void animation( float deltaTime, char dir);
@@ -54,7 +58,7 @@ public:
     float getDRM();
     void updateDodge(float multiplier);
     float getDodge();
-    void healPlayer(int amount);
+    void healPlayer(float amount);
 
 };
 
