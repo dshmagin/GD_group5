@@ -110,7 +110,7 @@ void GameLogic::update(float deltaTime)
 	    changed_background = false;
 	}
     }
-    
+
 
 }
 void GameLogic::idle()
@@ -171,7 +171,7 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
-    totalEnemies = 1 * wave;
+    totalEnemies = 10 * wave;
 
     cout<<"totalEnemies enemy " << totalEnemies << endl;
     for (int enemies = 0; enemies<totalEnemies; enemies++)
@@ -188,4 +188,31 @@ bool GameLogic::isPaused() {
 
 bool GameLogic::changingLevel(){
 	return changing_level;
+}
+
+void GameLogic::useItem()
+{
+    cout<<"ITEM "<<player.currentItem()<<endl;
+    switch(player.currentItem())
+    {
+        case(Process::RED_ITEM):
+            player.healPlayer(25);
+            //player
+            break;
+        case(Process::BLUE_ITEM):
+            cout<<" ITEM IS USED"<<endl;
+            airShieldCd += 30000;
+            basicAttackCd += 30000;
+            basicAttackOnCd = false;
+            airShieldOnCd = false;
+            break;
+        case(Process::YELLOW_ITEM):
+            shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
+            buff->createBuff(1);
+            pm->attachProcess((shared_ptr<Process>)buff);
+            break;
+    }
+    player.item(Process::NONE);
+
+    cout<<"ITEM USED"<<endl;
 }

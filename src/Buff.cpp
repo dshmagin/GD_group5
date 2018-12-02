@@ -17,6 +17,17 @@ void Buff::initialize() {
 	    player_ptr->updateSpeed(1.5);
 	    player_ptr->updateDM(10);
 	    break;
+    case 1:
+        //item buff
+		timeLimit = 10000;
+		timeRemaining = 10000;
+		shieldPoint = 200;
+		spellBuff = false;
+		//if( !texture.loadFromFile( "../Assets/Images/air_shield.png" )) cout<<"Cannot load Shield Sprite"<<endl;
+	    player_ptr->updateSpeed(1.5);
+	    player_ptr->updateDM(10);
+	    break;
+
 	default:
 		cout<<"buff type mismatch"<<endl;
 	}
@@ -44,7 +55,8 @@ void Buff::update(float deltaTime) {
 
         body.setTextureRect(sf::IntRect(128 * (spriteNum / 8), 0, 128, 128));
         body.setPosition(player_ptr->getXPos(), player_ptr->getYPos());
-        window_ptr -> draw(body);
+        if(spellBuff)
+            window_ptr -> draw(body);
         spriteNum = (spriteNum + 1) % 64;
     }
 }

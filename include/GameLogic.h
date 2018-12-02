@@ -31,9 +31,9 @@ class GameLogic
         bool paused = false;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
-	bool changing_level = false;
-	bool changed_background = false;
-	float transition = 0;
+        bool changing_level = false;
+        bool changed_background = false;
+        float transition = 0;
 
     public:
         Player player;
@@ -66,6 +66,7 @@ class GameLogic
         void setLevel(int level);
         int  getLevel();
         bool isPaused();
+        void useItem();
         //void dropItem(loc_x, loc_y);
 	bool changingLevel();
 

@@ -271,6 +271,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 //Pick up item
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
                 {
+
                     game -> grabItem();
                     int itemDisplay = game->player.currentItem();
                     if( itemDisplay > 0 )
@@ -279,46 +280,44 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     }
 
                 }
-                /*
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
-                {
-                    game -> createRangedEnemy(deltaTime);
-                }
-                */
+
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
                     if(game -> createPlayerAttack('N',deltaTime)){
                         sound.setBuffer(basicAttackSound);
-		        sound.play();
-		    }
-		}
+                        sound.play();
+                    }
+                }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 {
                     if(game -> createPlayerAttack('S',deltaTime)){
                         sound.setBuffer(basicAttackSound);
-		        sound.play();
-		    }
-		}
+                        sound.play();
+                    }
+                }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
                 {
                     if(game -> createPlayerAttack('W',deltaTime)){
                         sound.setBuffer(basicAttackSound);
-		        sound.play();
-		    }
-		}
+                    sound.play();
+                    }
+                }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                 {
                     if(game -> createPlayerAttack('E',deltaTime)){
                         sound.setBuffer(basicAttackSound);
-		        sound.play();
-		    }
-		}
+                        sound.play();
+                        }
+                }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
                 	game->createBuff(0);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+                	game->useItem();
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 {
@@ -385,7 +384,8 @@ void GameViewPlayer::update(float deltaTime)
     window_ptr -> draw(elementalIcon);
     window_ptr -> draw(airShieldIcon);
 
-    if(game ->player.currentItem() > 0 )
+
+    if(game ->player.currentItem() != Process::NONE )
     {
            window_ptr -> draw(itemIcon);
     }

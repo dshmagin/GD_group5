@@ -20,6 +20,7 @@ private:
     sf::RectangleShape body;
     sf::Texture image;
     float speed;
+    float itemUseTimer = 10000;
     float damageMultiplier = 1;
     float damageReceivedMultiplier = 1;
     float dodge = 0;
@@ -53,6 +54,8 @@ public:
     float getDRM();
     void updateDodge(float multiplier);
     float getDodge();
+    void healPlayer(int amount);
+
 };
 
 
