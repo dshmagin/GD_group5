@@ -14,6 +14,7 @@ void  GameLogic::setGameState( int GameState )
 {
     this -> GameState = GameState;
 }
+
 int  GameLogic::getGameState()
 {
     return GameState;
@@ -38,14 +39,17 @@ sf::RectangleShape GameLogic::getPlayer()
 {
     return player.getPlayerBody();
 }
+
 sf::RectangleShape GameLogic::getAttack()
 {
     //return (Attack) attack -> getAttackElement();
 }
+
 void GameLogic::setDirection(int dir,float deltaTime)
 {
     player.setDirection(dir,deltaTime);
 }
+
 int GameLogic::createPlayerAttack(char dir, float deltaTime)
 {
     if(basicAttackCd > basicAttackTimer)
@@ -60,15 +64,14 @@ int GameLogic::createPlayerAttack(char dir, float deltaTime)
 
 }
 
-void GameLogic::createBuff(int buffType) {
-
-
-	if (airShieldCd > 30000) {
-		airShieldCd = 0;
-		shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
-		buff->createBuff(buffType);
-		pm->attachProcess((shared_ptr<Process>)buff);
-	}
+void GameLogic::createBuff(int buffType)
+{
+    if (airShieldCd > 30000) {
+        airShieldCd = 0;
+        shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
+    	buff->createBuff(buffType);
+    	pm->attachProcess((shared_ptr<Process>)buff);
+    }
 }
 
 void GameLogic::createRangedEnemy()
@@ -96,23 +99,24 @@ void GameLogic::update(float deltaTime)
 
     if(pm -> checkEnemies() <= 0)
     {
-	changing_level = true;
-	transition += deltaTime;
-	if(transition >= 1000.0 && !changed_background){
+        changing_level = true;
+        transition += deltaTime;
+
+        if(transition >= 1000.0 && !changed_background){
             level++;
-	    changed_background = true;
+            changed_background = true;
         }
-	if(transition >= 1500.0){
-	    wave++;
-	    startWave();
-	    transition = 0;
-	    changing_level = false;
-	    changed_background = false;
-	}
+
+        if(transition >= 1500.0){
+            wave++;
+            startWave();
+            transition = 0;
+            changing_level = false;
+            changed_background = false;
+        }
     }
-
-
 }
+
 void GameLogic::idle()
 {
     player.moveKeyIsPressed=false;
@@ -120,7 +124,7 @@ void GameLogic::idle()
 
 sf::Vector2f GameLogic::getPlayerCoord()
 {
-    sf::Vector2f coords(player.getPlayerBody().getPosition().x,player.getPlayerBody().getPosition().y);
+    sf::Vector2f coords(player.getPlayerBody().getPosition().x, player.getPlayerBody().getPosition().y);
     return coords;
 }
 
@@ -128,22 +132,27 @@ int GameLogic::getStartingElement()
 {
     return startingElement;
 }
+
 bool GameLogic::isBasicAttackOnCd()
 {
     return basicAttackOnCd;
 }
+
 bool GameLogic::isAirShieldOnCd()
 {
     return airShieldOnCd;
 }
+
 void GameLogic::setStartingElement(int startingElement)
 {
     this -> startingElement = startingElement;
 }
+
 void GameLogic::resetPlayer()
 {
     player.reset(bckgW/2 + (screenW/2 - playerW/2) ,bckgH/2 + (screenH/2 - playerH/2) );
 }
+
 void GameLogic::grabItem()
 {
     int curItem = pm ->itemNearBy(getPlayer());
@@ -164,6 +173,7 @@ void GameLogic::setLevel(int level)
     this -> level = level;
     this -> wave = 1;
 }
+
 int GameLogic::getLevel()
 {
     return level;
@@ -174,6 +184,7 @@ void GameLogic::startWave()
     totalEnemies = 10 * wave;
 
     cout<<"totalEnemies enemy " << totalEnemies << endl;
+
     for (int enemies = 0; enemies<totalEnemies; enemies++)
     {
         cout<<"Created enemy " << enemies << endl;
@@ -212,6 +223,7 @@ void GameLogic::useItem()
             pm->attachProcess((shared_ptr<Process>)buff);
             break;
     }
+    
     player.item(Process::NONE);
 
     cout<<"ITEM USED"<<endl;
