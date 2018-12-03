@@ -10,10 +10,10 @@ class Process
 {
     public:
         enum state {RUNNING,DEAD, PAUSED, FAIL, SUCCESS, ABORT, UNINITIALIZED};
-        enum type {ATTACK, R_ENEMY, E_ATTACK, ITEM, BUFF};
+        enum type {ATTACK, R_ENEMY, E_ATTACK, ITEM, BUFF, TEXT, HEAL};
         enum itemDropped { NONE, BLUE_ITEM,RED_ITEM, YELLOW_ITEM};
         sf::RectangleShape item;
-        int state;
+        int state = UNINITIALIZED;
         int type;
         int toDrop;
         float damage;

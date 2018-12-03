@@ -1,6 +1,6 @@
 #include "GameLogic.h"
 #include "RangedEnemy.h"
-
+#include "DmgDisplay.h"
 using namespace std;
 
 GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm)
@@ -181,7 +181,7 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
-    totalEnemies = 10 * wave;
+    totalEnemies = 1 * wave;
 
     cout<<"totalEnemies enemy " << totalEnemies << endl;
 
@@ -203,15 +203,18 @@ bool GameLogic::changingLevel(){
 
 void GameLogic::useItem()
 {
-    cout<<"ITEM "<<player.currentItem()<<endl;
+
     switch(player.currentItem())
     {
         case(Process::RED_ITEM):
-            player.healPlayer(25);
-            //player
+            {
+                shared_ptr<DmgDisplay> displayHeal = make_shared<DmgDisplay>(window_ptr);
+                player.healPlayer(redPotion);
+                displayHeal -> createText(getPlayer().getPosition().x  , getPlayer().getPosition().y , Process::HEAL , redPotion);
+                pm ->  attachProcess((shared_ptr<Process>) displayHeal);
+            }
             break;
         case(Process::BLUE_ITEM):
-            cout<<" ITEM IS USED"<<endl;
             airShieldCd += 30000;
             basicAttackCd += 30000;
             basicAttackOnCd = false;
@@ -223,7 +226,7 @@ void GameLogic::useItem()
             pm->attachProcess((shared_ptr<Process>)buff);
             break;
     }
-    
+
     player.item(Process::NONE);
 
     cout<<"ITEM USED"<<endl;

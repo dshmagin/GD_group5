@@ -16,11 +16,10 @@ private:
     sf::Texture itemImg;
     sf::Font GameFont;
     sf::Text dmgText;
-    float textMoveDist = 25.0f;
-    float moveTimer = 250;
+    float textMoveDist = 5.0f;
     float itemW = 64;
     float itemH = 64;
-    float timer = 7000;
+    float timer = 5000;
 
 
 
