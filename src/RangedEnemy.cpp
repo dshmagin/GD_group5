@@ -23,14 +23,12 @@ void RangedEnemy::init()
 void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
 {
 
-
     this -> healthBar.setSize(sf::Vector2f( 50, 10 ));
     this -> healthBar.setFillColor(sf::Color::Red);
     this -> healthBg.setSize(sf::Vector2f( 54, 14 ));
     this -> healthBg.setFillColor(sf::Color::Black);
 
     this-> randF = (((float) (rand() % 100))/ 1000.0f);
-
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     float loc_x = (rand() % (1200 - 200) + 100);
     float loc_y = (rand() % (900 - 200) + 100);

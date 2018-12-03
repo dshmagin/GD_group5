@@ -14,7 +14,7 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
 
     if( !BackgroundTexture.loadFromFile( "../Assets/Images/MenuSpriteSheet.png" ) )
         cout << "Background did not load" << endl;
-
+/*
     if( !menuSong.loadFromFile( "../Assets/Sounds/Ground_Break_Menu_01.wav" ) )
     {
         cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
