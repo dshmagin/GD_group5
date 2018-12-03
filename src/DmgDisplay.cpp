@@ -17,6 +17,9 @@
 
     void DmgDisplay::createText(float loc_x, float loc_y, int attack, int dmg)
     {
+
+        this -> type  = Process::TEXT;
+
         std::stringstream ss;
         ss << dmg;
         std::string s_dmg = ss.str();

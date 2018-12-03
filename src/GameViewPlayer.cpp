@@ -66,7 +66,7 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
         abilityIcon.setTexture(&elementalText);
         abilityIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
-        cout<< "SUCESS"<<endl;
+
 
     }
     this -> game = game;
@@ -134,7 +134,6 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     playerView.reset(sf::FloatRect(bckgW/2,bckgH/2,screenW,screenH));
                     background.setTextureRect(sf::IntRect(textureSize,textureSize,bckgW,bckgH));
                     game -> setStartingElement(menu -> getSelectedElement());
-                    game -> resetCd();
                     setBackgroundTexture((menu -> getSelectedElement() + game ->getLevel()) % 4);
                     currentBckg = (menu -> getSelectedElement() + game ->getLevel()) % 4;
                     elementalAttack = game -> getStartingElement();
@@ -145,7 +144,9 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     game -> initiliaze(bckgW, bckgH, screenW, screenH, textureSize, playerW, playerH);
                     game -> resetPlayer();
                     currentLevel = game -> getLevel();
+
                     abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
+
                     elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
                 }
             }
@@ -303,23 +304,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
-                	switch (game->getStartingElement()) {
-                	case 0:
-                		game->createSplitAttack();
-                		break;
-                	case 1:
-                		game->createBuff(0);
-                		break;
-                	case 2:
-                		game->createDash(&playerView, &UIIcon, &elementalIcon, &abilityIcon, &itemIcon);
-                		break;
-                	case 3:
-                		game->createHeal();
-                		break;
-                	default:
-                		cout<<"element mismatch"<<endl;
-                		break;
-                	}
+                	game->createBuff(0);
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
@@ -332,7 +317,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     game -> setGameState(0);
                     elementalAttack = game -> getStartingElement();
                     elementalIcon.setPosition(bckgW/2 + 72  ,bckgH/2 + (screenH - 24 ));
-                    abilityIcon.setPosition(bckgW/2 + 72 + 32  ,bckgH/2 + (screenH - 24 ));
+                    airShieldIcon.setPosition(bckgW/2 + 72 + 32  ,bckgH/2 + (screenH - 24 ));
                     itemIcon.setPosition(bckgW/2 + 72 + 64   ,bckgH/2 + (screenH - 24 ));
                     UIIcon.setPosition(bckgW/2 + 64  ,bckgH/2 + (screenH - 32 ));
                     playerView.reset(sf::FloatRect(0,0,screenW,screenH));
@@ -372,19 +357,20 @@ void GameViewPlayer::update(float deltaTime)
         elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
     }
 
-    if(game -> isAbilityOnCd())
+    if(game -> isAirShieldOnCd())
     {
-        abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*0,itemTextureSize*1,itemTextureSize,itemTextureSize));
+        airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*0,itemTextureSize*1,itemTextureSize,itemTextureSize));
     }
     else
     {
-        abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
+        airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
     }
 
     //window_ptr -> draw( game -> getPlayer());
     window_ptr -> draw(UIIcon);
     window_ptr -> draw(elementalIcon);
     window_ptr -> draw(abilityIcon);
+
 
     if(game ->player.currentItem() != Process::NONE )
     {
@@ -452,6 +438,6 @@ void GameViewPlayer::centerView()
 
     UIIcon.setPosition(playerView.getCenter().x- screenW/2 ,playerView.getCenter().y + (screenH/2 - 32));
     elementalIcon.setPosition(playerView.getCenter().x - (screenW/2 - 8) ,playerView.getCenter().y + (screenH/2 - 24));
-    abilityIcon.setPosition(playerView.getCenter().x- (screenW/2 - 40) ,playerView.getCenter().y + (screenH/2 - 24));
+    airShieldIcon.setPosition(playerView.getCenter().x- (screenW/2 - 40) ,playerView.getCenter().y + (screenH/2 - 24));
     itemIcon.setPosition(playerView.getCenter().x- (screenW/2 - 72) ,playerView.getCenter().y + (screenH/2 - 24));
 }

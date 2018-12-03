@@ -98,13 +98,9 @@ void BasicAttack::createAttack(float x_pos, float y_pos, char dir)
     initialize();
 
 }
-
 void BasicAttack::initialize()
 {
-	this -> damage = 25;
-	this -> hitLimit = 1;
-	this -> state = Process::RUNNING;
-	this -> type  = Process::ATTACK;
+ this -> state = Process::RUNNING;
 }
 
 

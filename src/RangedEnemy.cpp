@@ -23,27 +23,26 @@ void RangedEnemy::init()
 void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
 {
 
-
     this -> healthBar.setSize(sf::Vector2f( 50, 10 ));
     this -> healthBar.setFillColor(sf::Color::Red);
     this -> healthBg.setSize(sf::Vector2f( 54, 14 ));
     this -> healthBg.setFillColor(sf::Color::Black);
 
     this-> randF = (((float) (rand() % 100))/ 1000.0f);
-
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     float loc_x = (rand() % (1200 - 200) + 100);
     float loc_y = (rand() % (900 - 200) + 100);
     this -> body.setPosition(loc_x, loc_y);
     this -> body.setTexture(&image);
     this -> game = gameLogic;
-    initializeProcess();
+    this -> state = Process::UNINITIALIZED;
+    this -> type = Process::R_ENEMY;
+
 }
 
-void RangedEnemy::initializeProcess()
+void RangedEnemy::initialize()
 {
  this -> state = Process::RUNNING;
- this -> type  = Process::R_ENEMY;
 }
 
 sf::RectangleShape RangedEnemy::getEnemyBody() {
