@@ -254,7 +254,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
 
                 //Pick up item
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
                 {
                     if(game->player.currentItem() == Process::NONE)
                     {
