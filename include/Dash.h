@@ -12,6 +12,7 @@ private:
     sf::View* playerView_ptr;
     sf::RectangleShape* UIIcon_ptr;
 	sf::CircleShape* elementalIcon_ptr;
+	sf::CircleShape* abilityIcon_ptr;
 	sf::CircleShape* itemIcon_ptr;
 
 	bool dashed = false;
@@ -23,11 +24,13 @@ private:
 public:
     Dash(){};
     Dash(shared_ptr<sf::RenderWindow> window_ptr, Player* player_ptr, sf::View* playerView_ptr,
-    		sf::RectangleShape* UIIcon_ptr, sf::CircleShape* elementalIcon_ptr, sf::CircleShape* itemIcon_ptr);
+    		sf::RectangleShape* UIIcon_ptr, sf::CircleShape* elementalIcon_ptr,
+			sf::CircleShape* abilityIcon_ptr, sf::CircleShape* itemIcon_ptr);
 
     ~Dash(){};
     void initialize();
     void update(float deltaTime);
+    void moveCam(float x, float y);
 };
 
 

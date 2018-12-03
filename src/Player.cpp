@@ -102,7 +102,9 @@ void Player::update(float deltaTime)
     }
 
         changeTimer += 0.04f *deltaTime;
-        draw();
+        window_ptr -> draw(body);
+        window_ptr -> draw(healthBg);
+        window_ptr -> draw(healthBar);
 }
 
 void Player::reset(float x_pos, float y_pos)
@@ -170,13 +172,7 @@ void Player::healPlayer(float amount)
 
 void Player::movePlayer(float x, float y) {
 	body.move(x, y);
-}
-
-void Player::draw() {
-	window_ptr -> draw(body);
-	window_ptr -> draw(healthBg);
-	window_ptr -> draw(healthBar);
-}
+};
 
 int Player::getDirection() {
 	return (int)dir;

@@ -1,6 +1,7 @@
 #include "ProcessManager.h"
 #include <SFML/Graphics.hpp>
 #include "Items.h"
+#include "DmgDisplay.h"
 #include "Process.h"
 #include "iostream"
 #include <vector>
@@ -70,14 +71,19 @@ void ProcessManager::updateProcessList(float deltaMs)
                     // check the if the attack hits something in the enemy list
                     // damage enemys health by the process's attack
                     // kill the process
-                    if(p->enemyHit < p->hitLimit)
+                    if(p->state !=Process::DEAD)
                         {
                         if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
                         {
                            cout<< "ENEMY Damaged by "<< p -> damage << endl;
+                           shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
+                           dmgDisp -> createText(enemy -> body.getPosition().x  , enemy -> body.getPosition().y , Process::ATTACK ,p->damage);
                            enemy -> health -= p-> damage * player_ptr->getDM();
+                           liveProcess.push_back((shared_ptr<Process>) dmgDisp);
+                           dmgDisp->update(deltaMs);
+
                            p->enemyHit++;
-                           p->state = Process::DEAD;
+                           if (p->enemyHit >= p->hitLimit) p->state = Process::DEAD;
 
                         //kill the enemy if health reaches below zero
                             if(enemy -> health <= 0 )
@@ -109,7 +115,6 @@ void ProcessManager::updateProcessList(float deltaMs)
                     {
                         liveEnemy.push_back(enemy);
                     }
-
                     // add live enemies to new list
                 }
                 // swap list
@@ -131,7 +136,6 @@ void ProcessManager::attachProcess(shared_ptr<Process> process)
   if(process -> type == Process::ATTACK)
     {
         attackList.push_back(process);
-        cout<<" ITEM TYPE"<<endl;
     }
     processList.push_back(process);
 }

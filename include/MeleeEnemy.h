@@ -1,5 +1,5 @@
-#ifndef RANGEDENEMY_H_INCLUDED
-#define RANGEDENEMY_H_INCLUDED
+#ifndef MELEEENEMY_H_INCLUDED
+#define MELEEENEMY_H_INCLUDED
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -9,11 +9,9 @@
 
 using namespace std;
 
-class RangedEnemy : public Process
+class MeleeEnemy : public Process
 {
 private:
-    sf::RectangleShape healthBar;
-    sf::RectangleShape healthBg;
 
 public:
     shared_ptr<sf::RenderWindow> window_ptr;
@@ -29,14 +27,15 @@ public:
     float playerW = 64;
     GameLogic* game;
     float randF;
-    RangedEnemy(){};
-    RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
+    
+    MeleeEnemy(){};
+    MeleeEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
     void init();
     sf::Vector2f findPlayer(float deltaTime);
     void update(float deltaTime);
     void setDirection(int dir, int spriteNum);
     int getDirection(sf::Vector2f toPlayer);
-    void createRangedEnemy(GameLogic* gameLogic);
+    void createMeleeEnemy(GameLogic* gameLogic);
     sf::RectangleShape getEnemyBody();
     void reset(float x_pos, float y_pos);
     void initializeProcess();
