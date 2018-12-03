@@ -25,7 +25,6 @@ private:
 
 
 
-
 public:
 
      DmgDisplay(){};

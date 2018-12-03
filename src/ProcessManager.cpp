@@ -50,13 +50,10 @@ void ProcessManager::updateProcessList(float deltaMs)
         if(p != nullptr)
         {
 
-
             if( p->getState()== Process::UNINITIALIZED)
                 p->initialize();
-          
             if(p->getState()== Process::RUNNING && p -> type != Process::ITEM)
                 p->update(deltaMs);
-
 
 
             if(p -> type == Process::ATTACK && p -> state != Process::DEAD)
@@ -75,18 +72,12 @@ void ProcessManager::updateProcessList(float deltaMs)
                         {
                         if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
                         {
-
-                           cout<< "ENEMY Damaged by "<< p -> damage << endl;
                            shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
                            dmgDisp ->initialize();
                            dmgDisp -> createText(enemy -> body.getPosition().x  , enemy -> body.getPosition().y , Process::ATTACK , (p->damage * player_ptr ->getDM()));
                            enemy -> health -= p-> damage * player_ptr->getDM();
                            liveProcess.push_back((shared_ptr<Process>) dmgDisp);
-                           dmgDisp->update(deltaMs);
-
-                           p->enemyHit++;
-                           if (p->enemyHit >= p->hitLimit) p->state = Process::DEAD;
-
+                           p->state = Process::DEAD;
 
                         //kill the enemy if health reaches below zero
                             if(enemy -> health <= 0 )

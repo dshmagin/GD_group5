@@ -169,13 +169,3 @@ void Player::healPlayer(float amount)
     else
         health += amount;
 }
-
-
-void Player::movePlayer(float x, float y) {
-	body.move(x, y);
-};
-
-int Player::getDirection() {
-	return (int)dir;
-}
-
