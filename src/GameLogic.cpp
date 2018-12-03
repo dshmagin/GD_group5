@@ -2,9 +2,6 @@
 #include "RangedEnemy.h"
 #include "MeleeEnemy.h"
 
-#include "DmgDisplay.h"
-#include "MeleeEnemy.h"
-
 using namespace std;
 
 GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm)
@@ -67,7 +64,6 @@ int GameLogic::createPlayerAttack(char dir, float deltaTime)
     return 0;
 
 }
-
 
 void GameLogic::createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
 		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
@@ -165,7 +161,6 @@ bool GameLogic::isBasicAttackOnCd()
     return basicAttackOnCd;
 }
 
-
 bool GameLogic::isAbilityOnCd()
 {
     return abilityOnCd;
@@ -241,18 +236,15 @@ bool GameLogic::changingLevel(){
 
 void GameLogic::useItem()
 {
-
+    cout<<"ITEM "<<player.currentItem()<<endl;
     switch(player.currentItem())
     {
         case(Process::RED_ITEM):
-            {
-                shared_ptr<DmgDisplay> displayHeal = make_shared<DmgDisplay>(window_ptr);
-                player.healPlayer(redPotion);
-                displayHeal -> createText(getPlayer().getPosition().x  , getPlayer().getPosition().y , Process::HEAL , redPotion);
-                pm ->  attachProcess((shared_ptr<Process>) displayHeal);
-            }
+            player.healPlayer(25);
+            //player
             break;
         case(Process::BLUE_ITEM):
+            cout<<" ITEM IS USED"<<endl;
             resetCd();
             break;
         case(Process::YELLOW_ITEM):
@@ -297,4 +289,3 @@ void GameLogic::updateCd(float deltaTime) {
 	abilityCd += deltaTime;
 	abilityOnCd = (abilityTimer >= abilityCd);
 }
-

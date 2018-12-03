@@ -66,7 +66,6 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
         abilityIcon.setTexture(&elementalText);
         abilityIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
-
         cout<< "SUCESS"<<endl;
 
     }
@@ -147,7 +146,6 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     game -> resetPlayer();
                     currentLevel = game -> getLevel();
                     abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
-
                     elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
                 }
             }
@@ -257,7 +255,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
 
                 //Pick up item
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
                 {
                     if(game->player.currentItem() == Process::NONE)
                     {
@@ -386,9 +384,7 @@ void GameViewPlayer::update(float deltaTime)
     //window_ptr -> draw( game -> getPlayer());
     window_ptr -> draw(UIIcon);
     window_ptr -> draw(elementalIcon);
-
     window_ptr -> draw(abilityIcon);
-
 
     if(game ->player.currentItem() != Process::NONE )
     {

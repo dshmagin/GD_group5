@@ -62,7 +62,6 @@ public:
     void movePlayer(float x, float y);
     int getDirection();
 
-
 };
 
 
