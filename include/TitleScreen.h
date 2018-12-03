@@ -17,8 +17,8 @@ class TitleScreen
     private:
         int selected = 0;
         int elementSelected = 0;
-        sf::Font GameFont;
         shared_ptr<sf::RenderWindow> window_ptr;
+        sf::Font GameFont;
         sf::Text Option;
         sf::Text Start;
         sf::Text fire;
