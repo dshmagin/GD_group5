@@ -1,6 +1,7 @@
 #include "ProcessManager.h"
 #include <SFML/Graphics.hpp>
 #include "Items.h"
+#include "DmgDisplay.h"
 #include "Process.h"
 #include "iostream"
 #include <vector>
@@ -75,7 +76,11 @@ void ProcessManager::updateProcessList(float deltaMs)
                         if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
                         {
                            cout<< "ENEMY Damaged by "<< p -> damage << endl;
+                           shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
+                           dmgDisp -> createText(enemy -> body.getPosition().x  , enemy -> body.getPosition().y , Process::ATTACK ,p->damage);
                            enemy -> health -= p-> damage * player_ptr->getDM();
+                           liveProcess.push_back((shared_ptr<Process>) dmgDisp);
+                           dmgDisp->update(deltaMs);
                            p->state = Process::DEAD;
 
                         //kill the enemy if health reaches below zero
