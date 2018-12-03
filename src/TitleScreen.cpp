@@ -36,7 +36,6 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
     {
         sound.setBuffer(keySound);
     }
-    */
 }
 
 

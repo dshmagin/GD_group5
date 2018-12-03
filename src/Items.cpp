@@ -18,6 +18,7 @@
         body.setTexture(&image);
         this -> type  = Process::ITEM;
 
+
     }
     void Items::initialize()
     {

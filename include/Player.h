@@ -59,6 +59,9 @@ public:
     void updateDodge(float multiplier);
     float getDodge();
     void healPlayer(float amount);
+    void movePlayer(float x, float y);
+    int getDirection();
+
 
 };
 

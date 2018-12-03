@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "BasicAttack.h"
 #include "Buff.h"
+#include "Dash.h"
+#include "SplitAttack.h"
 //#include "RangedEnemy.h"
 #include "ProcessManager.h"
 #include <memory>
@@ -18,17 +20,25 @@ class GameLogic
         int  startingElement ;
         bool gameStatus = false;
         bool basicAttackOnCd = false;
-        bool airShieldOnCd = false;
+
+        bool abilityOnCd = false;
+
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
         int level = 1;
         int wave = 1;
-        float redPotion = 25.0;
-        float basicAttackCd = 1000;
-        float airShieldCd= 30000;
+
+        float basicAttackCd = 600;
+        float abilityCd;
+        float abilityTimer;
         float basicAttackTimer= 600;
-        float airShieldTimer = 30000;
+        float airShieldTimer = 20000;
+        float dashTimer = 8000;
+        float healTimer = 10000;
+        float splitAttackTimer = 6000;
+        float redPotion = 25.0;
+
         bool paused = false;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
@@ -47,7 +57,7 @@ class GameLogic
         GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm);
 
         bool isBasicAttackOnCd();
-        bool isAirShieldOnCd();
+        bool isAbilityOnCd();
         int getStartingElement();
         int  getGameState( void );
         sf::RectangleShape getPlayer();
@@ -60,6 +70,11 @@ class GameLogic
         void update(float deltaTime);
         int createPlayerAttack(char, float);
         void createBuff(int buffType);
+        void createHeal();
+        void createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
+        		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
+				sf::CircleShape* itemIcon_ptr);
+        void createSplitAttack();
         void createRangedEnemy();
         void createMeleeEnemy();
         void setStartingElement(int startingElement);
@@ -72,7 +87,12 @@ class GameLogic
         bool isPaused();
         void useItem();
         //void dropItem(loc_x, loc_y);
-	bool changingLevel();
+
+        bool changingLevel();
+
+        void resetCd();
+        void updateCd(float deltaTime);
+
 
 
 
