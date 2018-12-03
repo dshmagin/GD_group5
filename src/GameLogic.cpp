@@ -1,6 +1,5 @@
 #include "GameLogic.h"
 #include "RangedEnemy.h"
-#include "MeleeEnemy.h"
 
 #include "DmgDisplay.h"
 #include "MeleeEnemy.h"
@@ -68,37 +67,10 @@ int GameLogic::createPlayerAttack(char dir, float deltaTime)
 
 }
 
-
-void GameLogic::createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
-		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
-		sf::CircleShape* itemIcon_ptr) {
-	if (abilityCd > abilityTimer) {
-		abilityCd = 0;
-		shared_ptr<Dash> dash = make_shared<Dash>(window_ptr, &player, playerView_ptr, UIIcon_ptr,
-				elementalIcon_ptr, abilityIcon_ptr, itemIcon_ptr);
-		pm->attachProcess((shared_ptr<Process>) dash);
-	}
-}
-void GameLogic::createHeal() {
-	if (abilityCd > abilityTimer) {
-		abilityCd = 0;
-		player.healPlayer(50);
-	}
-}
-
-void GameLogic::createSplitAttack() {
-	if (abilityCd > abilityTimer) {
-		abilityCd = 0;
-		for (int i = 0; i < 3; i++) {
-			shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player);
-			pm -> attachProcess((shared_ptr<Process>) splitAttack);
-		}
-	}
-}
-
-void GameLogic::createBuff(int buffType) {
-    if (abilityCd > abilityTimer) {
-        abilityCd = 0;
+void GameLogic::createBuff(int buffType)
+{
+    if (airShieldCd > 30000) {
+        airShieldCd = 0;
         shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
     	buff->createBuff(buffType);
     	pm->attachProcess((shared_ptr<Process>)buff);
@@ -120,8 +92,20 @@ void GameLogic::createMeleeEnemy()
 }
 void GameLogic::update(float deltaTime)
 {
+    basicAttackCd += deltaTime;
+    airShieldCd += deltaTime;
+
     player.update(deltaTime);
-    updateCd(deltaTime);
+
+    if(basicAttackCd > basicAttackTimer)
+      basicAttackOnCd = false;
+    else
+        basicAttackOnCd = true;
+
+    if(airShieldCd > airShieldTimer)
+        airShieldOnCd = false;
+    else
+        airShieldOnCd = true;
 
     if(pm -> checkEnemies() <= 0)
     {
@@ -134,7 +118,6 @@ void GameLogic::update(float deltaTime)
         }
 
         if(transition >= 1500.0){
-            clearGame();
             wave++;
             startWave();
             transition = 0;
@@ -165,10 +148,9 @@ bool GameLogic::isBasicAttackOnCd()
     return basicAttackOnCd;
 }
 
-
-bool GameLogic::isAbilityOnCd()
+bool GameLogic::isAirShieldOnCd()
 {
-    return abilityOnCd;
+    return airShieldOnCd;
 }
 
 void GameLogic::setStartingElement(int startingElement)
@@ -192,8 +174,7 @@ void GameLogic::grabItem()
 
 void GameLogic::clearGame()
 {
-    pm->clearManager();
-    resetCd();
+    pm -> clearManager();
     player.item( Process::NONE );
 }
 
@@ -210,11 +191,13 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
+
     rangedEnemies = 10 * wave;
 
     meleeEnemies = 5 * wave;
 
     totalEnemies = meleeEnemies + rangedEnemies;
+
 
     cout<<"totalEnemies enemy " << totalEnemies << endl;
 
@@ -253,7 +236,10 @@ void GameLogic::useItem()
             }
             break;
         case(Process::BLUE_ITEM):
-            resetCd();
+            airShieldCd += 30000;
+            basicAttackCd += 30000;
+            basicAttackOnCd = false;
+            airShieldOnCd = false;
             break;
         case(Process::YELLOW_ITEM):
             shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
@@ -266,35 +252,3 @@ void GameLogic::useItem()
 
     cout<<"ITEM USED"<<endl;
 }
-
-void GameLogic::resetCd() {
-	switch (startingElement) {
-	case 0:
-		abilityTimer = splitAttackTimer;
-		break;
-	case 1:
-		abilityTimer = airShieldTimer;
-		break;
-	case 2:
-		abilityTimer = dashTimer;
-		break;
-	case 3:
-		abilityTimer = healTimer;
-		break;
-	default:
-		cout<<"resetCd failed, element mismatch"<<endl;
-		break;
-	}
-	basicAttackCd = basicAttackTimer;
-	abilityCd = abilityTimer;
-	basicAttackOnCd = false;
-	abilityOnCd = false;
-}
-
-void GameLogic::updateCd(float deltaTime) {
-	basicAttackCd += deltaTime;
-	basicAttackOnCd = (basicAttackTimer >= basicAttackCd);
-	abilityCd += deltaTime;
-	abilityOnCd = (abilityTimer >= abilityCd);
-}
-
