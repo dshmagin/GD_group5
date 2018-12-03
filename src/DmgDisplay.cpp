@@ -17,7 +17,9 @@
 
     void DmgDisplay::createText(float loc_x, float loc_y, int attack, int dmg)
     {
+
         this -> type  = Process::TEXT;
+
         std::stringstream ss;
         ss << dmg;
         std::string s_dmg = ss.str();
@@ -35,14 +37,16 @@
         case Process::E_ATTACK:
             dmgText.setColor(sf::Color::Red);
             break;
-        case Process::HEAL:
-            dmgText.setColor(sf::Color::Green);
-            break;
+
         }
+
+
+
     }
     void DmgDisplay::initialize()
     {
      this -> state = Process::RUNNING;
+     this -> type  = Process::ITEM;
     }
     void DmgDisplay::update(float deltaTime)
     {

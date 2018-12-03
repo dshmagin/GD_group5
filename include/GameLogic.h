@@ -18,17 +18,26 @@ class GameLogic
         int  startingElement ;
         bool gameStatus = false;
         bool basicAttackOnCd = false;
-        bool airShieldOnCd = false;
+        bool abilityOnCd = false;
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
         int level = 1;
         int wave = 1;
-        float redPotion = 25.0;
-        float basicAttackCd = 1000;
-        float airShieldCd= 30000;
+
+        float basicAttackCd = 600;
+        float abilityCd;
+        float abilityTimer;
         float basicAttackTimer= 600;
+        float airShieldTimer = 20000;
+        float dashTimer = 8000;
+        float healTimer = 10000;
+        float splitAttackTimer = 6000;
+  
+        float redPotion = 25.0;
+        float airShieldCd= 30000;
         float airShieldTimer = 30000;
+  
         bool paused = false;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
@@ -69,8 +78,17 @@ class GameLogic
         bool isPaused();
         void useItem();
         //void dropItem(loc_x, loc_y);
-	bool changingLevel();
 
+  
+        bool changingLevel();
+
+        void resetCd();
+        void updateCd(float deltaTime);
+
+
+
+  
+  
 
 
 };

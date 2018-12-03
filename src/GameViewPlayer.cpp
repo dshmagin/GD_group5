@@ -61,12 +61,12 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         itemIcon.setTextureRect(sf::IntRect(itemTextureSize*1,1*spellTextNum,itemTextureSize,itemTextureSize));
         itemIcon.setTexture(&elementalText);
         itemIcon.setPosition(bckgW/2 + 8 + 64  ,bckgH/2 + (screenH - 24 ));
-        airShieldIcon.setRadius(spellIconSize);
-        airShieldIcon.setPointCount(60);
-        airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
-        airShieldIcon.setTexture(&elementalText);
-        airShieldIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
-        cout<< "SUCESS"<<endl;
+        abilityIcon.setRadius(spellIconSize);
+        abilityIcon.setPointCount(60);
+        abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
+        abilityIcon.setTexture(&elementalText);
+        abilityIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
+
 
     }
     this -> game = game;
@@ -144,7 +144,9 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     game -> initiliaze(bckgW, bckgH, screenW, screenH, textureSize, playerW, playerH);
                     game -> resetPlayer();
                     currentLevel = game -> getLevel();
-                    airShieldIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
+
+                    abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
+
                     elementalIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,0*itemTextureSize,itemTextureSize,itemTextureSize));
                 }
             }
@@ -254,7 +256,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
 
                 //Pick up item
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
                 {
                     if(game->player.currentItem() == Process::NONE)
                     {
@@ -367,7 +369,8 @@ void GameViewPlayer::update(float deltaTime)
     //window_ptr -> draw( game -> getPlayer());
     window_ptr -> draw(UIIcon);
     window_ptr -> draw(elementalIcon);
-    window_ptr -> draw(airShieldIcon);
+    window_ptr -> draw(abilityIcon);
+
 
     if(game ->player.currentItem() != Process::NONE )
     {

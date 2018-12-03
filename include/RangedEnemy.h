@@ -39,7 +39,9 @@ public:
     void createRangedEnemy(GameLogic* gameLogic);
     sf::RectangleShape getEnemyBody();
     void reset(float x_pos, float y_pos);
+
     void initialize();
+
     //void rangedAttack(int attackElement);
     //void animation( float deltaTime, char dir);
 };
