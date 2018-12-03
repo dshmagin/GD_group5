@@ -37,6 +37,7 @@
             break;
         case Process::HEAL:
             dmgText.setColor(sf::Color::Green);
+            break;
         }
     }
     void DmgDisplay::initialize()
