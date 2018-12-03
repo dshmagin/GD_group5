@@ -24,6 +24,7 @@ class GameLogic
         int GameState = 0;
         int level = 1;
         int wave = 1;
+        float redPotion = 25.0;
         float basicAttackCd = 1000;
         float airShieldCd= 30000;
         float basicAttackTimer= 600;
