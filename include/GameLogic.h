@@ -20,12 +20,15 @@ class GameLogic
         int  startingElement ;
         bool gameStatus = false;
         bool basicAttackOnCd = false;
+
         bool abilityOnCd = false;
+
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
         int level = 1;
         int wave = 1;
+
         float basicAttackCd = 600;
         float abilityCd;
         float abilityTimer;
@@ -34,6 +37,8 @@ class GameLogic
         float dashTimer = 8000;
         float healTimer = 10000;
         float splitAttackTimer = 6000;
+        float redPotion = 25.0;
+
         bool paused = false;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
@@ -82,10 +87,12 @@ class GameLogic
         bool isPaused();
         void useItem();
         //void dropItem(loc_x, loc_y);
+
         bool changingLevel();
 
         void resetCd();
         void updateCd(float deltaTime);
+
 
 
 

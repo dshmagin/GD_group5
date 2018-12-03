@@ -37,13 +37,12 @@ void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
     this -> body.setPosition(loc_x, loc_y);
     this -> body.setTexture(&image);
     this -> game = gameLogic;
-    initializeProcess();
+
 }
 
-void RangedEnemy::initializeProcess()
+void RangedEnemy::initialize()
 {
  this -> state = Process::RUNNING;
- this -> type  = Process::R_ENEMY;
 }
 
 sf::RectangleShape RangedEnemy::getEnemyBody() {

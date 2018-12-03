@@ -71,7 +71,8 @@ void BasicAttack::update(float deltaTime)
 
 void BasicAttack::createAttack(float x_pos, float y_pos, char dir)
 {
-
+    this -> damage = 25;
+    this -> type  = Process::ATTACK;
     this -> body.setSize( sf::Vector2f( 128, 64 ) );
     this -> body.setTexture(&image);
     this -> spriteNum = 0;
@@ -94,8 +95,7 @@ void BasicAttack::createAttack(float x_pos, float y_pos, char dir)
         this -> body.setPosition(x_pos + 32, y_pos + 96);
         break;
     }
-    this -> state = Process::RUNNING;
-    initialize();
+    this -> state = Process::UNINITIALIZED;
 
 }
 
