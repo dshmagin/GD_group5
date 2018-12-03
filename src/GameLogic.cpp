@@ -130,6 +130,7 @@ void GameLogic::update(float deltaTime)
         }
 
         if(transition >= 1500.0){
+            clearGame();
             wave++;
             startWave();
             transition = 0;
@@ -186,7 +187,7 @@ void GameLogic::grabItem()
 
 void GameLogic::clearGame()
 {
-    pm -> clearManager();
+    pm->clearManager();
     resetCd();
     player.item( Process::NONE );
 }
