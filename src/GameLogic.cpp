@@ -1,6 +1,9 @@
 #include "GameLogic.h"
 #include "RangedEnemy.h"
 #include "MeleeEnemy.h"
+#include "BossEnemy.h"
+#include "DmgDisplay.h"
+#include "MeleeEnemy.h"
 
 using namespace std;
 
@@ -65,14 +68,50 @@ int GameLogic::createPlayerAttack(char dir, float deltaTime)
 
 }
 
-void GameLogic::createBuff(int buffType)
-{
-    if (airShieldCd > 30000) {
-        airShieldCd = 0;
+
+void GameLogic::createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
+		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
+		sf::CircleShape* itemIcon_ptr) {
+	if (abilityCd > abilityTimer) {
+		abilityCd = 0;
+		shared_ptr<Dash> dash = make_shared<Dash>(window_ptr, &player, playerView_ptr, UIIcon_ptr,
+				elementalIcon_ptr, abilityIcon_ptr, itemIcon_ptr);
+		pm->attachProcess((shared_ptr<Process>) dash);
+	}
+}
+void GameLogic::createHeal() {
+	if (abilityCd > abilityTimer) {
+		abilityCd = 0;
+        shared_ptr<DmgDisplay> displayHeal = make_shared<DmgDisplay>(window_ptr);
+        displayHeal -> createText(getPlayer().getPosition().x  , getPlayer().getPosition().y , Process::HEAL , waterHeal);
+        pm ->  attachProcess((shared_ptr<Process>) displayHeal);
+		player.healPlayer(waterHeal);
+	}
+}
+
+void GameLogic::createSplitAttack() {
+	if (abilityCd > abilityTimer) {
+		abilityCd = 0;
+		for (int i = 0; i < 3; i++) {
+			shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player);
+			pm -> attachProcess((shared_ptr<Process>) splitAttack);
+		}
+	}
+}
+
+void GameLogic::createBuff(int buffType) {
+    if (abilityCd > abilityTimer) {
+        abilityCd = 0;
         shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
     	buff->createBuff(buffType);
     	pm->attachProcess((shared_ptr<Process>)buff);
     }
+}
+void GameLogic::createBossEnemy()
+{
+    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,startingElement);
+    bEnemy->createRangedEnemy(this);
+    pm ->  attachProcess((shared_ptr<Process>) bEnemy);
 }
 
 void GameLogic::createRangedEnemy()
@@ -84,26 +123,14 @@ void GameLogic::createRangedEnemy()
 
 void GameLogic::createMeleeEnemy()
 {
-    shared_ptr<MeleeEnemy> rEnemy = make_shared<MeleeEnemy>(window_ptr,startingElement);
-    rEnemy->createMeleeEnemy(this);
-    pm ->  attachProcess((shared_ptr<Process>) rEnemy);
+    shared_ptr<MeleeEnemy> mEnemy = make_shared<MeleeEnemy>(window_ptr,startingElement);
+    mEnemy->createMeleeEnemy(this);
+    pm ->  attachProcess((shared_ptr<Process>) mEnemy);
 }
 void GameLogic::update(float deltaTime)
 {
-    basicAttackCd += deltaTime;
-    airShieldCd += deltaTime;
-
     player.update(deltaTime);
-
-    if(basicAttackCd > basicAttackTimer)
-      basicAttackOnCd = false;
-    else
-        basicAttackOnCd = true;
-
-    if(airShieldCd > airShieldTimer)
-        airShieldOnCd = false;
-    else
-        airShieldOnCd = true;
+    updateCd(deltaTime);
 
     if(pm -> checkEnemies() <= 0)
     {
@@ -111,8 +138,15 @@ void GameLogic::update(float deltaTime)
         transition += deltaTime;
 
         if(transition >= 1000.0 && !changed_background){
-            level++;
-            changed_background = true;
+            if(wave % 4 == 0)
+            {
+                level++;
+                changed_background = true;
+                wave = 0;
+
+            }
+
+            clearGame();
         }
 
         if(transition >= 1500.0){
@@ -146,9 +180,10 @@ bool GameLogic::isBasicAttackOnCd()
     return basicAttackOnCd;
 }
 
-bool GameLogic::isAirShieldOnCd()
+
+bool GameLogic::isAbilityOnCd()
 {
-    return airShieldOnCd;
+    return abilityOnCd;
 }
 
 void GameLogic::setStartingElement(int startingElement)
@@ -172,8 +207,11 @@ void GameLogic::grabItem()
 
 void GameLogic::clearGame()
 {
-    pm -> clearManager();
+    pm->clearManager();
+    resetCd();
     player.item( Process::NONE );
+    player.setSpeed(0.3f);
+    player.setDM(1);
 }
 
 void GameLogic::setLevel(int level)
@@ -189,9 +227,18 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
-    rangedEnemies = 10 * wave;
-
-    meleeEnemies = 5 * wave;
+    if(wave % 4 == 0)
+    {
+        bossEnemies = 1;
+        rangedEnemies = 0;
+        meleeEnemies = 0;
+    }
+    else
+    {
+        bossEnemies = 0;
+        rangedEnemies = 1 * wave;
+        meleeEnemies = 1 * wave;
+    }
 
     totalEnemies = meleeEnemies + rangedEnemies;
 
@@ -208,6 +255,11 @@ void GameLogic::startWave()
         createMeleeEnemy();
     }
 
+    for (int enemies = 0; enemies<bossEnemies; enemies++)
+    {
+        cout<<"Created Boss enemy " << enemies << endl;
+        createBossEnemy();
+    }
 }
 
 bool GameLogic::isPaused() {
@@ -220,19 +272,19 @@ bool GameLogic::changingLevel(){
 
 void GameLogic::useItem()
 {
-    cout<<"ITEM "<<player.currentItem()<<endl;
+
     switch(player.currentItem())
     {
         case(Process::RED_ITEM):
-            player.healPlayer(25);
-            //player
+            {
+                shared_ptr<DmgDisplay> displayHeal = make_shared<DmgDisplay>(window_ptr);
+                player.healPlayer(redPotion);
+                displayHeal -> createText(getPlayer().getPosition().x  , getPlayer().getPosition().y , Process::HEAL , redPotion);
+                pm ->  attachProcess((shared_ptr<Process>) displayHeal);
+            }
             break;
         case(Process::BLUE_ITEM):
-            cout<<" ITEM IS USED"<<endl;
-            airShieldCd += 30000;
-            basicAttackCd += 30000;
-            basicAttackOnCd = false;
-            airShieldOnCd = false;
+            resetCd();
             break;
         case(Process::YELLOW_ITEM):
             shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
@@ -245,3 +297,35 @@ void GameLogic::useItem()
 
     cout<<"ITEM USED"<<endl;
 }
+
+void GameLogic::resetCd() {
+	switch (startingElement) {
+	case 0:
+		abilityTimer = splitAttackTimer;
+		break;
+	case 1:
+		abilityTimer = airShieldTimer;
+		break;
+	case 2:
+		abilityTimer = dashTimer;
+		break;
+	case 3:
+		abilityTimer = healTimer;
+		break;
+	default:
+		cout<<"resetCd failed, element mismatch"<<endl;
+		break;
+	}
+	basicAttackCd = basicAttackTimer;
+	abilityCd = abilityTimer;
+	basicAttackOnCd = false;
+	abilityOnCd = false;
+}
+
+void GameLogic::updateCd(float deltaTime) {
+	basicAttackCd += deltaTime;
+	basicAttackOnCd = (basicAttackTimer >= basicAttackCd);
+	abilityCd += deltaTime;
+	abilityOnCd = (abilityTimer >= abilityCd);
+}
+

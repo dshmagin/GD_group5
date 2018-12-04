@@ -9,7 +9,7 @@ Player::Player(float playerH, float playerW,shared_ptr<sf::RenderWindow> &window
         cout<<"Cannot PlayerSprite"<<endl;
 
     body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 0,playerW ,playerH ));
-    setSpeed(.3);
+
 }
 
 void Player::createPlayer(float x_pos, float y_pos)
@@ -136,6 +136,9 @@ void Player::updateDM(float multiplier) {
 	damageMultiplier *= multiplier;
 }
 
+void Player::setDM(float multiplier) {
+	damageMultiplier = multiplier;
+}
 float Player::getDM() {
 	return damageMultiplier;
 }
@@ -158,14 +161,35 @@ float Player::getDodge() {
 
 void Player::healPlayer(float amount)
 {
-    if(health + amount > 100)
+    if(amount < 0 && shieldPoints > 0)
     {
-        health = 100;
-    }
-    else if(health + amount < 0)
-    {
-        health = 0;
+        cout<<"shieldPoints "<< shieldPoints<<endl;
+        shieldPoints+=amount;
+        if(shieldPoints < 0)
+            health += shieldPoints;
     }
     else
-        health += amount;
+    {
+
+        if(health + amount > 100)
+        {
+            health = 100;
+        }
+        else if(health + amount < 0)
+        {
+            health = 0;
+        }
+        else
+            health += amount;
+    }
 }
+
+
+void Player::movePlayer(float x, float y) {
+	body.move(x, y);
+};
+
+int Player::getDirection() {
+	return (int)dir;
+}
+

@@ -1,5 +1,5 @@
-#ifndef RANGEDENEMY_H_INCLUDED
-#define RANGEDENEMY_H_INCLUDED
+#ifndef BOSSENEMY_H_INCLUDED
+#define BOSSENEMY_H_INCLUDED
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class RangedEnemy : public Process
+class BossEnemy : public Process
 {
 private:
     sf::RectangleShape healthBar;
@@ -29,8 +29,8 @@ public:
     float playerW = 64;
     GameLogic* game;
     float randF;
-    RangedEnemy(){};
-    RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
+    BossEnemy(){};
+    BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
     void init();
     sf::Vector2f findPlayer(float deltaTime);
     void update(float deltaTime);
