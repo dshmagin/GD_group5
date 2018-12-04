@@ -91,11 +91,11 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
             if(inputTimer>50)
             {
                 inputTimer = 0;
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_LEFT)))
                 {
                     menu -> setSelected(-1);
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_RIGHT)))
                 {
                     menu -> setSelected(1);
                 }
@@ -119,11 +119,11 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
             if(inputTimer > 100)
             {
                 inputTimer = 0;
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_LEFT)))
                 {
                     menu -> setSelectedElement(-1);
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_RIGHT)))
                 {
                     menu -> setSelectedElement(1);
                 }
@@ -156,11 +156,11 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
             if(inputTimer > 100 && !wait)
             {
                 inputTimer = 0;
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_LEFT)))
                 {
                     menu -> setSelectedKeybind(-1);
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_RIGHT)))
                 {
                     menu -> setSelectedKeybind(1);
                 }
@@ -189,7 +189,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
             movingX = false;
             movingY = false;
             if(!(game -> changingLevel())){
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_UP)))
                 {
                     movingY = true;
                     game -> setDirection(Player::NORTH,deltaTime);
@@ -205,7 +205,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     centerView();
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_DOWN)))
                 {
                     movingY = true;
                     sf::Vector2f vect(game -> getPlayerCoord());
@@ -219,7 +219,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     centerView();
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_RIGHT)))
                 {
                     movingX = true;
                     sf::Vector2f vect(game -> getPlayerCoord());
@@ -234,7 +234,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_LEFT)))
                 {
                     movingX = true;
                     sf::Vector2f vect(game -> getPlayerCoord());
@@ -269,7 +269,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
 
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::SHOOT_UP)))
                 {
                     if(game -> createPlayerAttack('N',deltaTime)){
                         sound.setBuffer(basicAttackSound);
@@ -277,7 +277,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     }
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::SHOOT_DOWN)))
                 {
                     if(game -> createPlayerAttack('S',deltaTime)){
                         sound.setBuffer(basicAttackSound);
@@ -285,7 +285,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     }
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::SHOOT_LEFT)))
                 {
                     if(game -> createPlayerAttack('W',deltaTime)){
                         sound.setBuffer(basicAttackSound);
@@ -293,7 +293,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     }
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::SHOOT_RIGHT)))
                 {
                     if(game -> createPlayerAttack('E',deltaTime)){
                         sound.setBuffer(basicAttackSound);
@@ -301,7 +301,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                         }
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::SPECIAL))) {
                 	game->createBuff(0);
                 }
 

@@ -17,8 +17,8 @@ class GameViewPlayer
     private:
     //AI Movements
         TitleScreen* menu;
-	sf::Sound sound;
-	sf::SoundBuffer basicAttackSound;
+	    sf::Sound sound;
+	    sf::SoundBuffer basicAttackSound;
         sf::Texture fireBg;
         sf::Texture waterBg;
         sf::Texture earthBg;
@@ -78,9 +78,3 @@ class GameViewPlayer
 };
 
 #endif
-
-
-
-
-
-
