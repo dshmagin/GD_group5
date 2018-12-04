@@ -53,7 +53,7 @@ void ProcessManager::updateProcessList(float deltaMs)
 
             if( p->getState()== Process::UNINITIALIZED)
                 p->initialize();
-          
+
             if(p->getState()== Process::RUNNING && p -> type != Process::ITEM)
                 p->update(deltaMs);
 
@@ -179,6 +179,7 @@ void ProcessManager::clearManager()
     itemList.clear();
     enemyList.clear();
 }
+
 
 int ProcessManager::checkEnemies()
 {

@@ -342,6 +342,8 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     game -> clearGame();
 
 
+
+
                 }
 
             if(movingX == false && movingY == false)
