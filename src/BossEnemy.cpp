@@ -78,10 +78,11 @@ void BossEnemy::update(float deltaTime)
     window_ptr -> draw(healthBar);
     switchTime -= deltaTime;
     if (switchTime < 0) {
-        switchTime = 1000;
-        for(int i = 0 ; i < 3; i ++ )
+        switchTime = 2000;
+        for(int i = 0 ; i < 8; i ++ )
         {
-            shared_ptr<BossAttack> splitAttack = make_shared<BossAttack>(window_ptr, 30 + 120 * i , body.getPosition().x, body.getPosition().y, enemyPM);
+            shared_ptr<BossAttack> splitAttack = make_shared<BossAttack>(window_ptr, 0 + 45
+                                                                          * i , body.getPosition().x, body.getPosition().y, enemyPM);
             enemyPM -> attachProcess((shared_ptr<Process>) splitAttack);
         }
     }

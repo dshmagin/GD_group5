@@ -50,14 +50,29 @@ void BossAttack::update(float deltaTime) {
 
         	moveDistance = speed * deltaTime;
         	switch ((int)rotation) {
-        	case 30:
-        		body.move(moveDistance * .866, moveDistance / 2);
+        	case 0:
+        		body.move(moveDistance, 0);
         		break;
-        	case 150:
-        		body.move(-moveDistance * 0.88, moveDistance / 2);
+        	case 45:
+                body.move(moveDistance * 0.88, moveDistance / 2);
+        		break;
+        	case 90:
+        		body.move(0, moveDistance);
+        		break;
+        	case 135:
+                body.move(-moveDistance * 0.88, moveDistance / 2);
+        		break;
+        	case 180:
+        		body.move(-moveDistance, 0);
+        		break;
+        	case 225:
+        		body.move(-moveDistance * 0.88, -(moveDistance / 2));
         		break;
         	case 270:
         		body.move(0, -moveDistance);
+        		break;
+        	case 315:
+        		body.move(moveDistance * 0.88, -(moveDistance / 2));
         		break;
         	default:
         		break;
