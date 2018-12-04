@@ -271,7 +271,6 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 
                 }
 
-
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
                     if(game -> createPlayerAttack('N',deltaTime)){

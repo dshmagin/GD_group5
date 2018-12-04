@@ -1,5 +1,6 @@
 #include "BasicAttack.h"
 #include "ProcessManager.h"
+#include <math.h>
 
 BasicAttack::BasicAttack(shared_ptr<sf::RenderWindow> window_ptr, int startingElement)
 {
@@ -96,7 +97,36 @@ void BasicAttack::createAttack(float x_pos, float y_pos, char dir)
         break;
     }
     this -> state = Process::UNINITIALIZED;
+}
 
+void BasicAttack::createEnemyAttack(float x_pos, float y_pos, char dir)
+{
+    this -> damage = 25;
+    this -> type  = Process::ATTACK;
+    this -> body.setSize( sf::Vector2f( 128, 64 ) );
+    this -> body.setTexture(&image);
+    this -> spriteNum = 0;
+    this -> dir = dir;
+
+    switch(dir)
+    {
+    case 'N':
+        body.rotate(270);
+        this -> body.setPosition(x_pos, y_pos + 128);
+        break;
+    case 'S':
+        body.rotate(90);
+        this -> body.setPosition(x_pos + 64, y_pos);
+        break;
+    case 'E':
+        this -> body.setPosition(x_pos, y_pos + 32);
+        break;
+    case 'W':
+        body.rotate(180);
+        this -> body.setPosition(x_pos + 32, y_pos + 96);
+        break;
+    }
+    this -> state = Process::UNINITIALIZED;
 }
 
 void BasicAttack::initialize()
@@ -112,5 +142,3 @@ sf::RectangleShape BasicAttack::getAttackElement()
 {
     return body;
 }
-
-

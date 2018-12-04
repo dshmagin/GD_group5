@@ -62,68 +62,74 @@ int GameLogic::createPlayerAttack(char dir, float deltaTime)
         shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr,startingElement);
         bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
         pm ->  attachProcess((shared_ptr<Process>) bAttack);
-	return 1;
+        return 1;
     }
     return 0;
-
 }
 
+void GameLogic::createEnemyAttack(float x_pos, float y_pos, char dir, float deltaTime)
+{
+        shared_ptr<BasicAttack> ebAttack =make_shared<BasicAttack>(window_ptr,startingElement);
+        ebAttack->createAttack(x_pos, y_pos, dir);
+        pm ->  attachProcess((shared_ptr<Process>) ebAttack);
+}
 
 void GameLogic::createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
-		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
-		sf::CircleShape* itemIcon_ptr) {
-	if (abilityCd > abilityTimer) {
-		abilityCd = 0;
-		shared_ptr<Dash> dash = make_shared<Dash>(window_ptr, &player, playerView_ptr, UIIcon_ptr,
-				elementalIcon_ptr, abilityIcon_ptr, itemIcon_ptr);
-		pm->attachProcess((shared_ptr<Process>) dash);
-	}
+        sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
+        sf::CircleShape* itemIcon_ptr) {
+    if (abilityCd > abilityTimer) {
+        abilityCd = 0;
+        shared_ptr<Dash> dash = make_shared<Dash>(window_ptr, &player, playerView_ptr, UIIcon_ptr,
+            elementalIcon_ptr, abilityIcon_ptr, itemIcon_ptr);
+        pm->attachProcess((shared_ptr<Process>) dash);
+    }
 }
+
 void GameLogic::createHeal() {
-	if (abilityCd > abilityTimer) {
-		abilityCd = 0;
+    if (abilityCd > abilityTimer) {
+        abilityCd = 0;
         shared_ptr<DmgDisplay> displayHeal = make_shared<DmgDisplay>(window_ptr);
         displayHeal -> createText(getPlayer().getPosition().x  , getPlayer().getPosition().y , Process::HEAL , waterHeal);
         pm ->  attachProcess((shared_ptr<Process>) displayHeal);
-		player.healPlayer(waterHeal);
-	}
+        player.healPlayer(waterHeal);
+    }
 }
 
 void GameLogic::createSplitAttack() {
-	if (abilityCd > abilityTimer) {
-		abilityCd = 0;
-		for (int i = 0; i < 3; i++) {
-			shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player);
-			pm -> attachProcess((shared_ptr<Process>) splitAttack);
-		}
-	}
+    if (abilityCd > abilityTimer) {
+        abilityCd = 0;
+        for (int i = 0; i < 3; i++) {
+            shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player);
+            pm -> attachProcess((shared_ptr<Process>) splitAttack);
+        }
+    }
 }
 
 void GameLogic::createBuff(int buffType) {
     if (abilityCd > abilityTimer) {
         abilityCd = 0;
         shared_ptr<Buff> buff = make_shared<Buff>(window_ptr, &player);
-    	buff->createBuff(buffType);
-    	pm->attachProcess((shared_ptr<Process>)buff);
+        buff->createBuff(buffType);
+        pm->attachProcess((shared_ptr<Process>)buff);
     }
 }
 void GameLogic::createBossEnemy()
 {
-    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,startingElement);
+    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,getLevel());
     bEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) bEnemy);
 }
 
 void GameLogic::createRangedEnemy()
 {
-    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,startingElement);
+    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,getLevel());
     rEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
 
 void GameLogic::createMeleeEnemy()
 {
-    shared_ptr<MeleeEnemy> mEnemy = make_shared<MeleeEnemy>(window_ptr,startingElement);
+    shared_ptr<MeleeEnemy> mEnemy = make_shared<MeleeEnemy>(window_ptr,getLevel());
     mEnemy->createMeleeEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) mEnemy);
 }
@@ -299,33 +305,32 @@ void GameLogic::useItem()
 }
 
 void GameLogic::resetCd() {
-	switch (startingElement) {
-	case 0:
-		abilityTimer = splitAttackTimer;
-		break;
-	case 1:
-		abilityTimer = airShieldTimer;
-		break;
-	case 2:
-		abilityTimer = dashTimer;
-		break;
-	case 3:
-		abilityTimer = healTimer;
-		break;
-	default:
-		cout<<"resetCd failed, element mismatch"<<endl;
-		break;
-	}
-	basicAttackCd = basicAttackTimer;
-	abilityCd = abilityTimer;
-	basicAttackOnCd = false;
-	abilityOnCd = false;
+    switch (startingElement) {
+        case 0:
+            abilityTimer = splitAttackTimer;
+            break;
+        case 1:
+            abilityTimer = airShieldTimer;
+            break;
+        case 2:
+            abilityTimer = dashTimer;
+            break;
+        case 3:
+            abilityTimer = healTimer;
+            break;
+        default:
+            cout<<"resetCd failed, element mismatch"<<endl;
+            break;
+    }
+    basicAttackCd = basicAttackTimer;
+    abilityCd = abilityTimer;
+    basicAttackOnCd = false;
+    abilityOnCd = false;
 }
 
 void GameLogic::updateCd(float deltaTime) {
-	basicAttackCd += deltaTime;
-	basicAttackOnCd = (basicAttackTimer >= basicAttackCd);
-	abilityCd += deltaTime;
-	abilityOnCd = (abilityTimer >= abilityCd);
+    basicAttackCd += deltaTime;
+    basicAttackOnCd = (basicAttackTimer >= basicAttackCd);
+    abilityCd += deltaTime;
+    abilityOnCd = (abilityTimer >= abilityCd);
 }
-

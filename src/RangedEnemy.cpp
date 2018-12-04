@@ -5,17 +5,35 @@
 
 RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
 {
-    init();
+    init(attackElement);
     this -> window_ptr = window_ptr;
     this -> attackElement = attackElement;
 }
 
-void RangedEnemy::init()
+void RangedEnemy::init(int element)
 {
-    if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
-        cout<<"Cannot load BenderAi"<<endl;
     if( !itemImg.loadFromFile( "../Assets/Images/items.png" ))
         cout<<"Cannot load items"<<endl;
+
+    switch(element)
+    {
+        case 0:
+            if( !image.loadFromFile( "../Assets/Images/fireBender.png" ))
+                cout<<"Cannot load fireBender"<<endl;
+            break;
+        case 1:
+            if( !image.loadFromFile( "../Assets/Images/BenderAi.png" ))
+                cout<<"Cannot load BenderAi"<<endl;
+            break;
+        case 2:
+            if( !image.loadFromFile( "../Assets/Images/earthBender.png" ))
+                cout<<"Cannot load earthBender"<<endl;
+            break;
+        case 3:
+            if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
+                cout<<"Cannot load waterBender"<<endl;
+            break;
+    }
 
     body.setTextureRect(sf::IntRect(playerW * 1, playerH * 0, playerW, playerH));
 }
@@ -29,7 +47,9 @@ void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
     this -> healthBg.setSize(sf::Vector2f( 54, 14 ));
     this -> healthBg.setFillColor(sf::Color::Black);
 
-    this-> randF = (((float) (rand() % 100))/ 1000.0f);
+    this -> randF = (((float) (rand() % 100))/ 1000.0f);
+
+    this -> randNum = ((float) (rand() % 4));
 
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     float loc_x = (rand() % (1200 - 200) + 100);
@@ -63,11 +83,12 @@ void RangedEnemy::update(float deltaTime)
     healthBar.setPosition(body.getPosition().x + 7,body.getPosition().y +5 );
     healthBar.setSize(sf::Vector2f(health/2.0, 10));
     if( changeTimer > 10 )
-        {
-          spriteNum = (spriteNum + 1) % 4;
-          changeTimer = 0;
-        }
-
+    {
+        spriteNum = (spriteNum + 1) % 4;
+        changeTimer = 0;
+        if (spriteNum == randNum)
+            game -> createEnemyAttack(body.getPosition().x, body.getPosition().y, getDirectionChar(toPlayer), deltaTime);
+    }
 
     changeTimer += 0.04f * deltaTime;
     setDirection(getDirection(toPlayer), spriteNum);
@@ -103,12 +124,12 @@ int RangedEnemy::getDirection(sf::Vector2f toPlayer)
     {
         if (abs(toPlayer.x) < abs(toPlayer.y))
         {
-            //Face East
+            //Face South
             return 0;
         }
         else
         {
-            //Face South
+            //Face East
             return 2;
         }
     }
@@ -116,12 +137,12 @@ int RangedEnemy::getDirection(sf::Vector2f toPlayer)
     {
         if (abs(toPlayer.x) < abs(toPlayer.y))
         {
-            //Face East
+            //Face North
             return 3;
         }
         else
         {
-            //Face North
+            //Face East
             return 2;
         }
     }
@@ -129,12 +150,12 @@ int RangedEnemy::getDirection(sf::Vector2f toPlayer)
     {
         if (abs(toPlayer.x) < abs(toPlayer.y))
         {
-            //Face West
+            //Face South
             return 0;
         }
         else
         {
-            //Face South
+            //Face West
             return 1;
         }
     }
@@ -142,13 +163,61 @@ int RangedEnemy::getDirection(sf::Vector2f toPlayer)
     {
         if (abs(toPlayer.x) < abs(toPlayer.y))
         {
-            //Face West
+            //Face North
             return 3;
         }
         else
         {
-            //Face North
+            //Face West
             return 1;
+        }
+    }
+}
+
+char RangedEnemy::getDirectionChar(sf::Vector2f toPlayer)
+{
+    if (toPlayer.x > 0 && toPlayer.y > 0)
+    {
+        if (abs(toPlayer.x) < abs(toPlayer.y))
+        {
+            return 'S';
+        }
+        else
+        {
+            return 'E';
+        }
+    }
+    else if (toPlayer.x > 0 && toPlayer.y < 0)
+    {
+        if (abs(toPlayer.x) < abs(toPlayer.y))
+        {
+            return 'N';
+        }
+        else
+        {
+            return 'E';
+        }
+    }
+    else if (toPlayer.x < 0 && toPlayer.y > 0)
+    {
+        if (abs(toPlayer.x) < abs(toPlayer.y))
+        {
+            return 'S';
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    else
+    {
+        if (abs(toPlayer.x) < abs(toPlayer.y))
+        {
+            return 'N';
+        }
+        else
+        {
+            return 'W';
         }
     }
 }
