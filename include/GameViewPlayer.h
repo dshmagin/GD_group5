@@ -27,7 +27,7 @@ class GameViewPlayer
         sf::Texture elementalText;
         sf::Texture UIText;
         sf::CircleShape elementalIcon;
-        sf::CircleShape airShieldIcon;
+        sf::CircleShape abilityIcon;
         sf::CircleShape itemIcon;
         sf::RectangleShape UIIcon;
         sf::View playerView;

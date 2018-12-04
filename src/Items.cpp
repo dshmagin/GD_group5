@@ -16,7 +16,6 @@
         body.setSize(sf::Vector2f(32 ,32));
         body.setTextureRect(sf::IntRect(32* this -> toDrop,32 * 1,32 ,32 ));
         body.setTexture(&image);
-
         this -> type  = Process::ITEM;
 
 
@@ -24,7 +23,6 @@
     void Items::initialize()
     {
      this -> state = Process::RUNNING;
-     this -> type  = Process::ITEM;
     }
     void Items::update(float deltaTime)
     {
