@@ -1,7 +1,9 @@
 #include "GameLogic.h"
 #include "RangedEnemy.h"
 #include "MeleeEnemy.h"
+
 #include "DmgDisplay.h"
+#include "MeleeEnemy.h"
 
 using namespace std;
 
@@ -109,22 +111,17 @@ void GameLogic::createRangedEnemy()
     rEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
+
+void GameLogic::createMeleeEnemy()
+{
+    shared_ptr<MeleeEnemy> rEnemy = make_shared<MeleeEnemy>(window_ptr,startingElement);
+    rEnemy->createMeleeEnemy(this);
+    pm ->  attachProcess((shared_ptr<Process>) rEnemy);
+}
 void GameLogic::update(float deltaTime)
 {
-    basicAttackCd += deltaTime;
-    airShieldCd += deltaTime;
-
     player.update(deltaTime);
-
-    if(basicAttackCd > basicAttackTimer)
-      basicAttackOnCd = false;
-    else
-        basicAttackOnCd = true;
-
-    if(airShieldCd > airShieldTimer)
-        airShieldOnCd = false;
-    else
-        airShieldOnCd = true;
+    updateCd(deltaTime);
 
     if(pm -> checkEnemies() <= 0)
     {
@@ -137,6 +134,7 @@ void GameLogic::update(float deltaTime)
         }
 
         if(transition >= 1500.0){
+            clearGame();
             wave++;
             startWave();
             transition = 0;
@@ -194,7 +192,8 @@ void GameLogic::grabItem()
 
 void GameLogic::clearGame()
 {
-    pm -> clearManager();
+    pm->clearManager();
+    resetCd();
     player.item( Process::NONE );
 }
 
@@ -211,14 +210,23 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
-    totalEnemies = 1 * wave;
+    rangedEnemies = 10 * wave;
+
+    meleeEnemies = 5 * wave;
+
+    totalEnemies = meleeEnemies + rangedEnemies;
 
     cout<<"totalEnemies enemy " << totalEnemies << endl;
 
-    for (int enemies = 0; enemies<totalEnemies; enemies++)
+    for (int enemies = 0; enemies<rangedEnemies; enemies++)
     {
-        cout<<"Created enemy " << enemies << endl;
+        cout<<"Created ranged enemy " << enemies << endl;
         createRangedEnemy();
+    }
+    for (int enemies = 0; enemies<meleeEnemies; enemies++)
+    {
+        cout<<"Created melee enemy " << enemies << endl;
+        createMeleeEnemy();
     }
 
 }
@@ -233,15 +241,18 @@ bool GameLogic::changingLevel(){
 
 void GameLogic::useItem()
 {
-    cout<<"ITEM "<<player.currentItem()<<endl;
+
     switch(player.currentItem())
     {
         case(Process::RED_ITEM):
-            player.healPlayer(25);
-            //player
+            {
+                shared_ptr<DmgDisplay> displayHeal = make_shared<DmgDisplay>(window_ptr);
+                player.healPlayer(redPotion);
+                displayHeal -> createText(getPlayer().getPosition().x  , getPlayer().getPosition().y , Process::HEAL , redPotion);
+                pm ->  attachProcess((shared_ptr<Process>) displayHeal);
+            }
             break;
         case(Process::BLUE_ITEM):
-            cout<<" ITEM IS USED"<<endl;
             resetCd();
             break;
         case(Process::YELLOW_ITEM):
@@ -255,7 +266,6 @@ void GameLogic::useItem()
 
     cout<<"ITEM USED"<<endl;
 }
-
 
 void GameLogic::resetCd() {
 	switch (startingElement) {
