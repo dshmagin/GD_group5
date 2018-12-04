@@ -29,6 +29,7 @@ public:
 
     ~BasicAttack();
     void createAttack(float x_pos, float y_pos, char dir);
+    void createEnemyAttack(float x_pos, float y_pos, char dir);
     void update(float deltaTime);
     void initialize();
     sf::RectangleShape getAttackElement();

@@ -31,7 +31,7 @@ public:
     float randF;
     BossEnemy(){};
     BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
-    void init();
+    void init(int element);
     sf::Vector2f findPlayer(float deltaTime);
     void update(float deltaTime);
     void setDirection(int dir, int spriteNum);

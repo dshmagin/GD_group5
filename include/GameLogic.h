@@ -70,12 +70,13 @@ class GameLogic
         void setDirection(int dir, float deltaTime );
         void idle();
         void update(float deltaTime);
-        int createPlayerAttack(char, float);
+        int createPlayerAttack(char dir, float deltaTime);
+        void createEnemyAttack(float x_pos, float y_pos, char dir, float deltaTime);
         void createBuff(int buffType);
         void createHeal();
         void createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
-        		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
-				sf::CircleShape* itemIcon_ptr);
+                sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
+                sf::CircleShape* itemIcon_ptr);
         void createSplitAttack();
         void createRangedEnemy();
         void createMeleeEnemy();

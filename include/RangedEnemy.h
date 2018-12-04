@@ -29,13 +29,15 @@ public:
     float playerW = 64;
     GameLogic* game;
     float randF;
+    float randNum;
     RangedEnemy(){};
     RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
-    void init();
+    void init(int element);
     sf::Vector2f findPlayer(float deltaTime);
     void update(float deltaTime);
     void setDirection(int dir, int spriteNum);
     int getDirection(sf::Vector2f toPlayer);
+    char getDirectionChar(sf::Vector2f toPlayer);
     void createRangedEnemy(GameLogic* gameLogic);
     sf::RectangleShape getEnemyBody();
     void reset(float x_pos, float y_pos);

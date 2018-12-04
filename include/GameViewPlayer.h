@@ -17,8 +17,8 @@ class GameViewPlayer
     private:
     //AI Movements
         TitleScreen* menu;
-	sf::Sound sound;
-	sf::SoundBuffer basicAttackSound;
+        sf::Sound sound;
+        sf::SoundBuffer basicAttackSound;
         sf::Texture fireBg;
         sf::Texture waterBg;
         sf::Texture earthBg;
@@ -61,8 +61,8 @@ class GameViewPlayer
         bool wait = false;
         //AbilityBar abilityBar;
         bool transition_started;
-	sf::RectangleShape transitionBox1;
-	sf::RectangleShape transitionBox2;
+        sf::RectangleShape transitionBox1;
+        sf::RectangleShape transitionBox2;
 
     public:
 
@@ -78,9 +78,3 @@ class GameViewPlayer
 };
 
 #endif
-
-
-
-
-
-
