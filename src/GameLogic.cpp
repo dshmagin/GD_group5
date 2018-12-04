@@ -145,10 +145,11 @@ void GameLogic::update(float deltaTime)
                 wave = 0;
 
             }
+
+            clearGame();
         }
 
         if(transition >= 1500.0){
-            clearGame();
             wave++;
             startWave();
             transition = 0;
@@ -209,6 +210,8 @@ void GameLogic::clearGame()
     pm->clearManager();
     resetCd();
     player.item( Process::NONE );
+    player.setSpeed(0.3f);
+    player.setDM(1);
 }
 
 void GameLogic::setLevel(int level)
