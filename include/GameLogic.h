@@ -9,6 +9,7 @@
 #include "SplitAttack.h"
 //#include "RangedEnemy.h"
 #include "ProcessManager.h"
+#include "EnemyAttackManager.h"
 #include <memory>
 
 #include <string>
@@ -43,6 +44,7 @@ class GameLogic
         bool paused = false;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
+        shared_ptr<EnemyAttackManager> enemyPM;
         bool changing_level = false;
         bool changed_background = false;
         float transition = 0;
@@ -56,8 +58,8 @@ class GameLogic
         //BasicAttack bAttack;
 
         GameLogic();
-        GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm);
-
+        GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm, shared_ptr<EnemyAttackManager> &enemyPM);
+        void createBossAttackCircle( float x_pos, float y_pox);
         bool isBasicAttackOnCd();
         bool isAbilityOnCd();
         int getStartingElement();

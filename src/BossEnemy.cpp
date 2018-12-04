@@ -1,12 +1,14 @@
 #include "BossEnemy.h"
 //#include "ProcessManager.h"
 #include <cstdlib>
+#include "BossAttack.h"
 #include <cmath>
 
-BossEnemy::BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
+BossEnemy::BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement, shared_ptr<EnemyAttackManager> enemyPM)
 {
     init();
     this -> window_ptr = window_ptr;
+    this -> enemyPM = enemyPM;
     this -> attackElement = attackElement;
 }
 
@@ -74,6 +76,15 @@ void BossEnemy::update(float deltaTime)
     window_ptr -> draw(this -> body);
     window_ptr -> draw(healthBg);
     window_ptr -> draw(healthBar);
+    switchTime -= deltaTime;
+    if (switchTime < 0) {
+        switchTime = 1000;
+        for(int i = 0 ; i < 3; i ++ )
+        {
+            shared_ptr<BossAttack> splitAttack = make_shared<BossAttack>(window_ptr, 30 + 120 * i , body.getPosition().x, body.getPosition().y, enemyPM);
+            enemyPM -> attachProcess((shared_ptr<Process>) splitAttack);
+        }
+    }
 }
 
 sf::Vector2f BossEnemy::findPlayer(float deltaTime)
@@ -92,7 +103,11 @@ sf::Vector2f BossEnemy::findPlayer(float deltaTime)
     }
 
     if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()))
-        game->player.healPlayer(-0.05);
+        {
+            game->player.healPlayer(-0.05);
+            //game->createBossAttackCircle(body.getPosition().x ,body.getPosition().y);
+
+        }
 
     return toPlayer;
 }

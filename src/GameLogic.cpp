@@ -4,14 +4,17 @@
 #include "BossEnemy.h"
 #include "DmgDisplay.h"
 #include "MeleeEnemy.h"
+#include "BossAttack.h"
 
 using namespace std;
 
-GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm)
+GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm, shared_ptr<EnemyAttackManager> &enemyPM)
 {
     this -> window_ptr = window_ptr;
+    this -> enemyPM = enemyPM;
     this -> pm = pm;
     this -> pm -> setRenderWindow(window_ptr);
+    this -> enemyPM -> setEnemyManager(window_ptr, &player);
 }
 
 void  GameLogic::setGameState( int GameState )
@@ -109,11 +112,22 @@ void GameLogic::createBuff(int buffType) {
 }
 void GameLogic::createBossEnemy()
 {
-    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,startingElement);
+    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,startingElement, enemyPM);
     bEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) bEnemy);
 }
-
+void GameLogic::createBossAttackCircle( float x_pos, float y_pos) {
+    cout<< " why is this called" << endl;
+    /*
+	if (abilityCd > abilityTimer) {
+		abilityCd = 0;
+		for (int i = 0; i < 1; i++) {
+				shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player);
+                pm -> attachProcess((shared_ptr<Process>) splitAttack);
+		}
+	}
+	*/
+}
 void GameLogic::createRangedEnemy()
 {
     shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,startingElement);
