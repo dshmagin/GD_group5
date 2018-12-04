@@ -67,8 +67,8 @@ void Player::setDirection(int dir,float deltaTime)
 }
 void Player::update(float deltaTime)
 {
-    healthBg.setPosition(body.getPosition().x + 5,body.getPosition().y +3);
-    healthBar.setPosition(body.getPosition().x + 7,body.getPosition().y +5 );
+    healthBg.setPosition(body.getPosition().x + 5,body.getPosition().y -15);
+    healthBar.setPosition(body.getPosition().x + 7,body.getPosition().y -13 );
     healthBar.setSize(sf::Vector2f(health/2.0, 10));
     //Grab the players direction and display the correct column in the sprite sheet.
     this -> dir = dir;

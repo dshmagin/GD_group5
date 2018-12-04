@@ -61,8 +61,8 @@ void BossEnemy::update(float deltaTime)
 {
     sf::Vector2f toPlayer = findPlayer(deltaTime);
 
-    healthBg.setPosition(body.getPosition().x - 38 ,body.getPosition().y +3);
-    healthBar.setPosition(body.getPosition().x - 36,body.getPosition().y +5 );
+    healthBg.setPosition(body.getPosition().x - 38 ,body.getPosition().y - 15);
+    healthBar.setPosition(body.getPosition().x - 36,body.getPosition().y - 13 );
     healthBar.setSize(sf::Vector2f(health/5.0, 10));
     if( changeTimer > 10 )
         {
