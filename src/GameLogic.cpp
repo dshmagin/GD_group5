@@ -114,9 +114,9 @@ void GameLogic::createRangedEnemy()
 
 void GameLogic::createMeleeEnemy()
 {
-    shared_ptr<MeleeEnemy> rEnemy = make_shared<MeleeEnemy>(window_ptr,startingElement);
-    rEnemy->createMeleeEnemy(this);
-    pm ->  attachProcess((shared_ptr<Process>) rEnemy);
+    shared_ptr<MeleeEnemy> mEnemy = make_shared<MeleeEnemy>(window_ptr,startingElement);
+    mEnemy->createMeleeEnemy(this);
+    pm ->  attachProcess((shared_ptr<Process>) mEnemy);
 }
 void GameLogic::update(float deltaTime)
 {
@@ -210,9 +210,9 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
-    rangedEnemies = 10 * wave;
+    rangedEnemies = 1 * wave;
 
-    meleeEnemies = 5 * wave;
+    meleeEnemies = 1 * wave;
 
     totalEnemies = meleeEnemies + rangedEnemies;
 
