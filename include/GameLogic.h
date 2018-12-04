@@ -29,7 +29,7 @@ class GameLogic
         int GameState = 0;
         int level = 1;
         int wave = 4;
-
+        int score = 0;
         float basicAttackCd = 600;
         float abilityCd;
         float abilityTimer;
