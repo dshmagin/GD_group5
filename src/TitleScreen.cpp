@@ -1,4 +1,6 @@
 #include "TitleScreen.h"
+#include<iostream>
+#include<fstream>
 
 using namespace std;
 
@@ -36,6 +38,38 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
     else
     {
         sound.setBuffer(keySound);
+    }
+
+    keybinds[0] = walk_left_key;
+    keybinds[1] = walk_right_key;
+    keybinds[2] = walk_down_key;
+    keybinds[3] = walk_up_key;
+    keybinds[4] = shoot_left_key;
+    keybinds[5] = shoot_right_key;
+    keybinds[6] = shoot_down_key;
+    keybinds[7] = shoot_up_key;
+    keybinds[8] = special_1_key;
+    keybinds[9] = special_2_key;
+    keybinds[10] = special_3_key;
+    keybinds[11] = special_4_key;
+    //ofstream keybind_file("../Assets/keybinds.config");
+    //for(int i = 0; i < 12; i++){
+    //    keybind_file << keyToString(keybinds[i]) << '\n';
+    //}
+    //keybind_file << keybinds;
+    //keybind_file.close();
+    ifstream keybind_file("../Assets/keybinds.config");
+    string keybind;
+    if (keybind_file.is_open())
+    {
+        int i = 0;
+        while ( getline (keybind_file, keybind) )
+        {
+            keybinds[i] = stringToKey(keybind);
+            i++;
+            cout << keybind << '\n';
+        }
+      keybind_file.close();
     }
 }
 
@@ -168,18 +202,18 @@ void TitleScreen::drawOptionsScreen( float deltaTime )
     special_3.setFont(GameFont);
     special_4.setFont(GameFont);
 
-    walk_left.setString("Walk Left: " + keyToString(walk_left_key));
-    walk_right.setString("Walk Right: " + keyToString(walk_right_key));
-    walk_down.setString("Walk Down: " + keyToString(walk_down_key));
-    walk_up.setString("Walk Up: " + keyToString(walk_up_key));
-    shoot_left.setString("Shoot Left: " + keyToString(shoot_left_key));
-    shoot_right.setString("Shoot Right: " + keyToString(shoot_right_key));
-    shoot_down.setString("Shoot Down: " + keyToString(shoot_down_key));
-    shoot_up.setString("Shoot Up: " + keyToString(shoot_up_key));
-    special_1.setString("Special 1: " + keyToString(special_1_key));
-    special_2.setString("Special 2: " + keyToString(special_2_key));
-    special_3.setString("Special 3: " + keyToString(special_3_key));
-    special_4.setString("Special 4: " + keyToString(special_4_key));
+    walk_left.setString("Walk Left: " + keyToString(keybinds[0]));
+    walk_right.setString("Walk Right: " + keyToString(keybinds[1]));
+    walk_down.setString("Walk Down: " + keyToString(keybinds[2]));
+    walk_up.setString("Walk Up: " + keyToString(keybinds[3]));
+    shoot_left.setString("Shoot Left: " + keyToString(keybinds[4]));
+    shoot_right.setString("Shoot Right: " + keyToString(keybinds[5]));
+    shoot_down.setString("Shoot Down: " + keyToString(keybinds[6]));
+    shoot_up.setString("Shoot Up: " + keyToString(keybinds[7]));
+    special_1.setString("Special 1: " + keyToString(keybinds[8]));
+    special_2.setString("Special 2: " + keyToString(keybinds[9]));
+    special_3.setString("Special 3: " + keyToString(keybinds[10]));
+    special_4.setString("Special 4: " + keyToString(keybinds[11]));
 
     walk_left.setPosition(300, 30);
     walk_right.setPosition(300, 60);
@@ -309,6 +343,16 @@ void TitleScreen::choosingKeybind()
 
 void TitleScreen::newKeybind(const sf::Keyboard::Key& key )
 {
+    ofstream keybind_file("../Assets/keybinds.config");
+    sf::Keyboard::Key *duplicate = std::find(std::begin(keybinds), std::end(keybinds), key);
+    if(duplicate == std::end(keybinds)){
+        keybinds[keybindSelected] = key;
+        if(keybind_file.is_open()){
+            for(int i = 0; i < (sizeof(keybinds) / sizeof(sf::Keyboard::Key)); i++){
+                keybind_file << keyToString(keybinds[i]) << '\n';
+            }
+        }
+    }
     switch(keybindSelected)
     {
         case 0:
@@ -428,6 +472,10 @@ void TitleScreen::stopMusic()
         music.stop();
         sound.stop();
     }
+}
+
+sf::Keyboard::Key TitleScreen::getKeybind(KB key){
+    return keybinds[key];
 }
 
 //I'm sincerely sorry for this, for the record:
@@ -847,6 +895,417 @@ string TitleScreen::keyToString(const sf::Keyboard::Key& key )
     default:
         ret="Unknown";
         break;
+    }
+    return ret;
+}
+
+//Again, so sorry for this. I blame SFML's bad coding practice
+sf::Keyboard::Key TitleScreen::stringToKey(const string string)
+{
+    sf::Keyboard::Key ret = sf::Keyboard::Unknown;
+    if(string.compare("A") == 0){
+        ret=sf::Keyboard::A;
+    }
+    if(string.compare("B") == 0){
+        ret=sf::Keyboard::B;
+    }
+    if(string.compare("C") == 0){
+        ret=sf::Keyboard::C;
+    }
+    if(string.compare("D") == 0){
+        ret=sf::Keyboard::D;
+    }
+    if(string.compare("E") == 0){
+
+        ret=sf::Keyboard::E;
+    }
+    if(string.compare("F") == 0){
+
+        ret=sf::Keyboard::F;
+    }
+    if(string.compare("G") == 0){
+
+        ret=sf::Keyboard::G;
+    }
+    if(string.compare("H") == 0){
+
+        ret=sf::Keyboard::H;
+    }
+    if(string.compare("I") == 0){
+
+        ret=sf::Keyboard::I;
+    }
+    if(string.compare("J") == 0){
+
+        ret=sf::Keyboard::J;
+    }
+    if(string.compare("K") == 0){
+
+        ret=sf::Keyboard::K;
+    }
+    if(string.compare("L") == 0){
+
+        ret=sf::Keyboard::L;
+    }
+    if(string.compare("M") == 0){
+
+        ret=sf::Keyboard::M;
+    }
+    if(string.compare("N") == 0){
+
+        ret=sf::Keyboard::N;
+    }
+    if(string.compare("O") == 0){
+
+        ret=sf::Keyboard::O;
+    }
+    if(string.compare("P") == 0){
+
+        ret=sf::Keyboard::P;
+    }
+    if(string.compare("Q") == 0){
+
+        ret=sf::Keyboard::Q;
+    }
+    if(string.compare("R") == 0){
+
+        ret=sf::Keyboard::R;
+    }
+    if(string.compare("S") == 0){
+
+        ret=sf::Keyboard::S;
+    }
+    if(string.compare("T") == 0){
+
+        ret=sf::Keyboard::T;
+    }
+    if(string.compare("U") == 0){
+
+        ret=sf::Keyboard::U;
+    }
+    if(string.compare("V") == 0){
+
+        ret=sf::Keyboard::V;
+    }
+    if(string.compare("W") == 0){
+
+        ret=sf::Keyboard::W;
+    }
+    if(string.compare("X") == 0){
+
+        ret=sf::Keyboard::X;
+    }
+    if(string.compare("Y") == 0){
+
+        ret=sf::Keyboard::Y;
+    }
+    if(string.compare("Z") == 0){
+
+        ret=sf::Keyboard::Z;
+    }
+    if(string.compare("Num0") == 0){
+
+        ret=sf::Keyboard::Num0;
+    }
+    if(string.compare("Num1") == 0){
+
+        ret=sf::Keyboard::Num1;
+    }
+    if(string.compare("Num2") == 0){
+
+        ret=sf::Keyboard::Num2;
+    }
+    if(string.compare("Num3") == 0){
+
+        ret=sf::Keyboard::Num3;
+    }
+    if(string.compare("Num4") == 0){
+
+        ret=sf::Keyboard::Num4;
+    }
+    if(string.compare("Num5") == 0){
+
+        ret=sf::Keyboard::Num5;
+    }
+    if(string.compare("Num6") == 0){
+
+        ret=sf::Keyboard::Num6;
+    }
+    if(string.compare("Num7") == 0){
+
+        ret=sf::Keyboard::Num7;
+    }
+    if(string.compare("Num8") == 0){
+
+        ret=sf::Keyboard::Num8;
+    }
+    if(string.compare("Num9") == 0){
+
+        ret=sf::Keyboard::Num9;
+    }
+    if(string.compare("Escape") == 0){
+
+        ret=sf::Keyboard::Escape;
+    }
+    if(string.compare("LControl") == 0){
+
+        ret=sf::Keyboard::LControl;
+    }
+    if(string.compare("LShift") == 0){
+
+        ret=sf::Keyboard::LShift;
+    }
+    if(string.compare("LAlt") == 0){
+
+        ret=sf::Keyboard::LAlt;
+    }
+    if(string.compare("LSystem") == 0){
+
+        ret=sf::Keyboard::LSystem;
+    }
+    if(string.compare("RControl") == 0){
+
+        ret=sf::Keyboard::RControl;
+    }
+    if(string.compare("RShift") == 0){
+
+        ret=sf::Keyboard::RShift;
+    }
+    if(string.compare("RAlt") == 0){
+
+        ret=sf::Keyboard::RAlt;
+    }
+    if(string.compare("RSystem") == 0){
+
+        ret=sf::Keyboard::RSystem;
+    }
+    if(string.compare("Menu") == 0){
+
+        ret=sf::Keyboard::Menu;
+    }
+    if(string.compare("LBracket") == 0){
+
+        ret=sf::Keyboard::LBracket;
+    }
+    if(string.compare("RBracket") == 0){
+
+        ret=sf::Keyboard::RBracket;
+    }
+    if(string.compare("SemiColon") == 0){
+
+        ret=sf::Keyboard::SemiColon;
+    }
+    if(string.compare("Comma") == 0){
+
+        ret=sf::Keyboard::Comma;
+    }
+    if(string.compare("Period") == 0){
+
+        ret=sf::Keyboard::Period;
+    }
+    if(string.compare("Quote") == 0){
+
+        ret=sf::Keyboard::Quote;
+    }
+    if(string.compare("Slash") == 0){
+
+        ret=sf::Keyboard::Slash;
+    }
+    if(string.compare("BackSlash") == 0){
+
+        ret=sf::Keyboard::BackSlash;
+    }
+    if(string.compare("Tilde") == 0){
+
+        ret=sf::Keyboard::Tilde;
+    }
+    if(string.compare("Equal") == 0){
+
+        ret=sf::Keyboard::Equal;
+    }
+    if(string.compare("Dash") == 0){
+
+        ret=sf::Keyboard::Dash;
+    }
+    if(string.compare("Space") == 0){
+
+        ret=sf::Keyboard::Space;
+    }
+    if(string.compare("Return") == 0){
+
+        ret=sf::Keyboard::Return;
+    }
+    if(string.compare("BackSpace") == 0){
+
+        ret=sf::Keyboard::BackSpace;
+    }
+    if(string.compare("Tab") == 0){
+
+        ret=sf::Keyboard::Tab;
+    }
+    if(string.compare("PageUp") == 0){
+
+        ret=sf::Keyboard::PageUp;
+    }
+    if(string.compare("PageDown") == 0){
+
+        ret=sf::Keyboard::PageDown;
+    }
+    if(string.compare("End") == 0){
+
+        ret=sf::Keyboard::End;
+    }
+    if(string.compare("Home") == 0){
+
+        ret=sf::Keyboard::Home;
+    }
+    if(string.compare("Insert") == 0){
+
+        ret=sf::Keyboard::Insert;
+    }
+    if(string.compare("Delete") == 0){
+
+        ret=sf::Keyboard::Delete;
+    }
+    if(string.compare("Add") == 0){
+
+        ret=sf::Keyboard::Add;
+    }
+    if(string.compare("Subtract") == 0){
+
+        ret=sf::Keyboard::Subtract;
+    }
+    if(string.compare("Multiply") == 0){
+
+        ret=sf::Keyboard::Multiply;
+    }
+    if(string.compare("Divide") == 0){
+
+        ret=sf::Keyboard::Divide;
+    }
+    if(string.compare("Left") == 0){
+
+        ret=sf::Keyboard::Left;
+    }
+    if(string.compare("Right") == 0){
+
+        ret=sf::Keyboard::Right;
+    }
+    if(string.compare("Up") == 0){
+
+        ret=sf::Keyboard::Up;
+    }
+    if(string.compare("Down") == 0){
+
+        ret=sf::Keyboard::Down;
+    }
+    if(string.compare("Numpad0") == 0){
+
+        ret=sf::Keyboard::Numpad0;
+    }
+    if(string.compare("Numpad1") == 0){
+
+        ret=sf::Keyboard::Numpad1;
+    }
+    if(string.compare("Numpad2") == 0){
+
+        ret=sf::Keyboard::Numpad2;
+    }
+    if(string.compare("Numpad3") == 0){
+
+        ret=sf::Keyboard::Numpad3;
+    }
+    if(string.compare("Numpad4") == 0){
+
+        ret=sf::Keyboard::Numpad4;
+    }
+    if(string.compare("Numpad5") == 0){
+
+        ret=sf::Keyboard::Numpad5;
+    }
+    if(string.compare("Numpad6") == 0){
+
+        ret=sf::Keyboard::Numpad6;
+    }
+    if(string.compare("Numpad7") == 0){
+
+        ret=sf::Keyboard::Numpad7;
+    }
+    if(string.compare("Numpad8") == 0){
+
+        ret=sf::Keyboard::Numpad8;
+    }
+    if(string.compare("Numpad9") == 0){
+
+        ret=sf::Keyboard::Numpad9;
+    }
+    if(string.compare("F1") == 0){
+
+        ret=sf::Keyboard::F1;
+    }
+    if(string.compare("F2") == 0){
+
+        ret=sf::Keyboard::F2;
+    }
+    if(string.compare("F3") == 0){
+
+        ret=sf::Keyboard::F3;
+    }
+    if(string.compare("F4") == 0){
+
+        ret=sf::Keyboard::F4;
+    }
+    if(string.compare("F5") == 0){
+
+        ret=sf::Keyboard::F5;
+    }
+    if(string.compare("F6") == 0){
+
+        ret=sf::Keyboard::F6;
+    }
+    if(string.compare("F7") == 0){
+
+        ret=sf::Keyboard::F7;
+    }
+    if(string.compare("F8") == 0){
+
+        ret=sf::Keyboard::F8;
+    }
+    if(string.compare("F9") == 0){
+
+        ret=sf::Keyboard::F9;
+    }
+    if(string.compare("F10") == 0){
+
+        ret=sf::Keyboard::F10;
+    }
+    if(string.compare("F11") == 0){
+
+        ret=sf::Keyboard::F11;
+    }
+    if(string.compare("F12") == 0){
+
+        ret=sf::Keyboard::F12;
+    }
+    if(string.compare("F13") == 0){
+
+        ret=sf::Keyboard::F13;
+    }
+    if(string.compare("F14") == 0){
+
+        ret=sf::Keyboard::F14;
+    }
+    if(string.compare("F15") == 0){
+
+        ret=sf::Keyboard::F15;
+    }
+    if(string.compare("Pause") == 0){
+
+        ret=sf::Keyboard::Pause;
+    }
+    if(string.compare("KeyCount") == 0){
+
+        ret=sf::Keyboard::KeyCount;
     }
     return ret;
 }

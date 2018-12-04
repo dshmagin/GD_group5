@@ -61,11 +61,24 @@ class TitleScreen
 	sf::Keyboard::Key special_3_key = sf::Keyboard::Num3;
 	sf::Keyboard::Key special_4_key = sf::Keyboard::Num4;
 
+	sf::Keyboard::Key keybinds[12];
+
 	bool keybind_chosen = true;
 	int keybindSelected = 0;
+
     public:
+        enum KB{MOVE_LEFT,
+                MOVE_RIGHT,
+                MOVE_DOWN,
+                MOVE_UP,
+                SHOOT_LEFT,
+                SHOOT_RIGHT,
+                SHOOT_DOWN,
+                SHOOT_UP,
+                SPECIAL};
         TitleScreen();
         TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr );
+        sf::Keyboard::Key getKeybind(KB key);
         void setSelected( int direction);
         int  getSelected();
         void setSelectedElement( int direction);
@@ -74,8 +87,9 @@ class TitleScreen
         void drawElementOption( float deltaTime );
         void drawOptionsScreen( float deltaTime );
         int  getSelectedKeybind();
-	void setSelectedKeybind( int direction );
+	      void setSelectedKeybind( int direction );
         string keyToString(const sf::Keyboard::Key& key );
+        sf::Keyboard::Key stringToKey(const string string);
         void newKeybind(const sf::Keyboard::Key& key );
         void choosingKeybind();
         void startMusic();
