@@ -27,7 +27,7 @@ class GameLogic
         float playerW,playerH;
         int GameState = 0;
         int level = 1;
-        int wave = 1;
+        int wave = 4;
 
         float basicAttackCd = 600;
         float abilityCd;
@@ -38,6 +38,7 @@ class GameLogic
         float healTimer = 10000;
         float splitAttackTimer = 6000;
         float redPotion = 25.0;
+        float waterHeal = 50.0;
 
         bool paused = false;
         shared_ptr<ProcessManager> pm;
@@ -50,6 +51,7 @@ class GameLogic
         Player player;
         int totalEnemies;
         int meleeEnemies;
+        int bossEnemies;
         int rangedEnemies;
         //BasicAttack bAttack;
 
@@ -77,6 +79,7 @@ class GameLogic
         void createSplitAttack();
         void createRangedEnemy();
         void createMeleeEnemy();
+        void createBossEnemy();
         void setStartingElement(int startingElement);
         void resetPlayer();
         void grabItem();

@@ -1,7 +1,7 @@
 #include "GameLogic.h"
 #include "RangedEnemy.h"
 #include "MeleeEnemy.h"
-
+#include "BossEnemy.h"
 #include "DmgDisplay.h"
 #include "MeleeEnemy.h"
 
@@ -82,7 +82,10 @@ void GameLogic::createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_
 void GameLogic::createHeal() {
 	if (abilityCd > abilityTimer) {
 		abilityCd = 0;
-		player.healPlayer(50);
+        shared_ptr<DmgDisplay> displayHeal = make_shared<DmgDisplay>(window_ptr);
+        displayHeal -> createText(getPlayer().getPosition().x  , getPlayer().getPosition().y , Process::HEAL , waterHeal);
+        pm ->  attachProcess((shared_ptr<Process>) displayHeal);
+		player.healPlayer(waterHeal);
 	}
 }
 
@@ -103,6 +106,12 @@ void GameLogic::createBuff(int buffType) {
     	buff->createBuff(buffType);
     	pm->attachProcess((shared_ptr<Process>)buff);
     }
+}
+void GameLogic::createBossEnemy()
+{
+    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,startingElement);
+    bEnemy->createRangedEnemy(this);
+    pm ->  attachProcess((shared_ptr<Process>) bEnemy);
 }
 
 void GameLogic::createRangedEnemy()
@@ -129,8 +138,13 @@ void GameLogic::update(float deltaTime)
         transition += deltaTime;
 
         if(transition >= 1000.0 && !changed_background){
-            level++;
-            changed_background = true;
+            if(wave % 4 == 0)
+            {
+                level++;
+                changed_background = true;
+                wave = 0;
+
+            }
         }
 
         if(transition >= 1500.0){
@@ -210,9 +224,18 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
-    rangedEnemies = 1 * wave;
-
-    meleeEnemies = 1 * wave;
+    if(wave % 4 == 0)
+    {
+        bossEnemies = 1;
+        rangedEnemies = 0;
+        meleeEnemies = 0;
+    }
+    else
+    {
+        bossEnemies = 0;
+        rangedEnemies = 1 * wave;
+        meleeEnemies = 1 * wave;
+    }
 
     totalEnemies = meleeEnemies + rangedEnemies;
 
@@ -229,6 +252,11 @@ void GameLogic::startWave()
         createMeleeEnemy();
     }
 
+    for (int enemies = 0; enemies<bossEnemies; enemies++)
+    {
+        cout<<"Created Boss enemy " << enemies << endl;
+        createBossEnemy();
+    }
 }
 
 bool GameLogic::isPaused() {
