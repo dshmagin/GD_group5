@@ -297,6 +297,28 @@ void TitleScreen::drawOptionsScreen( float deltaTime )
     window_ptr -> draw( special_4 );
 }
 
+void TitleScreen::drawWinScreen( float deltaTime ){
+    win_or_lose.setFont(GameFont);
+    score.setFont(GameFont);
+    instruction.setFont(GameFont);
+    win_or_lose.setColor(sf::Color::Black);
+    score.setColor(sf::Color::Black);
+    instruction.setColor(sf::Color::Black);
+
+    win_or_lose.setString("YOU WIN");
+    instruction.setString("Please press ESCAPE to return to the menu");
+    score.setString("Score: ");
+
+    win_or_lose.setPosition(200, 30);
+    score.setPosition(200, 70);
+    instruction.setPosition(200, 90);
+
+    window_ptr -> draw(win_or_lose);
+    window_ptr -> draw(score);
+    window_ptr -> draw(instruction);
+}
+
+
 void TitleScreen::choosingKeybind()
 {
     keybind_chosen = false;

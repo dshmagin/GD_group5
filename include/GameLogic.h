@@ -29,7 +29,12 @@ class GameLogic
         float playerW,playerH;
         int GameState = 0;
         int level = 1;
+<<<<<<< Updated upstream
         int wave = 4;
+=======
+        int wave = 1;
+        int score = 0;
+>>>>>>> Stashed changes
         float basicAttackCd = 600;
         float abilityCd;
         float abilityTimer;
@@ -47,6 +52,7 @@ class GameLogic
         bool changing_level = false;
         bool changed_background = false;
         float transition = 0;
+        bool game_completed = false;
 
     public:
         Player player;
@@ -94,6 +100,7 @@ class GameLogic
         //void dropItem(loc_x, loc_y);
 
         bool changingLevel();
+        bool completedGame();
 
         void resetCd();
         void updateCd(float deltaTime);

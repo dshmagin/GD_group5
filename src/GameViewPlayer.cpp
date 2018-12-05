@@ -351,10 +351,19 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     playerView.reset(sf::FloatRect(0,0,screenW,screenH));
                     window_ptr -> setView(playerView);
                     game -> clearGame();
+                }
 
-
-
-
+                if(game -> completedGame()){
+                    game -> setLevel(1);
+                    game -> setGameState(4);
+                    elementalAttack = game -> getStartingElement();
+                    elementalIcon.setPosition(bckgW/2 + 8  ,bckgH/2 + (screenH - 24 ));
+                    abilityIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
+                    itemIcon.setPosition(bckgW/2 + 8 + 64   ,bckgH/2 + (screenH - 24 ));
+                    UIIcon.setPosition(bckgW/2   ,bckgH/2 + (screenH - 32 ));
+                    playerView.reset(sf::FloatRect(0,0,screenW,screenH));
+                    window_ptr -> setView(playerView);
+                    game -> clearGame();
                 }
 
             if(movingX == false && movingY == false)
@@ -362,6 +371,13 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 game -> idle();
             }
         }
+        if(game -> getGameState() == 4 ){
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                game -> setGameState(0);
+            }
+        }
+
     return wait;
 }
 

@@ -79,10 +79,14 @@ void BossAttack::update(float deltaTime) {
         	}
         	spriteNum = (spriteNum + 1) % 32;
         	window_ptr->draw(body);
+            sf::FloatRect boundingBox = body.getGlobalBounds();
+            sf::RectangleShape bb(sf::Vector2f(boundingBox.width, boundingBox.height));
+            bb.setPosition(boundingBox.left, boundingBox.top);
+            bb.setOutlineColor(sf::Color::Red);
+            bb.setOutlineThickness(3.0);
+            bb.setFillColor(sf::Color::Transparent);
+            window_ptr -> draw(bb);
         }
     }
 
 }
-
-
-

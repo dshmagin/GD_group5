@@ -48,6 +48,10 @@ class TitleScreen
 	sf::Text special_3;
 	sf::Text special_4;
 
+    sf::Text win_or_lose;
+    sf::Text score;
+    sf::Text instruction;
+
 	sf::Keyboard::Key walk_left_key = sf::Keyboard::A;
 	sf::Keyboard::Key walk_right_key = sf::Keyboard::D;
 	sf::Keyboard::Key walk_down_key = sf::Keyboard::S;
@@ -86,6 +90,8 @@ class TitleScreen
         void drawTitleScreen( float deltaTime );
         void drawElementOption( float deltaTime );
         void drawOptionsScreen( float deltaTime );
+        void drawWinScreen( float deltaTime );
+        void drawLossScreen( float deltaTime );
         int  getSelectedKeybind();
 	      void setSelectedKeybind( int direction );
         string keyToString(const sf::Keyboard::Key& key );

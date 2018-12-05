@@ -105,6 +105,13 @@ void Player::update(float deltaTime)
         window_ptr -> draw(body);
         window_ptr -> draw(healthBg);
         window_ptr -> draw(healthBar);
+        sf::FloatRect boundingBox = body.getGlobalBounds();
+        sf::RectangleShape bb(sf::Vector2f(boundingBox.width, boundingBox.height));
+        bb.setPosition(boundingBox.left, boundingBox.top);
+        bb.setOutlineColor(sf::Color::Red);
+        bb.setOutlineThickness(3.0);
+        bb.setFillColor(sf::Color::Transparent);
+        window_ptr -> draw(bb);
 }
 
 void Player::reset(float x_pos, float y_pos)
@@ -192,4 +199,3 @@ void Player::movePlayer(float x, float y) {
 int Player::getDirection() {
 	return (int)dir;
 }
-
