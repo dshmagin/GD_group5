@@ -1,6 +1,5 @@
 #include "GameLogic.h"
 #include "RangedEnemy.h"
-#include "MeleeEnemy.h"
 #include "BossEnemy.h"
 #include "DmgDisplay.h"
 #include "MeleeEnemy.h"
@@ -71,6 +70,12 @@ int GameLogic::createPlayerAttack(char dir, float deltaTime)
 
 }
 
+void GameLogic::createEnemyAttack(float x_pos, float y_pos, char dir, float deltaTime)
+{
+        shared_ptr<BasicAttack> ebAttack =make_shared<BasicAttack>(window_ptr,startingElement);
+        ebAttack->createAttack(x_pos, y_pos, dir);
+        enemyPM ->  attachProcess((shared_ptr<Process>) ebAttack);
+}
 
 void GameLogic::createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
 		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
@@ -112,10 +117,11 @@ void GameLogic::createBuff(int buffType) {
 }
 void GameLogic::createBossEnemy()
 {
-    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,startingElement, enemyPM);
+    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr, startingElement, getLevel(), enemyPM);
     bEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) bEnemy);
 }
+
 void GameLogic::createBossAttackCircle( float x_pos, float y_pos) {
     cout<< " why is this called" << endl;
     /*
@@ -128,16 +134,17 @@ void GameLogic::createBossAttackCircle( float x_pos, float y_pos) {
 	}
 	*/
 }
+
 void GameLogic::createRangedEnemy()
 {
-    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,startingElement);
+    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr, getLevel(), enemyPM);
     rEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
 
 void GameLogic::createMeleeEnemy()
 {
-    shared_ptr<MeleeEnemy> mEnemy = make_shared<MeleeEnemy>(window_ptr,startingElement);
+    shared_ptr<MeleeEnemy> mEnemy = make_shared<MeleeEnemy>(window_ptr,getLevel());
     mEnemy->createMeleeEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) mEnemy);
 }

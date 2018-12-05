@@ -73,6 +73,7 @@ class GameLogic
         int getScore();
         void update(float deltaTime);
         int createPlayerAttack(char, float);
+        void createEnemyAttack(float x_pos, float y_pos, char dir, float deltaTime);
         void createBuff(int buffType);
         void createHeal();
         void createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,

@@ -4,20 +4,38 @@
 #include "BossAttack.h"
 #include <cmath>
 
-BossEnemy::BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement, shared_ptr<EnemyAttackManager> enemyPM)
+BossEnemy::BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement, int attackElement, shared_ptr<EnemyAttackManager> enemyPM)
 {
-    init();
+    init(attackElement);
     this -> window_ptr = window_ptr;
     this -> enemyPM = enemyPM;
     this -> attackElement = attackElement;
 }
 
-void BossEnemy::init()
+void BossEnemy::init(int element)
 {
     if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
         cout<<"Cannot load BenderAi"<<endl;
-    if( !itemImg.loadFromFile( "../Assets/Images/items.png" ))
-        cout<<"Cannot load items"<<endl;
+
+    switch(element)
+    {
+        case 0:
+            if( !image.loadFromFile( "../Assets/Images/fireBender.png" ))
+                cout<<"Cannot load fireBender"<<endl;
+            break;
+        case 1:
+            if( !image.loadFromFile( "../Assets/Images/BenderAi.png" ))
+                cout<<"Cannot load BenderAi"<<endl;
+            break;
+        case 2:
+            if( !image.loadFromFile( "../Assets/Images/earthBender.png" ))
+                cout<<"Cannot load earthBender"<<endl;
+            break;
+        case 3:
+            if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
+                cout<<"Cannot load waterBender"<<endl;
+            break;
+    }
 
     body.setTextureRect(sf::IntRect(playerW * 1, playerH * 0, playerW, playerH));
 }

@@ -17,7 +17,7 @@ private:
 
 public:
     shared_ptr<sf::RenderWindow> window_ptr;
-     shared_ptr<EnemyAttackManager> enemyPM;
+    shared_ptr<EnemyAttackManager> enemyPM;
     int attackElement;
     int dir = 0;
     int spriteNum = 0;
@@ -31,8 +31,8 @@ public:
     GameLogic* game;
     float randF;
     BossEnemy(){};
-    BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement,  shared_ptr<EnemyAttackManager> enemyPM );
-    void init();
+    BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement,  int attackElement, shared_ptr<EnemyAttackManager> enemyPM );
+    void init(int element);
     sf::Vector2f findPlayer(float deltaTime);
     void update(float deltaTime);
     void setDirection(int dir, int spriteNum);
