@@ -1,6 +1,7 @@
 
 #include "GameViewPlayer.h"
-
+#include <iostream>
+#include <sstream>
 using namespace std;
 
 GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &window_ptr)
@@ -40,6 +41,11 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         cout << "Cannot load basicAttackSound.wav" << endl;
     }
 
+    if( !GameFont.loadFromFile( "../Assets/Fonts/GROBOLD.ttf" ) )
+    {
+        cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
+        cout << "Player one control W-up S-down, Player two control I-up K-down" << endl;
+    }
     if(hasTextureLoaded)
     {
         fireBg.setRepeated(true);
@@ -66,7 +72,10 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
         abilityIcon.setTexture(&elementalText);
         abilityIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
-
+        score.setColor(sf::Color::Blue);
+        score.setOutlineColor(sf::Color::Black);
+        score.setOutlineThickness(2);
+        score.setPosition(bckgW/2 + 8 ,bckgH/2 + (screenH - 24 )- 580);
         cout<< "SUCESS"<<endl;
 
     }
@@ -322,7 +331,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 		cout<<"element mismatch"<<endl;
                 		break;
                 	}
-                  
+
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
@@ -338,6 +347,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     abilityIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
                     itemIcon.setPosition(bckgW/2 + 8 + 64   ,bckgH/2 + (screenH - 24 ));
                     UIIcon.setPosition(bckgW/2   ,bckgH/2 + (screenH - 32 ));
+                    score.setPosition(bckgW/2 + 8 ,bckgH/2 + (screenH - 24 )- 580);
                     playerView.reset(sf::FloatRect(0,0,screenW,screenH));
                     window_ptr -> setView(playerView);
                     game -> clearGame();
@@ -362,6 +372,7 @@ void GameViewPlayer::setTitleScreen(TitleScreen* screen)
 
 void GameViewPlayer::update(float deltaTime)
 {
+    setScore();
     if(currentLevel != game -> getLevel())
     {
         currentBckg = ((currentBckg + 1) % 4) ;
@@ -389,6 +400,7 @@ void GameViewPlayer::update(float deltaTime)
     }
 
     //window_ptr -> draw( game -> getPlayer());
+    window_ptr -> draw(score);
     window_ptr -> draw(UIIcon);
     window_ptr -> draw(elementalIcon);
 
@@ -400,7 +412,16 @@ void GameViewPlayer::update(float deltaTime)
            window_ptr -> draw(itemIcon);
     }
 }
-
+void GameViewPlayer::setScore()
+{
+    int the_score = game -> getScore();
+    std::stringstream ss;
+    ss << the_score;
+    std::string s_dmg = ss.str();
+    score.setFont(GameFont);
+    score.setCharacterSize(40);
+    score.setString("Score: " + s_dmg);
+}
 void GameViewPlayer::drawBg()
 {
     window_ptr -> draw(background);
@@ -463,4 +484,5 @@ void GameViewPlayer::centerView()
     elementalIcon.setPosition(playerView.getCenter().x - (screenW/2 - 8) ,playerView.getCenter().y + (screenH/2 - 24));
     abilityIcon.setPosition(playerView.getCenter().x- (screenW/2 - 40) ,playerView.getCenter().y + (screenH/2 - 24));
     itemIcon.setPosition(playerView.getCenter().x- (screenW/2 - 72) ,playerView.getCenter().y + (screenH/2 - 24));
+    score.setPosition(playerView.getCenter().x- screenW/2 + 8  ,playerView.getCenter().y + (screenH/2 - 24) - 580);
 }

@@ -23,13 +23,13 @@ class GameLogic
         bool basicAttackOnCd = false;
 
         bool abilityOnCd = false;
-
+        int score = 0;
+        int enemyCounter;
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
         int level = 1;
         int wave = 4;
-        int score = 0;
         float basicAttackCd = 600;
         float abilityCd;
         float abilityTimer;
@@ -40,7 +40,6 @@ class GameLogic
         float splitAttackTimer = 6000;
         float redPotion = 25.0;
         float waterHeal = 50.0;
-
         bool paused = false;
         shared_ptr<ProcessManager> pm;
         shared_ptr<sf::RenderWindow> window_ptr;
@@ -71,6 +70,7 @@ class GameLogic
         void initiliaze(float bckgW, float bckgH, float screenW, float screenH, float bckgPixSize, float playerW, float playerH);
         void setDirection(int dir, float deltaTime );
         void idle();
+        int getScore();
         void update(float deltaTime);
         int createPlayerAttack(char, float);
         void createBuff(int buffType);

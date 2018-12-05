@@ -55,12 +55,14 @@ class GameViewPlayer
         float camMoveSpeed = 0.3f;
         bool movingX;
         bool movingY;
+        sf::Font GameFont;
         bool hasTextureLoaded = true;
         bool chooseElement = false;
         shared_ptr<sf::RenderWindow> window_ptr;
         bool wait = false;
         //AbilityBar abilityBar;
         bool transition_started;
+        sf::Text score;
 	sf::RectangleShape transitionBox1;
 	sf::RectangleShape transitionBox2;
 
@@ -72,6 +74,7 @@ class GameViewPlayer
         void setTitleScreen(TitleScreen* screen);
         void update(float deltaTime);
         void drawBg();
+        void setScore();
         void setBackgroundTexture(int background);
         void drawTransition(float deltaTime);
         void centerView();
