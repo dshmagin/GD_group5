@@ -185,6 +185,7 @@ int ProcessManager::checkEnemies()
 {
     return enemyList.size();
 }
+
 void ProcessManager::setPlayer(Player* player) {
 	player_ptr = player;
 }

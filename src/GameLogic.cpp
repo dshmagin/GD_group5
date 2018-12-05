@@ -145,6 +145,18 @@ void GameLogic::update(float deltaTime)
 {
     player.update(deltaTime);
     updateCd(deltaTime);
+    if(enemyCounter > pm -> checkEnemies())
+    {
+        enemyCounter = pm -> checkEnemies();
+        if(level == 4)
+        {
+            score +=1000;
+        }
+        else
+        {
+            score +=25;
+        }
+    }
 
     if(pm -> checkEnemies() <= 0)
     {
@@ -241,7 +253,7 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
-    if(wave % 4 == 0)
+    if(level % 4 == 0)
     {
         bossEnemies = 1;
         rangedEnemies = 0;
@@ -274,6 +286,7 @@ void GameLogic::startWave()
         cout<<"Created Boss enemy " << enemies << endl;
         createBossEnemy();
     }
+    enemyCounter = pm -> checkEnemies();
 }
 
 bool GameLogic::isPaused() {
@@ -343,3 +356,7 @@ void GameLogic::updateCd(float deltaTime) {
 	abilityOnCd = (abilityTimer >= abilityCd);
 }
 
+int GameLogic::getScore()
+{
+    return score;
+}
