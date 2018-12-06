@@ -62,7 +62,7 @@ int GameLogic::createPlayerAttack(char dir, float deltaTime)
     if(basicAttackCd > basicAttackTimer)
     {
         basicAttackCd = 0;
-        shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr,startingElement);
+        shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr, startingElement);
         bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
         pm ->  attachProcess((shared_ptr<Process>) bAttack);
 	return 1;
@@ -130,7 +130,7 @@ void GameLogic::createBossAttackCircle( float x_pos, float y_pos) {
 }
 void GameLogic::createRangedEnemy()
 {
-    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,getStartingElement() + getLevel() % 4);
+    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,getStartingElement() + getLevel() % 4, enemyPM);
     rEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
