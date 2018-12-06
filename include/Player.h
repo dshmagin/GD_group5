@@ -22,7 +22,7 @@ private:
     sf::RectangleShape healthBar;
     sf::RectangleShape healthBg;
     sf::Texture image;
-    float speed;
+    float speed = 0.3f;
     float itemUseTimer = 10000;
     float damageMultiplier = 1;
     float damageReceivedMultiplier = 1;
@@ -31,6 +31,7 @@ private:
 public:
     // Enum that matches the sprite sheets row
     float health = 100;
+    float shieldPoints = 0;
     //          0      1    2      3
     enum dir {SOUTH, WEST, EAST, NORTH};
     bool moveKeyIsPressed=false;
@@ -53,15 +54,16 @@ public:
     float getSpeed();
 
     void updateDM(float multilpier); // dm = damage multiplier
+    void setDM(float multiplier);
     float getDM();
     void updateDRM(float multiplier); // drm = damage received multiplier
     float getDRM();
     void updateDodge(float multiplier);
     float getDodge();
     void healPlayer(float amount);
-
     void movePlayer(float x, float y);
     int getDirection();
+    void knockBack(int dir);
 
 
 };

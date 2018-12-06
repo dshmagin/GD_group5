@@ -15,6 +15,7 @@ using namespace std;
 class TitleScreen
 {
     private:
+        bool music_playing = false;
         int selected = 0;
         int elementSelected = 0;
         shared_ptr<sf::RenderWindow> window_ptr;
@@ -48,6 +49,10 @@ class TitleScreen
 	sf::Text special_3;
 	sf::Text special_4;
 
+    sf::Text win_or_lose;
+    sf::Text score;
+    sf::Text instruction;
+
 	sf::Keyboard::Key walk_left_key = sf::Keyboard::A;
 	sf::Keyboard::Key walk_right_key = sf::Keyboard::D;
 	sf::Keyboard::Key walk_down_key = sf::Keyboard::S;
@@ -61,11 +66,24 @@ class TitleScreen
 	sf::Keyboard::Key special_3_key = sf::Keyboard::Num3;
 	sf::Keyboard::Key special_4_key = sf::Keyboard::Num4;
 
+	sf::Keyboard::Key keybinds[12];
+
 	bool keybind_chosen = true;
 	int keybindSelected = 0;
+
     public:
+        enum KB{MOVE_LEFT,
+                MOVE_RIGHT,
+                MOVE_DOWN,
+                MOVE_UP,
+                SHOOT_LEFT,
+                SHOOT_RIGHT,
+                SHOOT_DOWN,
+                SHOOT_UP,
+                SPECIAL};
         TitleScreen();
         TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr );
+        sf::Keyboard::Key getKeybind(KB key);
         void setSelected( int direction);
         int  getSelected();
         void setSelectedElement( int direction);
@@ -73,9 +91,12 @@ class TitleScreen
         void drawTitleScreen( float deltaTime );
         void drawElementOption( float deltaTime );
         void drawOptionsScreen( float deltaTime );
+        void drawWinScreen( float deltaTime );
+        void drawLossScreen( float deltaTime );
         int  getSelectedKeybind();
-	void setSelectedKeybind( int direction );
+	      void setSelectedKeybind( int direction );
         string keyToString(const sf::Keyboard::Key& key );
+        sf::Keyboard::Key stringToKey(const string string);
         void newKeybind(const sf::Keyboard::Key& key );
         void choosingKeybind();
         void startMusic();

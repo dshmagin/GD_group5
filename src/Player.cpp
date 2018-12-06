@@ -9,7 +9,7 @@ Player::Player(float playerH, float playerW,shared_ptr<sf::RenderWindow> &window
         cout<<"Cannot PlayerSprite"<<endl;
 
     body.setTextureRect(sf::IntRect(playerW*1 ,playerH * 0,playerW ,playerH ));
-    setSpeed(.3);
+
 }
 
 void Player::createPlayer(float x_pos, float y_pos)
@@ -67,8 +67,8 @@ void Player::setDirection(int dir,float deltaTime)
 }
 void Player::update(float deltaTime)
 {
-    healthBg.setPosition(body.getPosition().x + 5,body.getPosition().y +3);
-    healthBar.setPosition(body.getPosition().x + 7,body.getPosition().y +5 );
+    healthBg.setPosition(body.getPosition().x + 5,body.getPosition().y -15);
+    healthBar.setPosition(body.getPosition().x + 7,body.getPosition().y -13 );
     healthBar.setSize(sf::Vector2f(health/2.0, 10));
     //Grab the players direction and display the correct column in the sprite sheet.
     this -> dir = dir;
@@ -105,6 +105,13 @@ void Player::update(float deltaTime)
         window_ptr -> draw(body);
         window_ptr -> draw(healthBg);
         window_ptr -> draw(healthBar);
+        sf::FloatRect boundingBox = body.getGlobalBounds();
+        sf::RectangleShape bb(sf::Vector2f(boundingBox.width, boundingBox.height));
+        bb.setPosition(boundingBox.left, boundingBox.top);
+        bb.setOutlineColor(sf::Color::Red);
+        bb.setOutlineThickness(3.0);
+        bb.setFillColor(sf::Color::Transparent);
+        //window_ptr -> draw(bb);
 }
 
 void Player::reset(float x_pos, float y_pos)
@@ -136,6 +143,9 @@ void Player::updateDM(float multiplier) {
 	damageMultiplier *= multiplier;
 }
 
+void Player::setDM(float multiplier) {
+	damageMultiplier = multiplier;
+}
 float Player::getDM() {
 	return damageMultiplier;
 }
@@ -158,16 +168,27 @@ float Player::getDodge() {
 
 void Player::healPlayer(float amount)
 {
-    if(health + amount > 100)
+    if(amount < 0 && shieldPoints > 0)
     {
-        health = 100;
-    }
-    else if(health + amount < 0)
-    {
-        health = 0;
+        cout<<"shieldPoints "<< shieldPoints<<endl;
+        shieldPoints+=amount;
+        if(shieldPoints < 0)
+            health += shieldPoints;
     }
     else
-        health += amount;
+    {
+
+        if(health + amount > 100)
+        {
+            health = 100;
+        }
+        else if(health + amount < 0)
+        {
+            health = 0;
+        }
+        else
+            health += amount;
+    }
 }
 
 
@@ -179,3 +200,27 @@ int Player::getDirection() {
 	return (int)dir;
 }
 
+void Player::knockBack(int dir) {
+	int moveVal = 30;
+    switch(dir)
+    {
+    case 3:
+        if(body.getPosition().y - moveVal >= 128 )
+            body.move(0,-moveVal);
+        break;
+    case 0:
+        if(body.getPosition().y + moveVal <= 1800 -256 )
+            body.move(0,moveVal);
+        break;
+    case 2:
+        if(body.getPosition().x + moveVal <= 2400 - 128 )
+            body.move(moveVal,0);
+        break;
+    case 1:
+        if(body.getPosition().x - moveVal >= 64 )
+            body.move(-moveVal,0);
+        break;
+    default:
+    	break;
+    }
+}

@@ -1,16 +1,18 @@
-#include "RangedEnemy.h"
+#include "BossEnemy.h"
 //#include "ProcessManager.h"
 #include <cstdlib>
+#include "BossAttack.h"
 #include <cmath>
 
-RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
+BossEnemy::BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement, shared_ptr<EnemyAttackManager> enemyPM)
 {
     init();
     this -> window_ptr = window_ptr;
+    this -> enemyPM = enemyPM;
     this -> attackElement = attackElement;
 }
 
-void RangedEnemy::init()
+void BossEnemy::init()
 {
     if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
         cout<<"Cannot load BenderAi"<<endl;
@@ -20,18 +22,18 @@ void RangedEnemy::init()
     body.setTextureRect(sf::IntRect(playerW * 1, playerH * 0, playerW, playerH));
 }
 
-void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
+void BossEnemy::createRangedEnemy(GameLogic* gameLogic)
 {
 
-
-    this -> healthBar.setSize(sf::Vector2f( 50, 10 ));
+    this -> health = 1000.0f;
+    this -> healthBar.setSize(sf::Vector2f( 200, 10 ));
     this -> healthBar.setFillColor(sf::Color::Red);
-    this -> healthBg.setSize(sf::Vector2f( 54, 14 ));
+    this -> healthBg.setSize(sf::Vector2f( 204, 14 ));
     this -> healthBg.setFillColor(sf::Color::Black);
 
     this-> randF = (((float) (rand() % 100))/ 1000.0f);
 
-    this -> body.setSize( sf::Vector2f( playerW, playerH ) );
+    this -> body.setSize( sf::Vector2f( playerW *2, playerH *2) );
     float loc_x = (rand() % (1200 - 200) + 100);
     float loc_y = (rand() % (900 - 200) + 100);
     this -> body.setPosition(loc_x, loc_y);
@@ -41,27 +43,27 @@ void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
     this -> type = Process::R_ENEMY;
 }
 
-void RangedEnemy::initialize()
+void BossEnemy::initialize()
 {
  this -> state = Process::RUNNING;
 }
 
-sf::RectangleShape RangedEnemy::getEnemyBody() {
+sf::RectangleShape BossEnemy::getEnemyBody() {
     return body;
 }
 
-void RangedEnemy::reset(float x_pos, float y_pos)
+void BossEnemy::reset(float x_pos, float y_pos)
 {
     body.setPosition(x_pos,y_pos);
 }
 
-void RangedEnemy::update(float deltaTime)
+void BossEnemy::update(float deltaTime)
 {
     sf::Vector2f toPlayer = findPlayer(deltaTime);
 
-    healthBg.setPosition(body.getPosition().x + 5,body.getPosition().y -15);
-    healthBar.setPosition(body.getPosition().x + 7,body.getPosition().y - 13 );
-    healthBar.setSize(sf::Vector2f(health/2.0, 10));
+    healthBg.setPosition(body.getPosition().x - 38 ,body.getPosition().y - 15);
+    healthBar.setPosition(body.getPosition().x - 36,body.getPosition().y - 13 );
+    healthBar.setSize(sf::Vector2f(health/5.0, 10));
     if( changeTimer > 10 )
         {
           spriteNum = (spriteNum + 1) % 4;
@@ -74,9 +76,19 @@ void RangedEnemy::update(float deltaTime)
     window_ptr -> draw(this -> body);
     window_ptr -> draw(healthBg);
     window_ptr -> draw(healthBar);
+    switchTime -= deltaTime;
+    if (switchTime < 0) {
+        switchTime = 2000;
+        for(int i = 0 ; i < 8; i ++ )
+        {
+            shared_ptr<BossAttack> splitAttack = make_shared<BossAttack>(window_ptr, 0 + 45
+                                                                          * i , body.getPosition().x, body.getPosition().y, enemyPM);
+            enemyPM -> attachProcess((shared_ptr<Process>) splitAttack);
+        }
+    }
 }
 
-sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
+sf::Vector2f BossEnemy::findPlayer(float deltaTime)
 {
     float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
     float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
@@ -88,16 +100,20 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
 
     if (abs(xComp) > 50 || abs(yComp) > 50)
     {
-        this -> body.move(toPlayer.x, toPlayer.y);
+        this -> body.move(toPlayer.x * 0.80, toPlayer.y * 0.80);
     }
 
     if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()))
-        game->player.healPlayer(-1);
+        {
+            game->player.healPlayer(-0.05);
+            //game->createBossAttackCircle(body.getPosition().x ,body.getPosition().y);
+
+        }
 
     return toPlayer;
 }
 
-int RangedEnemy::getDirection(sf::Vector2f toPlayer)
+int BossEnemy::getDirection(sf::Vector2f toPlayer)
 {
     if (toPlayer.x > 0 && toPlayer.y > 0)
     {
@@ -153,7 +169,7 @@ int RangedEnemy::getDirection(sf::Vector2f toPlayer)
     }
 }
 
-void RangedEnemy::setDirection(int dir, int spriteNum)
+void BossEnemy::setDirection(int dir, int spriteNum)
 {
     switch(spriteNum )
     {

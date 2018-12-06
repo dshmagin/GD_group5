@@ -4,6 +4,7 @@
 #include "GameViewPlayer.h"
 #include <memory>
 #include "ProcessManager.h"
+#include "EnemyAttackManager.h"
 
 using namespace std;
 int main(int argc, char** argv)
@@ -14,8 +15,9 @@ int main(int argc, char** argv)
     sf::Clock clock;
     shared_ptr<sf::RenderWindow> window_ptr =make_shared<sf::RenderWindow>(sf::VideoMode(800,600,32), "Ground Break");
     shared_ptr<ProcessManager> pm  = make_shared<ProcessManager>();
+    shared_ptr<EnemyAttackManager> enemyPM  = make_shared<EnemyAttackManager>();
     //shared_ptr<GameLogic> game  = make_shared<GameLogic>(window_ptr,pm);
-    GameLogic* game = new GameLogic(window_ptr,pm);
+    GameLogic* game = new GameLogic(window_ptr,pm,enemyPM);
     GameViewPlayer gvp = GameViewPlayer(game, window_ptr);
     TitleScreen menu = TitleScreen(window_ptr);
 
@@ -23,7 +25,6 @@ int main(int argc, char** argv)
     // start main loop
     gvp.setTitleScreen(&menu);
     window_ptr->setFramerateLimit(60);
-    menu.startMusic();
 
 
     while(window_ptr->isOpen())
@@ -55,9 +56,7 @@ int main(int argc, char** argv)
 
         if( game -> getGameState() == 0 )
         {
-
             menu.drawTitleScreen(deltaTime);
-
         }
         if( game -> getGameState() == 1 )
         {
@@ -65,7 +64,7 @@ int main(int argc, char** argv)
         }
         if( game -> getGameState() == 3 )
         {
-	    menu.drawOptionsScreen(deltaTime);
+	        menu.drawOptionsScreen(deltaTime);
         }
 
         if ( game -> getGameState() == 2 )
@@ -73,14 +72,19 @@ int main(int argc, char** argv)
             gvp.drawBg();
             if (!game->isPaused()) {
             	pm -> updateProcessList(deltaTime);
+            	enemyPM -> updateProcessList(deltaTime);
             	game -> update(deltaTime);
             }
             gvp.update(deltaTime);
 			gvp.drawTransition(deltaTime);
+        }
+
+        if(game -> getGameState() == 4){
+            gvp.drawTransition(deltaTime);
+            menu.drawWinScreen(deltaTime);
         }
         window_ptr->display();
     }
     // Done.
     return 0;
 }
-

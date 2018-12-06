@@ -12,6 +12,10 @@ using namespace std;
 class MeleeEnemy : public Process
 {
 private:
+    sf::RectangleShape healthBar;
+    sf::RectangleShape healthBg;
+    float attackCd = 600;
+    float attackTimer = 600;
 
 public:
     shared_ptr<sf::RenderWindow> window_ptr;
@@ -27,7 +31,7 @@ public:
     float playerW = 64;
     GameLogic* game;
     float randF;
-    
+
     MeleeEnemy(){};
     MeleeEnemy(shared_ptr<sf::RenderWindow> window_ptr, int startingElement);
     void init();
@@ -38,7 +42,7 @@ public:
     void createMeleeEnemy(GameLogic* gameLogic);
     sf::RectangleShape getEnemyBody();
     void reset(float x_pos, float y_pos);
-    void initializeProcess();
+    void initialize();
     //void rangedAttack(int attackElement);
     //void animation( float deltaTime, char dir);
 };

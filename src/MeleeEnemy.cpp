@@ -12,7 +12,7 @@ MeleeEnemy::MeleeEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElemen
 
 void MeleeEnemy::init()
 {
-    if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
+    if( !image.loadFromFile( "../Assets/Images/earthBender.png" ))
         cout<<"Cannot load BenderAi"<<endl;
     if( !itemImg.loadFromFile( "../Assets/Images/items.png" ))
         cout<<"Cannot load items"<<endl;
@@ -22,7 +22,10 @@ void MeleeEnemy::init()
 
 void MeleeEnemy::createMeleeEnemy(GameLogic* gameLogic)
 {
-
+    this -> healthBar.setSize(sf::Vector2f( 50, 10 ));
+    this -> healthBar.setFillColor(sf::Color::Red);
+    this -> healthBg.setSize(sf::Vector2f( 54, 14 ));
+    this -> healthBg.setFillColor(sf::Color::Black);
     this -> randF = (((float) (rand() % 100))/ 1000.0f);
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     float loc_x = (rand() % (1200 - 200) + 100);
@@ -30,13 +33,13 @@ void MeleeEnemy::createMeleeEnemy(GameLogic* gameLogic)
     this -> body.setPosition(loc_x, loc_y);
     this -> body.setTexture(&image);
     this -> game = gameLogic;
-    initializeProcess();
+    this -> state = Process::UNINITIALIZED;
+    this -> type = Process::R_ENEMY;
 }
 
-void MeleeEnemy::initializeProcess()
+void MeleeEnemy::initialize()
 {
  this -> state = Process::RUNNING;
- this -> type  = Process::R_ENEMY;
 }
 
 sf::RectangleShape MeleeEnemy::getEnemyBody() {
@@ -50,8 +53,12 @@ void MeleeEnemy::reset(float x_pos, float y_pos)
 
 void MeleeEnemy::update(float deltaTime)
 {
+	attackCd += deltaTime;
     sf::Vector2f toPlayer = findPlayer(deltaTime);
 
+    healthBg.setPosition(body.getPosition().x + 5,body.getPosition().y - 15);
+    healthBar.setPosition(body.getPosition().x + 7,body.getPosition().y - 13 );
+    healthBar.setSize(sf::Vector2f(health/2.0, 10));
     if( changeTimer > 10 )
         {
           spriteNum = (spriteNum + 1) % 4;
@@ -62,6 +69,8 @@ void MeleeEnemy::update(float deltaTime)
     changeTimer += 0.04f * deltaTime;
     setDirection(getDirection(toPlayer), spriteNum);
     window_ptr -> draw(this -> body);
+    window_ptr -> draw(healthBg);
+    window_ptr -> draw(healthBar);
 }
 
 sf::Vector2f MeleeEnemy::findPlayer(float deltaTime)
@@ -79,9 +88,11 @@ sf::Vector2f MeleeEnemy::findPlayer(float deltaTime)
         this -> body.move(toPlayer.x, toPlayer.y);
     }
 
-    if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()))
-        game->player.healPlayer(-0.05);
-
+    if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()) && attackCd >= attackTimer) {
+    	attackCd = 0;
+    	game->player.healPlayer(-20);
+    	game->player.knockBack(getDirection(toPlayer));
+    }
     return toPlayer;
 }
 

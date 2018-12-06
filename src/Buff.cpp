@@ -7,15 +7,16 @@ Buff::Buff(shared_ptr<sf::RenderWindow> window_ptr, Player* player_ptr) {
 
 void Buff::initialize() {
 	this -> type  = Process::BUFF;
+	this -> state  = Process::RUNNING;
     spriteNum = 0;
 	switch (buffType) {
 	case 0:
 		timeLimit = 10000;
 		timeRemaining = 10000;
-		shieldPoint = 200;
+		player_ptr-> shieldPoints += 50;
 		if( !texture.loadFromFile( "../Assets/Images/air_shield.png" )) cout<<"Cannot load Shield Sprite"<<endl;
 	    player_ptr->updateSpeed(1.5);
-	    player_ptr->updateDM(10);
+	    player_ptr->updateDM(2);
 	    break;
     case 1:
         //item buff
@@ -39,18 +40,19 @@ void Buff::initialize() {
 }
 
 void Buff::createBuff(int buffType) {
-	state = Process::RUNNING;
+	state = Process::UNINITIALIZED;
 	this->buffType = buffType;
-	initialize();
+
 }
 
 void Buff::update(float deltaTime) {
     if(state == Process::RUNNING) {
         timeRemaining -= deltaTime;
-        if ((shieldPoint <= 0) || (timeRemaining <= 0)) {
+        if ( timeRemaining <= 0) {
         	state = Process::DEAD;
         	player_ptr->updateSpeed(2.f/3.f);
-        	player_ptr->updateDM(0.1);
+        	player_ptr->updateDM(0.5);
+            player_ptr-> shieldPoints = 0;
         }
 
         body.setTextureRect(sf::IntRect(128 * (spriteNum / 8), 0, 128, 128));
@@ -60,4 +62,6 @@ void Buff::update(float deltaTime) {
         spriteNum = (spriteNum + 1) % 64;
     }
 }
+
+
 

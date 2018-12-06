@@ -1,15 +1,20 @@
 #include "GameLogic.h"
 #include "RangedEnemy.h"
 #include "MeleeEnemy.h"
+#include "BossEnemy.h"
 #include "DmgDisplay.h"
+#include "MeleeEnemy.h"
+#include "BossAttack.h"
 
 using namespace std;
 
-GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm)
+GameLogic::GameLogic(shared_ptr<sf::RenderWindow> &window_ptr, shared_ptr<ProcessManager> &pm, shared_ptr<EnemyAttackManager> &enemyPM)
 {
     this -> window_ptr = window_ptr;
+    this -> enemyPM = enemyPM;
     this -> pm = pm;
     this -> pm -> setRenderWindow(window_ptr);
+    this -> enemyPM -> setEnemyManager(window_ptr, &player);
 }
 
 void  GameLogic::setGameState( int GameState )
@@ -80,7 +85,10 @@ void GameLogic::createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_
 void GameLogic::createHeal() {
 	if (abilityCd > abilityTimer) {
 		abilityCd = 0;
-		player.healPlayer(50);
+        shared_ptr<DmgDisplay> displayHeal = make_shared<DmgDisplay>(window_ptr);
+        displayHeal -> createText(getPlayer().getPosition().x  , getPlayer().getPosition().y , Process::HEAL , waterHeal);
+        pm ->  attachProcess((shared_ptr<Process>) displayHeal);
+		player.healPlayer(waterHeal);
 	}
 }
 
@@ -102,29 +110,59 @@ void GameLogic::createBuff(int buffType) {
     	pm->attachProcess((shared_ptr<Process>)buff);
     }
 }
-
+void GameLogic::createBossEnemy()
+{
+    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,startingElement, enemyPM);
+    bEnemy->createRangedEnemy(this);
+    pm ->  attachProcess((shared_ptr<Process>) bEnemy);
+}
+void GameLogic::createBossAttackCircle( float x_pos, float y_pos) {
+    cout<< " why is this called" << endl;
+    /*
+	if (abilityCd > abilityTimer) {
+		abilityCd = 0;
+		for (int i = 0; i < 1; i++) {
+				shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player);
+                pm -> attachProcess((shared_ptr<Process>) splitAttack);
+		}
+	}
+	*/
+}
 void GameLogic::createRangedEnemy()
 {
     shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,startingElement);
     rEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
+
+void GameLogic::createMeleeEnemy()
+{
+    shared_ptr<MeleeEnemy> mEnemy = make_shared<MeleeEnemy>(window_ptr,startingElement);
+    mEnemy->createMeleeEnemy(this);
+    pm ->  attachProcess((shared_ptr<Process>) mEnemy);
+}
 void GameLogic::update(float deltaTime)
 {
-    basicAttackCd += deltaTime;
-    airShieldCd += deltaTime;
-
     player.update(deltaTime);
+    updateCd(deltaTime);
+    if(enemyCounter > pm -> checkEnemies())
+    {
+        enemyCounter = pm -> checkEnemies();
+        if(level == 4)
+        {
+            score +=1000;
+        }
+        else
+        {
+            score +=25;
+        }
+    }
 
-    if(basicAttackCd > basicAttackTimer)
-      basicAttackOnCd = false;
-    else
-        basicAttackOnCd = true;
-
-    if(airShieldCd > airShieldTimer)
-        airShieldOnCd = false;
-    else
-        airShieldOnCd = true;
+    if((pm -> checkEnemies() <= 0) && (level == 4)){
+        clearGame();
+        game_completed = true;
+        return;
+    }
 
     if(pm -> checkEnemies() <= 0)
     {
@@ -132,8 +170,15 @@ void GameLogic::update(float deltaTime)
         transition += deltaTime;
 
         if(transition >= 1000.0 && !changed_background){
-            level++;
-            changed_background = true;
+            if(wave % 4 == 0)
+            {
+                level++;
+                changed_background = true;
+                wave = 0;
+
+            }
+
+            clearGame();
         }
 
         if(transition >= 1500.0){
@@ -194,8 +239,12 @@ void GameLogic::grabItem()
 
 void GameLogic::clearGame()
 {
-    pm -> clearManager();
+    pm->clearManager();
+    resetCd();
     player.item( Process::NONE );
+    player.setSpeed(0.3f);
+    player.setDM(1);
+    game_completed = false;
 }
 
 void GameLogic::setLevel(int level)
@@ -211,16 +260,40 @@ int GameLogic::getLevel()
 
 void GameLogic::startWave()
 {
-    totalEnemies = 1 * wave;
+    if(level % 4 == 0)
+    {
+        bossEnemies = 1;
+        rangedEnemies = 0;
+        meleeEnemies = 0;
+    }
+    else
+    {
+        bossEnemies = 0;
+        rangedEnemies = 1 * wave;
+        meleeEnemies = 1 * wave;
+    }
+
+    totalEnemies = meleeEnemies + rangedEnemies;
 
     cout<<"totalEnemies enemy " << totalEnemies << endl;
 
-    for (int enemies = 0; enemies<totalEnemies; enemies++)
+    for (int enemies = 0; enemies<rangedEnemies; enemies++)
     {
-        cout<<"Created enemy " << enemies << endl;
+        cout<<"Created ranged enemy " << enemies << endl;
         createRangedEnemy();
     }
+    for (int enemies = 0; enemies<meleeEnemies; enemies++)
+    {
+        cout<<"Created melee enemy " << enemies << endl;
+        createMeleeEnemy();
+    }
 
+    for (int enemies = 0; enemies<bossEnemies; enemies++)
+    {
+        cout<<"Created Boss enemy " << enemies << endl;
+        createBossEnemy();
+    }
+    enemyCounter = pm -> checkEnemies();
 }
 
 bool GameLogic::isPaused() {
@@ -233,15 +306,18 @@ bool GameLogic::changingLevel(){
 
 void GameLogic::useItem()
 {
-    cout<<"ITEM "<<player.currentItem()<<endl;
+
     switch(player.currentItem())
     {
         case(Process::RED_ITEM):
-            player.healPlayer(25);
-            //player
+            {
+                shared_ptr<DmgDisplay> displayHeal = make_shared<DmgDisplay>(window_ptr);
+                player.healPlayer(redPotion);
+                displayHeal -> createText(getPlayer().getPosition().x  , getPlayer().getPosition().y , Process::HEAL , redPotion);
+                pm ->  attachProcess((shared_ptr<Process>) displayHeal);
+            }
             break;
         case(Process::BLUE_ITEM):
-            cout<<" ITEM IS USED"<<endl;
             resetCd();
             break;
         case(Process::YELLOW_ITEM):
@@ -255,7 +331,6 @@ void GameLogic::useItem()
 
     cout<<"ITEM USED"<<endl;
 }
-
 
 void GameLogic::resetCd() {
 	switch (startingElement) {
@@ -288,3 +363,17 @@ void GameLogic::updateCd(float deltaTime) {
 	abilityOnCd = (abilityTimer >= abilityCd);
 }
 
+int GameLogic::getScore(){
+    return score;
+}
+void GameLogic::setScore(int score){
+    this -> score = score;
+}
+bool GameLogic::completedGame(){
+    if(game_completed)
+    {
+        cout<<"GAME IS DONE"<<endl;
+        score = 0;
+    }
+    return game_completed;
+}
