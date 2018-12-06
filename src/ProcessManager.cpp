@@ -6,6 +6,7 @@
 #include "iostream"
 #include <vector>
 #include <cstdlib>
+#include "MeleeEnemy.h"
 
 using namespace std;
 
@@ -58,7 +59,16 @@ void ProcessManager::updateProcessList(float deltaMs)
                 p->update(deltaMs);
 
 
-
+            if (p->type == Process::M_ENEMY && p->state == Process::RUNNING) {
+            	if (p->dealDamage) {
+            		shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
+            		dmgDisp ->initialize();
+            		dmgDisp -> createText(player_ptr->getPlayerBody().getPosition().x  , player_ptr->getPlayerBody().getPosition().y , Process::E_ATTACK , 20);
+            		liveProcess.push_back((shared_ptr<Process>) dmgDisp);
+            		dmgDisp->update(deltaMs);
+            		p->dealDamage = false;
+            	}
+            }
             if(p -> type == Process::ATTACK && p -> state != Process::DEAD)
             {
                 shared_ptr<Process> enemy;
@@ -76,14 +86,10 @@ void ProcessManager::updateProcessList(float deltaMs)
                         if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
                         {
                         	float elementModifier = 1;
-                        	cout<<"enemy element = "<<enemy->getAttackElement()<<endl;
-                        	cout<<"player element ="<<p->getAttackElement()<<endl;
                         	if (p->getAttackElement() == (enemy->getAttackElement() + 1) % 4) {
                         		elementModifier = 2.f/3.f;
-                        		cout<<"weak"<<endl;
                         	} else if (enemy->getAttackElement() == (p->getAttackElement() + 1) % 4) {
                         		elementModifier = 1.5;
-                        		cout<<"strong"<<endl;
                         	}
                         	float damage = p->damage * player_ptr->getDM() * elementModifier;
                         	cout<< "ENEMY Damaged by "<< damage<<endl;
