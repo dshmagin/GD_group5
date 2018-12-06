@@ -38,6 +38,7 @@ void GameLogic::initiliaze( float bckgW, float bckgH, float screenW, float scree
     this -> bckgPixSize = bckgPixSize;
     player = Player( playerH, playerW, window_ptr);
     player.createPlayer(bckgW/2 + (screenW/2 - playerW/2) ,bckgH/2 + (screenH/2 - playerH/2) );
+    player.setElement(getStartingElement());
     // need to refactor
     pm->setPlayer(&player);
 }
@@ -96,7 +97,7 @@ void GameLogic::createSplitAttack() {
 	if (abilityCd > abilityTimer) {
 		abilityCd = 0;
 		for (int i = 0; i < 3; i++) {
-			shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player, getStartingElement() + getLevel() % 4);
+			shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player, 0);
 			pm -> attachProcess((shared_ptr<Process>) splitAttack);
 		}
 	}
@@ -112,7 +113,7 @@ void GameLogic::createBuff(int buffType) {
 }
 void GameLogic::createBossEnemy()
 {
-    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,getStartingElement() + getLevel() % 4, enemyPM);
+    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,(getStartingElement() + getLevel()) % 4, enemyPM);
     bEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) bEnemy);
 }
@@ -130,7 +131,7 @@ void GameLogic::createBossAttackCircle( float x_pos, float y_pos) {
 }
 void GameLogic::createRangedEnemy()
 {
-    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,getStartingElement() + getLevel() % 4, enemyPM);
+    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,(getStartingElement() + getLevel()) % 4, enemyPM);
     rEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
@@ -276,6 +277,7 @@ void GameLogic::startWave()
     totalEnemies = meleeEnemies + rangedEnemies;
 
     cout<<"totalEnemies enemy " << totalEnemies << endl;
+    cout<<"level "<<level<<", wave"<<wave<<endl;
 
     for (int enemies = 0; enemies<rangedEnemies; enemies++)
     {

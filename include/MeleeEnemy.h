@@ -21,7 +21,6 @@ private:
 
 public:
     shared_ptr<sf::RenderWindow> window_ptr;
-    int attackElement;
     int dir = 0;
     int spriteNum = 0;
     float changeTimer = 0;

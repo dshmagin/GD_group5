@@ -75,20 +75,30 @@ void ProcessManager::updateProcessList(float deltaMs)
                         {
                         if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
                         {
+                        	float elementModifier = 1;
+                        	cout<<"enemy element = "<<enemy->getAttackElement()<<endl;
+                        	cout<<"player element ="<<p->getAttackElement()<<endl;
+                        	if (p->getAttackElement() == (enemy->getAttackElement() + 1) % 4) {
+                        		elementModifier = 2.f/3.f;
+                        		cout<<"weak"<<endl;
+                        	} else if (enemy->getAttackElement() == (p->getAttackElement() + 1) % 4) {
+                        		elementModifier = 1.5;
+                        		cout<<"strong"<<endl;
+                        	}
+                        	float damage = p->damage * player_ptr->getDM() * elementModifier;
+                        	cout<< "ENEMY Damaged by "<< damage<<endl;
+                        	shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
+                        	dmgDisp ->initialize();
+                        	dmgDisp -> createText(enemy -> body.getPosition().x  , enemy -> body.getPosition().y , Process::ATTACK , damage);
+                        	enemy -> health -= damage;
+                        	liveProcess.push_back((shared_ptr<Process>) dmgDisp);
+                        	dmgDisp->update(deltaMs);
 
-                           cout<< "ENEMY Damaged by "<< p -> damage << endl;
-                           shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
-                           dmgDisp ->initialize();
-                           dmgDisp -> createText(enemy -> body.getPosition().x  , enemy -> body.getPosition().y , Process::ATTACK , (p->damage * player_ptr ->getDM()));
-                           enemy -> health -= p-> damage * player_ptr->getDM();
-                           liveProcess.push_back((shared_ptr<Process>) dmgDisp);
-                           dmgDisp->update(deltaMs);
-
-                           p->enemyHit++;
-                           if (p->enemyHit >= p->hitLimit) p->state = Process::DEAD;
+                        	p->enemyHit++;
+                        	if (p->enemyHit >= p->hitLimit) p->state = Process::DEAD;
 
 
-                        //kill the enemy if health reaches below zero
+                        	//kill the enemy if health reaches below zero
                             if(enemy -> health <= 0 )
                             {
                                 int itemDropRate = rand() % 100;

@@ -10,6 +10,7 @@ BasicAttack::BasicAttack(shared_ptr<sf::RenderWindow> window_ptr, int startingEl
 
     body.setTextureRect(sf::IntRect(128 * 0 ,64 * 1,128 * 1,64 * 1));
     this -> startingElement = startingElement;
+    attackElement = startingElement;
 }
 
 BasicAttack::~BasicAttack()

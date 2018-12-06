@@ -225,3 +225,10 @@ void Player::knockBack(int dir) {
     }
 }
 
+void Player::setElement(int element) {
+	this->element = element;
+}
+
+int Player::getElement() {
+	return element;
+}

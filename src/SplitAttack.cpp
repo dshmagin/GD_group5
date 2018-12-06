@@ -9,6 +9,7 @@ SplitAttack::SplitAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation
 }
 
 void SplitAttack::initialize() {
+	attackElement = 0;
 	type  = Process::ATTACK;
 	state = Process::RUNNING;
 	hitLimit = 3;

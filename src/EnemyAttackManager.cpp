@@ -42,12 +42,22 @@ void EnemyAttackManager::updateProcessList(float deltaMs)
                     //if (p->body.getPosition().x -50< player -> getPlayerBody().getPosition().x && p->body.getPosition().x +50 > player -> getPlayerBody().getPosition().x
                     //    && p->body.getPosition().y -50< player -> getPlayerBody().getPosition().y && p->body.getPosition().y +50 > player -> getPlayerBody().getPosition().y)
                     //{
+
+
+                    	float elementModifier = 1;
+                    	if (p->getAttackElement() == (player->getElement() + 1) % 4) {
+                    		elementModifier = 2.f/3.f;
+                    	} else if (player->getElement() == (p->getAttackElement() + 1) % 4) {
+                    		elementModifier = 1.5;
+                    	}
+                    	float damage = p->damage * elementModifier;
+
                             shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
                             dmgDisp ->initialize();
-                            dmgDisp -> createText(player -> getPlayerBody().getPosition().x  , player -> getPlayerBody().getPosition().y , Process::E_ATTACK , p->damage );
+                            dmgDisp -> createText(player -> getPlayerBody().getPosition().x  , player -> getPlayerBody().getPosition().y , Process::E_ATTACK , damage );
                             liveProcess.push_back((shared_ptr<Process>) dmgDisp);
                             dmgDisp->update(deltaMs);
-                            player->healPlayer(-25);
+                            player->healPlayer(-damage);
                             p->state = Process::DEAD;
                     }
 

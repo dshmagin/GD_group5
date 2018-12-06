@@ -9,6 +9,7 @@ BossAttack::BossAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, 
     this -> x_pos = x_pos;
     this -> y_pos = y_pos;
     this -> element = element;
+    attackElement = element;
 }
 
 void BossAttack::initialize() {
