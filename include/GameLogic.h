@@ -28,8 +28,8 @@ class GameLogic
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
-        int level = 1;
-        int wave = 4;
+        int level = 4;
+        int wave = 1;
         float basicAttackCd = 600;
         float abilityCd;
         float abilityTimer;
@@ -47,6 +47,7 @@ class GameLogic
         bool changing_level = false;
         bool changed_background = false;
         float transition = 0;
+        bool game_completed = false;
 
     public:
         Player player;
@@ -94,6 +95,7 @@ class GameLogic
         //void dropItem(loc_x, loc_y);
 
         bool changingLevel();
+        bool completedGame();
 
         void resetCd();
         void updateCd(float deltaTime);

@@ -100,7 +100,7 @@ sf::Vector2f BossEnemy::findPlayer(float deltaTime)
 
     if (abs(xComp) > 50 || abs(yComp) > 50)
     {
-        this -> body.move(toPlayer.x, toPlayer.y);
+        this -> body.move(toPlayer.x * 0.80, toPlayer.y * 0.80);
     }
 
     if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()))

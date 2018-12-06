@@ -98,7 +98,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
         if( game -> getGameState() == 0 )
         {
             inputTimer += deltaTime;
-            if(inputTimer>50)
+            if(inputTimer>100)
             {
                 inputTimer = 0;
                 if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::MOVE_LEFT)))
@@ -285,6 +285,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 {
                     if(game -> createPlayerAttack('N',deltaTime)){
                         sound.setBuffer(basicAttackSound);
+                        sound.setVolume(0.4);
                         sound.play();
                     }
                 }
@@ -293,6 +294,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 {
                     if(game -> createPlayerAttack('S',deltaTime)){
                         sound.setBuffer(basicAttackSound);
+                        sound.setVolume(0.4);
                         sound.play();
                     }
                 }
@@ -301,7 +303,8 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 {
                     if(game -> createPlayerAttack('W',deltaTime)){
                         sound.setBuffer(basicAttackSound);
-                    sound.play();
+                        sound.setVolume(0.4);
+                        sound.play();
                     }
                 }
 
@@ -309,8 +312,9 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 {
                     if(game -> createPlayerAttack('E',deltaTime)){
                         sound.setBuffer(basicAttackSound);
+                        sound.setVolume(0.4);
                         sound.play();
-                        }
+                    }
                 }
 
                 if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::SPECIAL))) {
@@ -351,10 +355,20 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     playerView.reset(sf::FloatRect(0,0,screenW,screenH));
                     window_ptr -> setView(playerView);
                     game -> clearGame();
+                    menu -> startMusic();
+                }
 
-
-
-
+                if(game -> completedGame()){
+                    game -> setLevel(1);
+                    game -> setGameState(4);
+                    elementalAttack = game -> getStartingElement();
+                    elementalIcon.setPosition(bckgW/2 + 8  ,bckgH/2 + (screenH - 24 ));
+                    abilityIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
+                    itemIcon.setPosition(bckgW/2 + 8 + 64   ,bckgH/2 + (screenH - 24 ));
+                    UIIcon.setPosition(bckgW/2   ,bckgH/2 + (screenH - 32 ));
+                    playerView.reset(sf::FloatRect(0,0,screenW,screenH));
+                    window_ptr -> setView(playerView);
+                    game -> clearGame();
                 }
 
             if(movingX == false && movingY == false)
@@ -362,6 +376,14 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 game -> idle();
             }
         }
+        if(game -> getGameState() == 4 ){
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                game -> setGameState(0);
+                menu -> startMusic();
+            }
+        }
+
     return wait;
 }
 
@@ -448,7 +470,7 @@ void GameViewPlayer::setBackgroundTexture(int element)
 }
 
 void GameViewPlayer::drawTransition(float deltaTime){
-    if(game ->changingLevel()){
+    if(game -> changingLevel()){
         if(!transition_started){
             transitionBox1.setSize(sf::Vector2f(800, 600));
             transitionBox2.setSize(sf::Vector2f(800, 600));

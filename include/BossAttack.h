@@ -12,7 +12,7 @@ private:
 	sf::RectangleShape* boss;
 	int rotation;
 	float timeRemaining;
-	float speed = 0.4;
+	float speed = 0.3;
 	float moveDistance;
 	float x_pos;
 	float y_pos;

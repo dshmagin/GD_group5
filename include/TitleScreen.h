@@ -15,6 +15,7 @@ using namespace std;
 class TitleScreen
 {
     private:
+        bool music_playing = false;
         int selected = 0;
         int elementSelected = 0;
         shared_ptr<sf::RenderWindow> window_ptr;
@@ -47,6 +48,10 @@ class TitleScreen
 	sf::Text special_2;
 	sf::Text special_3;
 	sf::Text special_4;
+
+    sf::Text win_or_lose;
+    sf::Text score;
+    sf::Text instruction;
 
 	sf::Keyboard::Key walk_left_key = sf::Keyboard::A;
 	sf::Keyboard::Key walk_right_key = sf::Keyboard::D;
@@ -86,6 +91,8 @@ class TitleScreen
         void drawTitleScreen( float deltaTime );
         void drawElementOption( float deltaTime );
         void drawOptionsScreen( float deltaTime );
+        void drawWinScreen( float deltaTime );
+        void drawLossScreen( float deltaTime );
         int  getSelectedKeybind();
 	      void setSelectedKeybind( int direction );
         string keyToString(const sf::Keyboard::Key& key );

@@ -158,6 +158,12 @@ void GameLogic::update(float deltaTime)
         }
     }
 
+    if((pm -> checkEnemies() <= 0) && (level == 4)){
+        clearGame();
+        game_completed = true;
+        return;
+    }
+
     if(pm -> checkEnemies() <= 0)
     {
         changing_level = true;
@@ -238,6 +244,7 @@ void GameLogic::clearGame()
     player.item( Process::NONE );
     player.setSpeed(0.3f);
     player.setDM(1);
+    game_completed = false;
 }
 
 void GameLogic::setLevel(int level)
@@ -356,7 +363,10 @@ void GameLogic::updateCd(float deltaTime) {
 	abilityOnCd = (abilityTimer >= abilityCd);
 }
 
-int GameLogic::getScore()
-{
+int GameLogic::getScore(){
     return score;
+}
+
+bool GameLogic::completedGame(){
+    return game_completed;
 }

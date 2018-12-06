@@ -17,7 +17,7 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
     if( !BackgroundTexture.loadFromFile( "../Assets/Images/MenuSpriteSheet.png" ) )
         cout << "Background did not load" << endl;
 
-/*
+
     if( !menuSong.loadFromFile( "../Assets/Sounds/Ground_Break_Menu_01.wav" ) )
     {
         cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
@@ -28,7 +28,7 @@ TitleScreen::TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr)
     {
         music.setBuffer(menuSong);
     }
-*/
+
     if( !keySound.loadFromFile( "../Assets/Sounds/keySound.wav" ) )
     {
         cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
@@ -184,6 +184,10 @@ void TitleScreen::drawTitleScreen( float deltaTime )
     window_ptr -> draw( TitleBackground );
     window_ptr -> draw( Option );
     window_ptr -> draw( Start );
+    if(!music_playing){
+        startMusic();
+        music_playing = true;
+    }
 
 }
 
@@ -296,6 +300,28 @@ void TitleScreen::drawOptionsScreen( float deltaTime )
     window_ptr -> draw( special_3 );
     window_ptr -> draw( special_4 );
 }
+
+void TitleScreen::drawWinScreen( float deltaTime ){
+    win_or_lose.setFont(GameFont);
+    score.setFont(GameFont);
+    instruction.setFont(GameFont);
+    win_or_lose.setColor(sf::Color::Black);
+    score.setColor(sf::Color::Black);
+    instruction.setColor(sf::Color::Black);
+
+    win_or_lose.setString("YOU WIN");
+    instruction.setString("Please press ESCAPE to return to the menu");
+    //score.setString("Score: ");
+
+    win_or_lose.setPosition(300, 30);
+    score.setPosition(300, 70);
+    instruction.setPosition(100, 130);
+
+    window_ptr -> draw(win_or_lose);
+    window_ptr -> draw(score);
+    window_ptr -> draw(instruction);
+}
+
 
 void TitleScreen::choosingKeybind()
 {
