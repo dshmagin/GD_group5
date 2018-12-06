@@ -80,6 +80,8 @@ void BossAttack::update(float deltaTime) {
         	}
         	spriteNum = (spriteNum + 1) % 32;
         	window_ptr->draw(body);
+
+            
             sf::FloatRect boundingBox = body.getGlobalBounds();
             sf::RectangleShape bb(sf::Vector2f(boundingBox.width, boundingBox.height));
             bb.setPosition(boundingBox.left, boundingBox.top);
