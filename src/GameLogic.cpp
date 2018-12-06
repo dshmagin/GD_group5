@@ -159,8 +159,8 @@ void GameLogic::update(float deltaTime)
     }
 
     if((pm -> checkEnemies() <= 0) && (level == 4)){
-        game_completed = true;
         clearGame();
+        game_completed = true;
         return;
     }
 

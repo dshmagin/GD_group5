@@ -15,6 +15,7 @@ using namespace std;
 class TitleScreen
 {
     private:
+        bool music_playing = false;
         int selected = 0;
         int elementSelected = 0;
         shared_ptr<sf::RenderWindow> window_ptr;

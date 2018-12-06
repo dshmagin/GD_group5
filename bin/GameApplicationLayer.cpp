@@ -25,7 +25,6 @@ int main(int argc, char** argv)
     // start main loop
     gvp.setTitleScreen(&menu);
     window_ptr->setFramerateLimit(60);
-    menu.startMusic();
 
 
     while(window_ptr->isOpen())
@@ -57,9 +56,7 @@ int main(int argc, char** argv)
 
         if( game -> getGameState() == 0 )
         {
-
             menu.drawTitleScreen(deltaTime);
-
         }
         if( game -> getGameState() == 1 )
         {
@@ -83,6 +80,7 @@ int main(int argc, char** argv)
         }
 
         if(game -> getGameState() == 4){
+            gvp.drawTransition(deltaTime);
             menu.drawWinScreen(deltaTime);
         }
         window_ptr->display();

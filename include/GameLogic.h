@@ -28,13 +28,8 @@ class GameLogic
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
-        int level = 1;
-<<<<<<< Updated upstream
-        int wave = 4;
-=======
+        int level = 4;
         int wave = 1;
-        int score = 0;
->>>>>>> Stashed changes
         float basicAttackCd = 600;
         float abilityCd;
         float abilityTimer;

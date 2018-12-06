@@ -111,7 +111,7 @@ void Player::update(float deltaTime)
         bb.setOutlineColor(sf::Color::Red);
         bb.setOutlineThickness(3.0);
         bb.setFillColor(sf::Color::Transparent);
-        window_ptr -> draw(bb);
+        //window_ptr -> draw(bb);
 }
 
 void Player::reset(float x_pos, float y_pos)

@@ -92,7 +92,7 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
     }
 
     if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()))
-        game->player.healPlayer(-0.05);
+        game->player.healPlayer(-1);
 
     return toPlayer;
 }
