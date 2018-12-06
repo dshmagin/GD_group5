@@ -84,6 +84,10 @@ void RangedEnemy::update(float deltaTime)
           spriteNum = (spriteNum + 1) % 4;
           changeTimer = 0;
         }
+    // shared_ptr<BasicAttack> splitAttack = make_shared<BasicAttack>(window_ptr, 0 + 45
+    //         * i , body.getPosition().x, body.getPosition().y, enemyPM,
+    //         game -> getStartingElement() +  game -> getLevel() % 4);
+    // enemyPM -> attachProcess((shared_ptr<Process>) splitAttack);
 
 
     changeTimer += 0.04f * deltaTime;
