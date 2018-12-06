@@ -53,6 +53,7 @@ void MeleeEnemy::reset(float x_pos, float y_pos)
 
 void MeleeEnemy::update(float deltaTime)
 {
+	attackCd += deltaTime;
     sf::Vector2f toPlayer = findPlayer(deltaTime);
 
     healthBg.setPosition(body.getPosition().x + 5,body.getPosition().y - 15);
@@ -87,8 +88,12 @@ sf::Vector2f MeleeEnemy::findPlayer(float deltaTime)
         this -> body.move(toPlayer.x, toPlayer.y);
     }
 
-    if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()))
-        game->player.healPlayer(-1);
+
+    if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()) && attackCd >= attackTimer) {
+    	attackCd = 0;
+    	game->player.healPlayer(-20);
+    	game->player.knockBack(getDirection(toPlayer));
+    }
 
     return toPlayer;
 }

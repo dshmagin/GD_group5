@@ -199,3 +199,29 @@ void Player::movePlayer(float x, float y) {
 int Player::getDirection() {
 	return (int)dir;
 }
+
+void Player::knockBack(int dir) {
+	int moveVal = 30;
+    switch(dir)
+    {
+    case 3:
+        if(body.getPosition().y - moveVal >= 128 )
+            body.move(0,-moveVal);
+        break;
+    case 0:
+        if(body.getPosition().y + moveVal <= 1800 -256 )
+            body.move(0,moveVal);
+        break;
+    case 2:
+        if(body.getPosition().x + moveVal <= 2400 - 128 )
+            body.move(moveVal,0);
+        break;
+    case 1:
+        if(body.getPosition().x - moveVal >= 64 )
+            body.move(-moveVal,0);
+        break;
+    default:
+    	break;
+    }
+}
+

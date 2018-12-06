@@ -15,6 +15,10 @@ private:
     sf::RectangleShape healthBar;
     sf::RectangleShape healthBg;
 
+    float attackCd = 600;
+    float attackTimer = 600;
+
+
 public:
     shared_ptr<sf::RenderWindow> window_ptr;
     int attackElement;

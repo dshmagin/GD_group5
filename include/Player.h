@@ -63,6 +63,7 @@ public:
     void healPlayer(float amount);
     void movePlayer(float x, float y);
     int getDirection();
+    void knockBack(int dir);
 
 
 };
