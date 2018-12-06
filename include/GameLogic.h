@@ -48,6 +48,7 @@ class GameLogic
         bool changed_background = false;
         float transition = 0;
         bool game_completed = false;
+        bool game_lost = false;
 
     public:
         Player player;
@@ -97,6 +98,7 @@ class GameLogic
 
         bool changingLevel();
         bool completedGame();
+        bool lostGame();
 
         void resetCd();
         void updateCd(float deltaTime);

@@ -72,7 +72,7 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         abilityIcon.setTextureRect(sf::IntRect(itemTextureSize*elementalAttack,2*itemTextureSize,itemTextureSize,itemTextureSize));
         abilityIcon.setTexture(&elementalText);
         abilityIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
-        score.setColor(sf::Color::Blue);
+        score.setColor(sf::Color::White);
         score.setOutlineColor(sf::Color::Black);
         score.setOutlineThickness(2);
         score.setPosition(bckgW/2 + 8 ,bckgH/2 + (screenH - 24 )- 580);
@@ -263,7 +263,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
                 {
-                    game -> player.health -=1;
+                    game -> player.health = 100;
                 }
 
                 //Pick up item
@@ -357,6 +357,21 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     window_ptr -> setView(playerView);
                     game -> clearGame();
                     menu -> startMusic();
+                    game -> setScore(0);
+                }
+
+                if(game -> lostGame()){
+                    game -> setLevel(1);
+                    game -> setGameState(5);
+                    elementalAttack = game -> getStartingElement();
+                    elementalIcon.setPosition(bckgW/2 + 8  ,bckgH/2 + (screenH - 24 ));
+                    abilityIcon.setPosition(bckgW/2 + 8 + 32  ,bckgH/2 + (screenH - 24 ));
+                    itemIcon.setPosition(bckgW/2 + 8 + 64   ,bckgH/2 + (screenH - 24 ));
+                    UIIcon.setPosition(bckgW/2   ,bckgH/2 + (screenH - 32 ));
+                    playerView.reset(sf::FloatRect(0,0,screenW,screenH));
+                    window_ptr -> setView(playerView);
+                    game -> clearGame();
+                    game -> setScore(0);
                 }
 
                 if(game -> completedGame()){
@@ -378,7 +393,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 game -> idle();
             }
         }
-        if(game -> getGameState() == 4 ){
+        if((game -> getGameState() == 4) || (game -> getGameState() == 5)){
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 game -> setGameState(0);

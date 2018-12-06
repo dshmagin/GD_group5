@@ -159,6 +159,12 @@ void GameLogic::update(float deltaTime)
         }
     }
 
+    if(player.health <= 0){
+        clearGame();
+        game_lost = true;
+        return;
+    }
+
     if((pm -> checkEnemies() <= 0) && (level == 4)){
         clearGame();
         game_completed = true;
@@ -246,6 +252,7 @@ void GameLogic::clearGame()
     player.setSpeed(0.3f);
     player.setDM(1);
     game_completed = false;
+    game_lost = false;
 }
 
 void GameLogic::setLevel(int level)
@@ -378,4 +385,13 @@ bool GameLogic::completedGame(){
         score = 0;
     }
     return game_completed;
+}
+
+bool GameLogic::lostGame(){
+    if(game_lost)
+    {
+        cout<<"GAME IS DONE"<<endl;
+        score = 0;
+    }
+    return game_lost;
 }
