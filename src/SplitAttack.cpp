@@ -1,9 +1,10 @@
 #include "SplitAttack.h"
 
-SplitAttack::SplitAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, Player* player_ptr) {
+SplitAttack::SplitAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, Player* player_ptr, int element) {
     this -> window_ptr = window_ptr;
     this -> player_ptr = player_ptr;
     this -> rotation = rotation;
+    this -> element = element;
     initialize();
 }
 
@@ -30,16 +31,16 @@ void SplitAttack::update(float deltaTime) {
         } else {
         	switch (spriteNum) {
         	case 0:
-        		body.setTextureRect(sf::IntRect(128 * 1 ,64 * 0,128 * 1,64 * 1));
+        		body.setTextureRect(sf::IntRect(128 * 1 ,64 * element,128 * 1,64 * 1));
         	    break;
         	case 8:
-                body.setTextureRect(sf::IntRect(128 * 2 ,64 * 0,128 * 1,64 * 1));
+                body.setTextureRect(sf::IntRect(128 * 2 ,64 * element,128 * 1,64 * 1));
        	        break;
        	    case 16:
-       	        body.setTextureRect(sf::IntRect(128 * 3 ,64 * 0,128 * 1,64 * 1));
+       	        body.setTextureRect(sf::IntRect(128 * 3 ,64 * element,128 * 1,64 * 1));
        	        break;
        	    case 24:
-       	        body.setTextureRect(sf::IntRect(128 * 0 ,64 * 0,128 * 1,64 * 1));
+       	        body.setTextureRect(sf::IntRect(128 * 0 ,64 * element,128 * 1,64 * 1));
        	        break;
        	    }
 
@@ -62,6 +63,3 @@ void SplitAttack::update(float deltaTime) {
         }
     }
 }
-
-
-
