@@ -1,12 +1,14 @@
 #include "RangedEnemy.h"
+#include "EnemyAttack.h"
 //#include "ProcessManager.h"
 #include <cstdlib>
 #include <cmath>
 
-RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
+RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement, shared_ptr<EnemyAttackManager> enemyPM)
 {
     init();
     this -> window_ptr = window_ptr;
+    this -> enemyPM = enemyPM;
     this -> attackElement = attackElement;
 }
 
@@ -46,7 +48,10 @@ void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
     this -> healthBg.setSize(sf::Vector2f( 54, 14 ));
     this -> healthBg.setFillColor(sf::Color::Black);
 
-    this-> randF = (((float) (rand() % 100))/ 1000.0f);
+    this -> randF = (((float) (rand() % 100))/ 1000.0f);
+
+    this -> randNum = (((float) (rand() % 1900)));
+    this -> switchTime += randNum;
 
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     float loc_x = (rand() % (1200 - 200) + 100);
@@ -83,11 +88,7 @@ void RangedEnemy::update(float deltaTime)
         {
           spriteNum = (spriteNum + 1) % 4;
           changeTimer = 0;
-        }
-    // shared_ptr<BasicAttack> splitAttack = make_shared<BasicAttack>(window_ptr, 0 + 45
-    //         * i , body.getPosition().x, body.getPosition().y, enemyPM,
-    //         game -> getStartingElement() +  game -> getLevel() % 4);
-    // enemyPM -> attachProcess((shared_ptr<Process>) splitAttack);
+      }
 
 
     changeTimer += 0.04f * deltaTime;
@@ -95,6 +96,15 @@ void RangedEnemy::update(float deltaTime)
     window_ptr -> draw(this -> body);
     window_ptr -> draw(healthBg);
     window_ptr -> draw(healthBar);
+    switchTime -= deltaTime;
+
+    if (switchTime < 0) {
+        switchTime = 2000;
+        shared_ptr<EnemyAttack> eAttack = make_shared<EnemyAttack>(window_ptr, findPlayerAttack(deltaTime), rotation,
+            body.getPosition().x, body.getPosition().y, enemyPM,
+            game -> getStartingElement() +  game -> getLevel() % 4);
+        enemyPM -> attachProcess((shared_ptr<Process>) eAttack);
+    }
 }
 
 sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
@@ -102,12 +112,23 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
     float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
     float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
 
+    rotation = atan(yComp / xComp) * 180/3.1415;
+
+    if(xComp < 0)
+    {
+        rotation = rotation + 180;
+    }
+    if(xComp > 0 && yComp < 0)
+    {
+        rotation = rotation + 360;
+    }
+
     sf::Vector2f toPlayer;
 
     toPlayer.x = (xComp/(abs(xComp) + abs(yComp))) * (.2 + randF) * deltaTime;
     toPlayer.y = (yComp/(abs(xComp) + abs(yComp))) * (.2 + randF) * deltaTime;
 
-    if (abs(xComp) > 50 || abs(yComp) > 50)
+    if (abs(xComp) > 250 || abs(yComp) > 250)
     {
         this -> body.move(toPlayer.x, toPlayer.y);
     }
@@ -116,6 +137,30 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
         game->player.healPlayer(-1);
 
     return toPlayer;
+}
+
+sf::Vector2f RangedEnemy::findPlayerAttack(float deltaTime)
+{
+    float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
+    float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
+
+    float rotation = atan(yComp / xComp) * 180/3.1415;
+
+    if(xComp < 0)
+    {
+        rotation = rotation + 90;
+    }
+    if(xComp > 0 && yComp < 0)
+    {
+        rotation = rotation + 360;
+    }
+
+    sf::Vector2f toPlayerAttack;
+
+    toPlayerAttack.x = (xComp/(abs(xComp) + abs(yComp)));
+    toPlayerAttack.y = (yComp/(abs(xComp) + abs(yComp)));
+
+    return toPlayerAttack;
 }
 
 int RangedEnemy::getDirection(sf::Vector2f toPlayer)

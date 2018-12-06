@@ -1,9 +1,11 @@
-#include "BossAttack.h"
+#include "EnemyAttack.h"
+#include <cmath>
 
-BossAttack::BossAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, float x_pos, float y_pos, shared_ptr<EnemyAttackManager>  enemyPM, int element) {
+EnemyAttack::EnemyAttack(shared_ptr<sf::RenderWindow> window_ptr, sf::Vector2f rotationV, float rotation, float x_pos, float y_pos, shared_ptr<EnemyAttackManager>  enemyPM, int element) {
     this -> window_ptr = window_ptr;
     this -> boss = boss;
     this -> rotation = rotation;
+    this -> rotationV = rotationV;
 	type  = Process::BOSSATTACK;
     this -> state = Process::UNINITIALIZED;
     this -> x_pos = x_pos;
@@ -11,7 +13,7 @@ BossAttack::BossAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, 
     this -> element = element;
 }
 
-void BossAttack::initialize() {
+void EnemyAttack::initialize() {
 	state = Process::RUNNING;
 	hitLimit = 3;
 	timeRemaining = 5000;
@@ -26,7 +28,7 @@ void BossAttack::initialize() {
 
 }
 
-void BossAttack::update(float deltaTime) {
+void EnemyAttack::update(float deltaTime) {
 
 
     if(state == Process::RUNNING) {
@@ -36,52 +38,43 @@ void BossAttack::update(float deltaTime) {
         } else {
         	switch (spriteNum) {
         	case 0:
-        		body.setTextureRect(sf::IntRect(128 * 1 ,64 * element,128 * 1,64 * 1));
+        		body.setTextureRect(sf::IntRect(128 * 1 ,64 * (element % 4),128 * 1,64 * 1));
         	    break;
         	case 8:
-                body.setTextureRect(sf::IntRect(128 * 2 ,64 * element,128 * 1,64 * 1));
+                body.setTextureRect(sf::IntRect(128 * 2 ,64 * (element % 4),128 * 1,64 * 1));
        	        break;
        	    case 16:
-       	        body.setTextureRect(sf::IntRect(128 * 3 ,64 * element,128 * 1,64 * 1));
+       	        body.setTextureRect(sf::IntRect(128 * 3 ,64 * (element % 4),128 * 1,64 * 1));
        	        break;
        	    case 24:
-       	        body.setTextureRect(sf::IntRect(128 * 0 ,64 * element,128 * 1,64 * 1));
+       	        body.setTextureRect(sf::IntRect(128 * 0 ,64 * (element % 4),128 * 1,64 * 1));
        	        break;
        	    }
 
         	moveDistance = speed * deltaTime;
-        	switch ((int)rotation) {
-        	case 0:
-        		body.move(moveDistance, 0);
-        		break;
-        	case 45:
-                body.move(moveDistance * 0.88, moveDistance / 2);
-        		break;
-        	case 90:
-        		body.move(0, moveDistance);
-        		break;
-        	case 135:
-                body.move(-moveDistance * 0.88, moveDistance / 2);
-        		break;
-        	case 180:
-        		body.move(-moveDistance, 0);
-        		break;
-        	case 225:
-        		body.move(-moveDistance * 0.88, -(moveDistance / 2));
-        		break;
-        	case 270:
-        		body.move(0, -moveDistance);
-        		break;
-        	case 315:
-        		body.move(moveDistance * 0.88, -(moveDistance / 2));
-        		break;
-        	default:
-        		break;
-        	}
+
+            body.move(rotationV.x * moveDistance, rotationV.y * moveDistance);
+
+
+            // if (rotation <= 90)
+            // {
+            //     body.move(cos(rotation) * moveDistance, sin(rotation) * moveDistance);
+            // }
+            // else if (rotation <= 180)
+            // {
+            //     body.move(cos(rotation) * moveDistance, sin(rotation) * -moveDistance);
+            // }
+            // else if (rotation <= 270)
+            // {
+            //     body.move(cos(rotation) * -moveDistance, sin(rotation) * -moveDistance);
+            // }
+            // else
+            // {
+            //     body.move(cos(rotation) * -moveDistance, sin(rotation) * moveDistance);
+            // }
+
         	spriteNum = (spriteNum + 1) % 32;
         	window_ptr->draw(body);
-
-            
             sf::FloatRect boundingBox = body.getGlobalBounds();
             sf::RectangleShape bb(sf::Vector2f(boundingBox.width, boundingBox.height));
             bb.setPosition(boundingBox.left, boundingBox.top);

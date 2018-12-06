@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Process.h"
 #include "ProcessManager.h"
+#include "EnemyAttackManager.h"
 
 #include <memory>
 using namespace std;

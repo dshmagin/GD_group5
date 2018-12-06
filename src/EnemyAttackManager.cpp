@@ -36,17 +36,20 @@ void EnemyAttackManager::updateProcessList(float deltaMs)
             {
                 if(p->type = Process::BOSSATTACK)
                 {
-                        if(p->body.getGlobalBounds().intersects(player->getPlayerBody().getGlobalBounds()))
-                        {
-
-                                shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
-                                dmgDisp ->initialize();
-                                dmgDisp -> createText(player -> getPlayerBody().getPosition().x  , player -> getPlayerBody().getPosition().y , Process::E_ATTACK , p->damage );
-                                liveProcess.push_back((shared_ptr<Process>) dmgDisp);
-                                dmgDisp->update(deltaMs);
-                                player->healPlayer(-25);
-                                p->state = Process::DEAD;
-                        }
+                    if(p->body.getGlobalBounds().intersects(player->getPlayerBody().getGlobalBounds()))
+                    {
+                            //if (attack.x > player.x && attack.x +32 < player.x  && attack.y > player.y && attack.y +32 < player.y)
+                    //if (p->body.getPosition().x -50< player -> getPlayerBody().getPosition().x && p->body.getPosition().x +50 > player -> getPlayerBody().getPosition().x
+                    //    && p->body.getPosition().y -50< player -> getPlayerBody().getPosition().y && p->body.getPosition().y +50 > player -> getPlayerBody().getPosition().y)
+                    //{
+                            shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
+                            dmgDisp ->initialize();
+                            dmgDisp -> createText(player -> getPlayerBody().getPosition().x  , player -> getPlayerBody().getPosition().y , Process::E_ATTACK , p->damage );
+                            liveProcess.push_back((shared_ptr<Process>) dmgDisp);
+                            dmgDisp->update(deltaMs);
+                            player->healPlayer(-25);
+                            p->state = Process::DEAD;
+                    }
 
                 }
                 p->update(deltaMs);
@@ -72,4 +75,3 @@ void EnemyAttackManager::attachProcess(shared_ptr<Process> process)
     }
 
 }
-
