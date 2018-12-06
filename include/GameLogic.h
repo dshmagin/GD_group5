@@ -62,7 +62,7 @@ class GameLogic
         bool isBasicAttackOnCd();
         bool isAbilityOnCd();
         int getStartingElement();
-        int  getGameState( void );
+        int getGameState( void );
         sf::RectangleShape getPlayer();
         sf::RectangleShape getAttack();
         sf::Vector2f getPlayerCoord();
@@ -76,8 +76,8 @@ class GameLogic
         void createBuff(int buffType);
         void createHeal();
         void createDash(sf::View* playerView_ptr, sf::RectangleShape* UIIcon_ptr,
-        		sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
-				sf::CircleShape* itemIcon_ptr);
+                sf::CircleShape* elementalIcon_ptr, sf::CircleShape* abilityIcon_ptr,
+                sf::CircleShape* itemIcon_ptr);
         void createSplitAttack();
         void createRangedEnemy();
         void createMeleeEnemy();
