@@ -1,6 +1,6 @@
 #include "BossAttack.h"
 
-BossAttack::BossAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, float x_pos, float y_pos, shared_ptr<EnemyAttackManager>  enemyPM) {
+BossAttack::BossAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, float x_pos, float y_pos, shared_ptr<EnemyAttackManager>  enemyPM, int element) {
     this -> window_ptr = window_ptr;
     this -> boss = boss;
     this -> rotation = rotation;
@@ -8,6 +8,7 @@ BossAttack::BossAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, 
     this -> state = Process::UNINITIALIZED;
     this -> x_pos = x_pos;
     this -> y_pos = y_pos;
+    this -> element = element;
 }
 
 void BossAttack::initialize() {
@@ -35,16 +36,16 @@ void BossAttack::update(float deltaTime) {
         } else {
         	switch (spriteNum) {
         	case 0:
-        		body.setTextureRect(sf::IntRect(128 * 1 ,64 * 0,128 * 1,64 * 1));
+        		body.setTextureRect(sf::IntRect(128 * 1 ,64 * element,128 * 1,64 * 1));
         	    break;
         	case 8:
-                body.setTextureRect(sf::IntRect(128 * 2 ,64 * 0,128 * 1,64 * 1));
+                body.setTextureRect(sf::IntRect(128 * 2 ,64 * element,128 * 1,64 * 1));
        	        break;
        	    case 16:
-       	        body.setTextureRect(sf::IntRect(128 * 3 ,64 * 0,128 * 1,64 * 1));
+       	        body.setTextureRect(sf::IntRect(128 * 3 ,64 * element,128 * 1,64 * 1));
        	        break;
        	    case 24:
-       	        body.setTextureRect(sf::IntRect(128 * 0 ,64 * 0,128 * 1,64 * 1));
+       	        body.setTextureRect(sf::IntRect(128 * 0 ,64 * element,128 * 1,64 * 1));
        	        break;
        	    }
 
