@@ -48,7 +48,7 @@ void Buff::createBuff(int buffType) {
 void Buff::update(float deltaTime) {
     if(state == Process::RUNNING) {
         timeRemaining -= deltaTime;
-        if ( timeRemaining <= 0) {
+        if ( timeRemaining <= 0 || player_ptr->shieldPoints <= 0) {
         	state = Process::DEAD;
         	player_ptr->updateSpeed(2.f/3.f);
         	player_ptr->updateDM(0.5);
