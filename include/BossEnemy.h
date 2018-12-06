@@ -17,7 +17,7 @@ private:
 
 public:
     shared_ptr<sf::RenderWindow> window_ptr;
-     shared_ptr<EnemyAttackManager> enemyPM;
+    shared_ptr<EnemyAttackManager> enemyPM;
     int attackElement;
     int dir = 0;
     int spriteNum = 0;

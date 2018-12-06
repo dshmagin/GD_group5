@@ -20,6 +20,7 @@ class Process
         float health = 100;
         int enemyHit = 0;
         int hitLimit;
+        int attackElement;
         Process* child = nullptr;
         sf::RectangleShape body;
         Process(){};
@@ -33,6 +34,7 @@ class Process
         bool isDead();
         void setType(enum type);
         int getState();
+        int getAttackElement();
         bool hasChild();
         Process* getChild();
 };

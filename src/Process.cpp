@@ -20,3 +20,7 @@ void Process::setType(enum type)
 {
     this->type = type;
 }
+
+int Process::getAttackElement() {
+	return attackElement;
+}

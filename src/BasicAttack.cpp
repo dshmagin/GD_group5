@@ -112,5 +112,3 @@ sf::RectangleShape BasicAttack::getAttackElement()
 {
     return body;
 }
-
-

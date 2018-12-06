@@ -14,8 +14,6 @@ BossEnemy::BossEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement,
 
 void BossEnemy::init()
 {
-    if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
-        cout<<"Cannot load BenderAi"<<endl;
     if( !itemImg.loadFromFile( "../Assets/Images/items.png" ))
         cout<<"Cannot load items"<<endl;
 
@@ -24,6 +22,25 @@ void BossEnemy::init()
 
 void BossEnemy::createRangedEnemy(GameLogic* gameLogic)
 {
+    switch(attackElement)
+    {
+        case 0:
+            if( !image.loadFromFile( "../Assets/Images/fireBender.png" ))
+                cout<<"Cannot load fireBender"<<endl;
+            break;
+        case 1:
+            if( !image.loadFromFile( "../Assets/Images/airBender.png" ))
+                cout<<"Cannot load airBender"<<endl;
+            break;
+        case 2:
+            if( !image.loadFromFile( "../Assets/Images/earthBender.png" ))
+                cout<<"Cannot load earthBender"<<endl;
+            break;
+        case 3:
+            if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
+                cout<<"Cannot load waterBender"<<endl;
+            break;
+    }
 
     this -> health = 1000.0f;
     this -> healthBar.setSize(sf::Vector2f( 200, 10 ));
@@ -82,7 +99,8 @@ void BossEnemy::update(float deltaTime)
         for(int i = 0 ; i < 8; i ++ )
         {
             shared_ptr<BossAttack> splitAttack = make_shared<BossAttack>(window_ptr, 0 + 45
-                                                                          * i , body.getPosition().x, body.getPosition().y, enemyPM);
+                    * i , body.getPosition().x, body.getPosition().y, enemyPM,
+                    game -> getStartingElement() +  game -> getLevel() % 4);
             enemyPM -> attachProcess((shared_ptr<Process>) splitAttack);
         }
     }

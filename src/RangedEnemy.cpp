@@ -1,35 +1,57 @@
 #include "RangedEnemy.h"
+#include "EnemyAttack.h"
 //#include "ProcessManager.h"
 #include <cstdlib>
 #include <cmath>
 
-RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement)
+RangedEnemy::RangedEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElement, shared_ptr<EnemyAttackManager> enemyPM)
 {
     init();
     this -> window_ptr = window_ptr;
+    this -> enemyPM = enemyPM;
     this -> attackElement = attackElement;
 }
 
 void RangedEnemy::init()
 {
-    if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
-        cout<<"Cannot load BenderAi"<<endl;
     if( !itemImg.loadFromFile( "../Assets/Images/items.png" ))
         cout<<"Cannot load items"<<endl;
+
 
     body.setTextureRect(sf::IntRect(playerW * 1, playerH * 0, playerW, playerH));
 }
 
 void RangedEnemy::createRangedEnemy(GameLogic* gameLogic)
 {
-
+    switch(attackElement)
+    {
+        case 4:
+            if( !image.loadFromFile( "../Assets/Images/fireBender.png" ))
+                cout<<"Cannot load fireBender"<<endl;
+            break;
+        case 1:
+            if( !image.loadFromFile( "../Assets/Images/airBender.png" ))
+                cout<<"Cannot load airBender"<<endl;
+            break;
+        case 2:
+            if( !image.loadFromFile( "../Assets/Images/earthBender.png" ))
+                cout<<"Cannot load earthBender"<<endl;
+            break;
+        case 3:
+            if( !image.loadFromFile( "../Assets/Images/waterBender.png" ))
+                cout<<"Cannot load waterBender"<<endl;
+            break;
+    }
 
     this -> healthBar.setSize(sf::Vector2f( 50, 10 ));
     this -> healthBar.setFillColor(sf::Color::Red);
     this -> healthBg.setSize(sf::Vector2f( 54, 14 ));
     this -> healthBg.setFillColor(sf::Color::Black);
 
-    this-> randF = (((float) (rand() % 100))/ 1000.0f);
+    this -> randF = (((float) (rand() % 100))/ 1000.0f);
+
+    this -> randNum = (((float) (rand() % 1900)));
+    this -> switchTime += randNum;
 
     this -> body.setSize( sf::Vector2f( playerW, playerH ) );
     float loc_x = (rand() % (1200 - 200) + 100);
@@ -66,7 +88,7 @@ void RangedEnemy::update(float deltaTime)
         {
           spriteNum = (spriteNum + 1) % 4;
           changeTimer = 0;
-        }
+      }
 
 
     changeTimer += 0.04f * deltaTime;
@@ -74,6 +96,15 @@ void RangedEnemy::update(float deltaTime)
     window_ptr -> draw(this -> body);
     window_ptr -> draw(healthBg);
     window_ptr -> draw(healthBar);
+    switchTime -= deltaTime;
+
+    if (switchTime < 0) {
+        switchTime = 2000;
+        shared_ptr<EnemyAttack> eAttack = make_shared<EnemyAttack>(window_ptr, findPlayerAttack(deltaTime), rotation,
+            body.getPosition().x, body.getPosition().y, enemyPM,
+            game -> getStartingElement() +  game -> getLevel() % 4);
+        enemyPM -> attachProcess((shared_ptr<Process>) eAttack);
+    }
 }
 
 sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
@@ -81,12 +112,23 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
     float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
     float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
 
+    rotation = atan(yComp / xComp) * 180/3.1415;
+
+    if(xComp < 0)
+    {
+        rotation = rotation + 180;
+    }
+    if(xComp > 0 && yComp < 0)
+    {
+        rotation = rotation + 360;
+    }
+
     sf::Vector2f toPlayer;
 
     toPlayer.x = (xComp/(abs(xComp) + abs(yComp))) * (.2 + randF) * deltaTime;
     toPlayer.y = (yComp/(abs(xComp) + abs(yComp))) * (.2 + randF) * deltaTime;
 
-    if (abs(xComp) > 50 || abs(yComp) > 50)
+    if (abs(xComp) > 250 || abs(yComp) > 250)
     {
         this -> body.move(toPlayer.x, toPlayer.y);
     }
@@ -95,6 +137,30 @@ sf::Vector2f RangedEnemy::findPlayer(float deltaTime)
         game->player.healPlayer(-1);
 
     return toPlayer;
+}
+
+sf::Vector2f RangedEnemy::findPlayerAttack(float deltaTime)
+{
+    float xComp = (game -> getPlayerCoord().x) - this -> body.getPosition().x;
+    float yComp = (game -> getPlayerCoord().y) - this -> body.getPosition().y;
+
+    float rotation = atan(yComp / xComp) * 180/3.1415;
+
+    if(xComp < 0)
+    {
+        rotation = rotation + 90;
+    }
+    if(xComp > 0 && yComp < 0)
+    {
+        rotation = rotation + 360;
+    }
+
+    sf::Vector2f toPlayerAttack;
+
+    toPlayerAttack.x = (xComp/(abs(xComp) + abs(yComp)));
+    toPlayerAttack.y = (yComp/(abs(xComp) + abs(yComp)));
+
+    return toPlayerAttack;
 }
 
 int RangedEnemy::getDirection(sf::Vector2f toPlayer)

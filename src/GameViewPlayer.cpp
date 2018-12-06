@@ -145,8 +145,8 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     background.setTextureRect(sf::IntRect(textureSize,textureSize,bckgW,bckgH));
                     game -> setStartingElement(menu -> getSelectedElement());
                     game -> resetCd();
-                    setBackgroundTexture((menu -> getSelectedElement() + game ->getLevel()) % 4);
-                    currentBckg = (menu -> getSelectedElement() + game ->getLevel()) % 4;
+                    setBackgroundTexture((menu -> getSelectedElement() + game -> getLevel()) % 4);
+                    currentBckg = (menu -> getSelectedElement() + game -> getLevel()) % 4;
                     elementalAttack = game -> getStartingElement();
                     window_ptr -> setView(playerView);
                     menu -> stopMusic();

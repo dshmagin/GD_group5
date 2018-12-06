@@ -62,7 +62,7 @@ int GameLogic::createPlayerAttack(char dir, float deltaTime)
     if(basicAttackCd > basicAttackTimer)
     {
         basicAttackCd = 0;
-        shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr,startingElement);
+        shared_ptr<BasicAttack> bAttack =make_shared<BasicAttack>(window_ptr, startingElement);
         bAttack->createAttack(player.getXPos(), player.getYPos(), dir);
         pm ->  attachProcess((shared_ptr<Process>) bAttack);
 	return 1;
@@ -96,7 +96,7 @@ void GameLogic::createSplitAttack() {
 	if (abilityCd > abilityTimer) {
 		abilityCd = 0;
 		for (int i = 0; i < 3; i++) {
-			shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player);
+			shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player, getStartingElement() + getLevel() % 4);
 			pm -> attachProcess((shared_ptr<Process>) splitAttack);
 		}
 	}
@@ -112,7 +112,7 @@ void GameLogic::createBuff(int buffType) {
 }
 void GameLogic::createBossEnemy()
 {
-    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,startingElement, enemyPM);
+    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,getStartingElement() + getLevel() % 4, enemyPM);
     bEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) bEnemy);
 }
@@ -130,7 +130,7 @@ void GameLogic::createBossAttackCircle( float x_pos, float y_pos) {
 }
 void GameLogic::createRangedEnemy()
 {
-    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,startingElement);
+    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,getStartingElement() + getLevel() % 4, enemyPM);
     rEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }

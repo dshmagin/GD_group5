@@ -33,15 +33,14 @@ void Buff::initialize() {
 		cout<<"buff type mismatch"<<endl;
 	}
 
-	body.setSize(sf::Vector2f(128,128));
-    body.setOrigin(32, 0);
-    body.setPosition(player_ptr->getXPos(), player_ptr->getYPos());
+	body.setSize(sf::Vector2f(160,160));
 	body.setTexture(&texture);
 }
 
 void Buff::createBuff(int buffType) {
 	state = Process::UNINITIALIZED;
 	this->buffType = buffType;
+	initialize();
 
 }
 
@@ -56,7 +55,7 @@ void Buff::update(float deltaTime) {
         }
 
         body.setTextureRect(sf::IntRect(128 * (spriteNum / 8), 0, 128, 128));
-        body.setPosition(player_ptr->getXPos(), player_ptr->getYPos());
+        body.setPosition(player_ptr->getXPos() - 48, player_ptr->getYPos() - 30);
         if(spellBuff)
             window_ptr -> draw(body);
         spriteNum = (spriteNum + 1) % 64;
