@@ -112,7 +112,7 @@ void GameLogic::createBuff(int buffType) {
 }
 void GameLogic::createBossEnemy()
 {
-    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,startingElement, enemyPM);
+    shared_ptr<BossEnemy> bEnemy = make_shared<BossEnemy>(window_ptr,getStartingElement() + getLevel() % 4, enemyPM);
     bEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) bEnemy);
 }
@@ -130,7 +130,7 @@ void GameLogic::createBossAttackCircle( float x_pos, float y_pos) {
 }
 void GameLogic::createRangedEnemy()
 {
-    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,startingElement);
+    shared_ptr<RangedEnemy> rEnemy = make_shared<RangedEnemy>(window_ptr,getStartingElement() + getLevel() % 4);
     rEnemy->createRangedEnemy(this);
     pm ->  attachProcess((shared_ptr<Process>) rEnemy);
 }
