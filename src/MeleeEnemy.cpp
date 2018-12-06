@@ -34,7 +34,7 @@ void MeleeEnemy::createMeleeEnemy(GameLogic* gameLogic)
     this -> body.setTexture(&image);
     this -> game = gameLogic;
     this -> state = Process::UNINITIALIZED;
-    this -> type = Process::R_ENEMY;
+    this -> type = Process::M_ENEMY;
 }
 
 void MeleeEnemy::initialize()
@@ -91,6 +91,7 @@ sf::Vector2f MeleeEnemy::findPlayer(float deltaTime)
 
     if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()) && attackCd >= attackTimer) {
     	attackCd = 0;
+    	dealDamage = true;
     	game->player.healPlayer(-20);
     	game->player.knockBack(getDirection(toPlayer));
     }

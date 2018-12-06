@@ -6,6 +6,7 @@
 #include "iostream"
 #include <vector>
 #include <cstdlib>
+#include "MeleeEnemy.h"
 
 using namespace std;
 
@@ -58,7 +59,16 @@ void ProcessManager::updateProcessList(float deltaMs)
                 p->update(deltaMs);
 
 
-
+            if (p->type == Process::M_ENEMY && p->state == Process::RUNNING) {
+            	if (p->dealDamage) {
+            		shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
+            		dmgDisp ->initialize();
+            		dmgDisp -> createText(player_ptr->getPlayerBody().getPosition().x  , player_ptr->getPlayerBody().getPosition().y , Process::E_ATTACK , 20);
+            		liveProcess.push_back((shared_ptr<Process>) dmgDisp);
+            		dmgDisp->update(deltaMs);
+            		p->dealDamage = false;
+            	}
+            }
             if(p -> type == Process::ATTACK && p -> state != Process::DEAD)
             {
                 shared_ptr<Process> enemy;
@@ -75,20 +85,26 @@ void ProcessManager::updateProcessList(float deltaMs)
                         {
                         if(p -> body.getGlobalBounds().intersects(enemy -> body.getGlobalBounds()) && enemy -> state != Process::DEAD )
                         {
+                        	float elementModifier = 1;
+                        	if (p->getAttackElement() == (enemy->getAttackElement() + 1) % 4) {
+                        		elementModifier = 2.f/3.f;
+                        	} else if (enemy->getAttackElement() == (p->getAttackElement() + 1) % 4) {
+                        		elementModifier = 1.5;
+                        	}
+                        	float damage = p->damage * player_ptr->getDM() * elementModifier;
+                        	cout<< "ENEMY Damaged by "<< damage<<endl;
+                        	shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
+                        	dmgDisp ->initialize();
+                        	dmgDisp -> createText(enemy -> body.getPosition().x  , enemy -> body.getPosition().y , Process::ATTACK , damage);
+                        	enemy -> health -= damage;
+                        	liveProcess.push_back((shared_ptr<Process>) dmgDisp);
+                        	dmgDisp->update(deltaMs);
 
-                           cout<< "ENEMY Damaged by "<< p -> damage << endl;
-                           shared_ptr<DmgDisplay> dmgDisp = make_shared<DmgDisplay>(window_ptr);
-                           dmgDisp ->initialize();
-                           dmgDisp -> createText(enemy -> body.getPosition().x  , enemy -> body.getPosition().y , Process::ATTACK , (p->damage * player_ptr ->getDM()));
-                           enemy -> health -= p-> damage * player_ptr->getDM();
-                           liveProcess.push_back((shared_ptr<Process>) dmgDisp);
-                           dmgDisp->update(deltaMs);
-
-                           p->enemyHit++;
-                           if (p->enemyHit >= p->hitLimit) p->state = Process::DEAD;
+                        	p->enemyHit++;
+                        	if (p->enemyHit >= p->hitLimit) p->state = Process::DEAD;
 
 
-                        //kill the enemy if health reaches below zero
+                        	//kill the enemy if health reaches below zero
                             if(enemy -> health <= 0 )
                             {
                                 int itemDropRate = rand() % 100;
@@ -134,7 +150,7 @@ void ProcessManager::updateProcessList(float deltaMs)
 void ProcessManager::attachProcess(shared_ptr<Process> process)
 {
 
-    if(process -> type == Process::R_ENEMY)
+    if(process -> type == Process::R_ENEMY || process->type == Process::M_ENEMY)
     {
         enemyList.push_back(process);
     }

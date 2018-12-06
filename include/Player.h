@@ -27,6 +27,7 @@ private:
     float damageMultiplier = 1;
     float damageReceivedMultiplier = 1;
     float dodge = 0;
+    int element;
 
 public:
     // Enum that matches the sprite sheets row
@@ -64,6 +65,8 @@ public:
     void movePlayer(float x, float y);
     int getDirection();
     void knockBack(int dir);
+    void setElement(int element);
+    int getElement();
 
 
 };

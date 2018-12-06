@@ -21,6 +21,7 @@ void Dash::initialize() {
 	type  = Process::ATTACK;
 	state = Process::RUNNING;
 	hitLimit = 32;
+	attackElement = 2;
 }
 
 void Dash::update(float deltaTime) {

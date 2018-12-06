@@ -9,6 +9,7 @@ BossAttack::BossAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, 
     this -> x_pos = x_pos;
     this -> y_pos = y_pos;
     this -> element = element;
+    attackElement = element;
 }
 
 void BossAttack::initialize() {
@@ -18,7 +19,7 @@ void BossAttack::initialize() {
 	damage = 20;
 	body.setSize(sf::Vector2f(128, 64));
     body.setOrigin(0, 32);
-    body.setPosition(x_pos + 32, y_pos + 64);
+    body.setPosition(x_pos + 64, y_pos + 128);
     if( !texture.loadFromFile( "../Assets/Images/elemental_attack.png" ))
             cout<<"Cannot load AttackSprite"<<endl;
     body.setTexture(&texture);
@@ -55,25 +56,25 @@ void BossAttack::update(float deltaTime) {
         		body.move(moveDistance, 0);
         		break;
         	case 45:
-                body.move(moveDistance * 0.88, moveDistance / 2);
+                body.move(moveDistance / 1.414, moveDistance / 1.414);
         		break;
         	case 90:
         		body.move(0, moveDistance);
         		break;
         	case 135:
-                body.move(-moveDistance * 0.88, moveDistance / 2);
+                body.move(-moveDistance / 1.414, moveDistance / 1.414);
         		break;
         	case 180:
         		body.move(-moveDistance, 0);
         		break;
         	case 225:
-        		body.move(-moveDistance * 0.88, -(moveDistance / 2));
+        		body.move(-moveDistance / 1.414, -(moveDistance / 1.414));
         		break;
         	case 270:
         		body.move(0, -moveDistance);
         		break;
         	case 315:
-        		body.move(moveDistance * 0.88, -(moveDistance / 2));
+        		body.move(moveDistance / 1.414, -(moveDistance / 1.414));
         		break;
         	default:
         		break;

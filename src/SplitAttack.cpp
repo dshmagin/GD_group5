@@ -9,6 +9,7 @@ SplitAttack::SplitAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation
 }
 
 void SplitAttack::initialize() {
+	attackElement = 0;
 	type  = Process::ATTACK;
 	state = Process::RUNNING;
 	hitLimit = 3;
@@ -31,16 +32,16 @@ void SplitAttack::update(float deltaTime) {
         } else {
         	switch (spriteNum) {
         	case 0:
-        		body.setTextureRect(sf::IntRect(128 * 1 ,64 * element,128 * 1,64 * 1));
+        		body.setTextureRect(sf::IntRect(128 * 1 ,64 * 0 ,128 * 1,64 * 1));
         	    break;
         	case 8:
-                body.setTextureRect(sf::IntRect(128 * 2 ,64 * element,128 * 1,64 * 1));
+                body.setTextureRect(sf::IntRect(128 * 2 ,64 * 0 ,128 * 1,64 * 1));
        	        break;
        	    case 16:
-       	        body.setTextureRect(sf::IntRect(128 * 3 ,64 * element,128 * 1,64 * 1));
+       	        body.setTextureRect(sf::IntRect(128 * 3 ,64 * 0 ,128 * 1,64 * 1));
        	        break;
        	    case 24:
-       	        body.setTextureRect(sf::IntRect(128 * 0 ,64 * element,128 * 1,64 * 1));
+       	        body.setTextureRect(sf::IntRect(128 * 0 ,64 * 0 ,128 * 1,64 * 1));
        	        break;
        	    }
 
@@ -50,7 +51,7 @@ void SplitAttack::update(float deltaTime) {
         		body.move(moveDistance * .866, moveDistance / 2);
         		break;
         	case 150:
-        		body.move(-moveDistance * 0.88, moveDistance / 2);
+        		body.move(-moveDistance * .866, moveDistance / 2);
         		break;
         	case 270:
         		body.move(0, -moveDistance);
