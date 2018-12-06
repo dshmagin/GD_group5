@@ -17,11 +17,12 @@ private:
 	float x_pos;
 	float y_pos;
 	int spriteNum = 0;
+    int element;
     shared_ptr<sf::RenderWindow> window_ptr;
     shared_ptr<EnemyAttackManager>  enemyPM;
 public:
 	BossAttack(){};
-	BossAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, float x_pos, float y_pos, shared_ptr<EnemyAttackManager>  enemyPM);
+	BossAttack(shared_ptr<sf::RenderWindow> window_ptr, float rotation, float x_pos, float y_pos, shared_ptr<EnemyAttackManager>  enemyPM, int element);
     ~BossAttack(){};
 
     void update(float deltaTime);

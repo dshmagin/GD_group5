@@ -96,7 +96,7 @@ void GameLogic::createSplitAttack() {
 	if (abilityCd > abilityTimer) {
 		abilityCd = 0;
 		for (int i = 0; i < 3; i++) {
-			shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player);
+			shared_ptr<SplitAttack> splitAttack = make_shared<SplitAttack>(window_ptr, i *  120 + 30, &player, getStartingElement() + getLevel() % 4);
 			pm -> attachProcess((shared_ptr<Process>) splitAttack);
 		}
 	}
