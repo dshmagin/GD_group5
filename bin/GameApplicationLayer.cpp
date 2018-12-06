@@ -83,6 +83,11 @@ int main(int argc, char** argv)
             gvp.drawTransition(deltaTime);
             menu.drawWinScreen(deltaTime);
         }
+
+        if(game -> getGameState() == 5){
+            gvp.drawTransition(deltaTime);
+            menu.drawLossScreen(deltaTime);
+        }
         window_ptr->display();
     }
     // Done.

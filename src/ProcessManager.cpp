@@ -109,7 +109,7 @@ void ProcessManager::updateProcessList(float deltaMs)
                             {
                                 int itemDropRate = rand() % 100;
                                 int itemType = (rand() % 3) + 1;
-                                if( itemDropRate >= 0 )
+                                if( itemDropRate >= 50 )
                                 {
                                     shared_ptr<Items> itemToDrop = make_shared<Items>(window_ptr);
                                     itemToDrop -> toDrop = itemType;
