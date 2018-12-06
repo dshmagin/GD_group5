@@ -224,3 +224,4 @@ void Player::knockBack(int dir) {
     	break;
     }
 }
+

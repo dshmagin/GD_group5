@@ -88,11 +88,13 @@ sf::Vector2f MeleeEnemy::findPlayer(float deltaTime)
         this -> body.move(toPlayer.x, toPlayer.y);
     }
 
+
     if(body.getGlobalBounds().intersects(game->getPlayer().getGlobalBounds()) && attackCd >= attackTimer) {
     	attackCd = 0;
     	game->player.healPlayer(-20);
     	game->player.knockBack(getDirection(toPlayer));
     }
+
     return toPlayer;
 }
 
