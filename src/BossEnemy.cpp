@@ -24,7 +24,7 @@ void BossEnemy::createRangedEnemy(GameLogic* gameLogic)
 {
     switch(attackElement)
     {
-        case 4:
+        case 0:
             if( !image.loadFromFile( "../Assets/Images/fireBender.png" ))
                 cout<<"Cannot load fireBender"<<endl;
             break;
