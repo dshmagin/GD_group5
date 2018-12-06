@@ -150,7 +150,7 @@ void ProcessManager::updateProcessList(float deltaMs)
 void ProcessManager::attachProcess(shared_ptr<Process> process)
 {
 
-    if(process -> type == Process::R_ENEMY)
+    if(process -> type == Process::R_ENEMY || process->type == Process::M_ENEMY)
     {
         enemyList.push_back(process);
     }
