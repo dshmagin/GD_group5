@@ -12,7 +12,7 @@ MeleeEnemy::MeleeEnemy(shared_ptr<sf::RenderWindow> window_ptr, int attackElemen
 
 void MeleeEnemy::init()
 {
-    if( !image.loadFromFile( "../Assets/Images/earthBender.png" ))
+    if( !image.loadFromFile( "../Assets/Images/Simu.png" ))
         cout<<"Cannot load BenderAi"<<endl;
     if( !itemImg.loadFromFile( "../Assets/Images/items.png" ))
         cout<<"Cannot load items"<<endl;
