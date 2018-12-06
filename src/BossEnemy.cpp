@@ -99,7 +99,8 @@ void BossEnemy::update(float deltaTime)
         for(int i = 0 ; i < 8; i ++ )
         {
             shared_ptr<BossAttack> splitAttack = make_shared<BossAttack>(window_ptr, 0 + 45
-                                                                          * i , body.getPosition().x, body.getPosition().y, enemyPM);
+                    * i , body.getPosition().x, body.getPosition().y, enemyPM,
+                    game -> getStartingElement() +  game -> getLevel() % 4);
             enemyPM -> attachProcess((shared_ptr<Process>) splitAttack);
         }
     }
