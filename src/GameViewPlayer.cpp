@@ -183,6 +183,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 {
+                    game -> setScore(0);
                     game -> setGameState(0);
                 }
             }
@@ -369,6 +370,7 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                     playerView.reset(sf::FloatRect(0,0,screenW,screenH));
                     window_ptr -> setView(playerView);
                     game -> clearGame();
+                    game -> setScore(0);
                 }
 
             if(movingX == false && movingY == false)
