@@ -366,7 +366,14 @@ void GameLogic::updateCd(float deltaTime) {
 int GameLogic::getScore(){
     return score;
 }
-
+void GameLogic::setScore(int score){
+    this -> score = score;
+}
 bool GameLogic::completedGame(){
+    if(game_completed)
+    {
+        cout<<"GAME IS DONE"<<endl;
+        score = 0;
+    }
     return game_completed;
 }

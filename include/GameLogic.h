@@ -72,6 +72,7 @@ class GameLogic
         void setDirection(int dir, float deltaTime );
         void idle();
         int getScore();
+        void setScore(int score);
         void update(float deltaTime);
         int createPlayerAttack(char, float);
         void createBuff(int buffType);
