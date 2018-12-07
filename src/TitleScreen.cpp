@@ -215,9 +215,9 @@ void TitleScreen::drawOptionsScreen( float deltaTime )
     shoot_down.setString("Shoot Down: " + keyToString(keybinds[6]));
     shoot_up.setString("Shoot Up: " + keyToString(keybinds[7]));
     special_1.setString("Special 1: " + keyToString(keybinds[8]));
-    special_2.setString("Special 2: " + keyToString(keybinds[9]));
-    special_3.setString("Special 3: " + keyToString(keybinds[10]));
-    special_4.setString("Special 4: " + keyToString(keybinds[11]));
+    special_2.setString("Use Potion: " + keyToString(keybinds[9]));
+    special_3.setString("Pick Up Potion: " + keyToString(keybinds[10]));
+    special_4.setString("Cheat: " + keyToString(keybinds[11]));
 
     walk_left.setPosition(300, 30);
     walk_right.setPosition(300, 60);

@@ -18,7 +18,9 @@ class GameViewPlayer
     //AI Movements
         TitleScreen* menu;
 	    sf::Sound sound;
+        sf::Sound music;
 	    sf::SoundBuffer basicAttackSound;
+        sf::SoundBuffer levelMusic;
         sf::Texture fireBg;
         sf::Texture waterBg;
         sf::Texture earthBg;
@@ -63,8 +65,9 @@ class GameViewPlayer
         //AbilityBar abilityBar;
         bool transition_started;
         sf::Text score;
-	sf::RectangleShape transitionBox1;
-	sf::RectangleShape transitionBox2;
+	    sf::RectangleShape transitionBox1;
+	    sf::RectangleShape transitionBox2;
+        bool level_music_playing = false;
 
     public:
 

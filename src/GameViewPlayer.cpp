@@ -41,6 +41,10 @@ GameViewPlayer::GameViewPlayer (GameLogic* game, shared_ptr<sf::RenderWindow> &w
         cout << "Cannot load basicAttackSound.wav" << endl;
     }
 
+    if (!levelMusic.loadFromFile( "../Assets/Sounds/Ground Break Level_00.wav") ){
+        cout << "Cannot load level music" << endl;
+    }
+
     if( !GameFont.loadFromFile( "../Assets/Fonts/GROBOLD.ttf" ) )
     {
         cout << "Font not found, title screen unable to load. Press 1 for single player, 2 for multiplayer" << endl;
@@ -198,6 +202,13 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 
         if( game -> getGameState() == 2 )
         {
+            if(!level_music_playing){
+                level_music_playing = true;
+                music.setBuffer(levelMusic);
+                music.setVolume(1.0);
+                music.setLoop(true);
+                music.play();
+            }
         	camMoveSpeed = game->player.getSpeed();
             movingX = false;
             movingY = false;
@@ -261,13 +272,13 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
             }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::CHEAT)))
                 {
                     game -> player.health = 100;
                 }
 
                 //Pick up item
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::PICK_UP)))
                 {
                     if(game->player.currentItem() == Process::NONE)
                     {
@@ -339,12 +350,14 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
 
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+                if (sf::Keyboard::isKeyPressed(menu -> getKeybind(TitleScreen::USE_POTION))) {
                 	game->useItem();
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 {
+                    music.stop();
+                    level_music_playing = false;
                     game -> setLevel(1);
                     game -> setGameState(0);
                     elementalAttack = game -> getStartingElement();
@@ -361,6 +374,8 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
 
                 if(game -> lostGame()){
+                    music.stop();
+                    level_music_playing = false;
                     game -> setLevel(1);
                     game -> setGameState(5);
                     elementalAttack = game -> getStartingElement();
@@ -375,6 +390,8 @@ bool GameViewPlayer::checkKeyEvents( float deltaTime , sf::Keyboard::Key keycode
                 }
 
                 if(game -> completedGame()){
+                    music.stop();
+                    level_music_playing = false;
                     game -> setLevel(1);
                     game -> setGameState(4);
                     elementalAttack = game -> getStartingElement();

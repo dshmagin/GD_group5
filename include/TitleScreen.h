@@ -63,8 +63,8 @@ class TitleScreen
 	sf::Keyboard::Key shoot_up_key = sf::Keyboard::Up;
 	sf::Keyboard::Key special_1_key = sf::Keyboard::Num1;
 	sf::Keyboard::Key special_2_key = sf::Keyboard::Num2;
-	sf::Keyboard::Key special_3_key = sf::Keyboard::Num3;
-	sf::Keyboard::Key special_4_key = sf::Keyboard::Num4;
+	sf::Keyboard::Key special_3_key = sf::Keyboard::Space;
+	sf::Keyboard::Key special_4_key = sf::Keyboard::U;
 
 	sf::Keyboard::Key keybinds[12];
 
@@ -80,7 +80,10 @@ class TitleScreen
                 SHOOT_RIGHT,
                 SHOOT_DOWN,
                 SHOOT_UP,
-                SPECIAL};
+                SPECIAL,
+                USE_POTION,
+                PICK_UP,
+                CHEAT};
         TitleScreen();
         TitleScreen(shared_ptr<sf::RenderWindow> &window_ptr );
         sf::Keyboard::Key getKeybind(KB key);
