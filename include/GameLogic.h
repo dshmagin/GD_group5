@@ -28,7 +28,7 @@ class GameLogic
         float bckgW, bckgH, screenW, screenH, bckgPixSize;
         float playerW,playerH;
         int GameState = 0;
-        int level = 4;
+        int level = 1;
         int wave = 1;
         float basicAttackCd = 600;
         float abilityCd;
