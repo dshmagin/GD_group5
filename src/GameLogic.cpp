@@ -164,8 +164,9 @@ void GameLogic::update(float deltaTime)
         game_lost = true;
         return;
     }
+	
 
-    if((pm -> checkEnemies() <= 0) && (level == 4)){
+    if(((pm -> checkEnemies() <= 0) && (level == 4) && (wave == 1))){
         clearGame();
         game_completed = true;
         return;
